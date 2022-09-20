@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="customCell" rowHeight="75" id="KGk-i7-Jjw" customClass="MyCustonTableViewCell" customModule="myProject" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wHs-uP-8K6">
+                        <rect key="frame" x="10" y="27.5" width="36" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="o1B-VB-pB9">
+                        <rect key="frame" x="50" y="19" width="45.5" height="37"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMw-3L-r7n">
+                                <rect key="frame" x="0.0" y="0.0" width="45.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5H-Rg-eTM">
+                                <rect key="frame" x="0.0" y="22.5" width="45.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TotalPrice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPR-Ha-cGv">
+                        <rect key="frame" x="234.5" y="27.5" width="75.5" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="wHs-uP-8K6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3hI-yd-tp1"/>
+                    <constraint firstItem="o1B-VB-pB9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="FY4-eW-ag6"/>
+                    <constraint firstItem="o1B-VB-pB9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IXl-7A-1bt"/>
+                    <constraint firstAttribute="trailing" secondItem="GPR-Ha-cGv" secondAttribute="trailing" constant="10" id="PS1-NV-7AX"/>
+                    <constraint firstItem="GPR-Ha-cGv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="alR-aZ-bFV"/>
+                    <constraint firstItem="wHs-uP-8K6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="l2O-Ca-P9h"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="wHs-uP-8K6" id="Jr6-Sa-Eg5"/>
+                <outlet property="numberLabel" destination="V5H-Rg-eTM" id="9hI-vC-8qc"/>
+                <outlet property="storeLabel" destination="cMw-3L-r7n" id="9Br-k1-N4T"/>
+                <outlet property="totalPriceLabel" destination="GPR-Ha-cGv" id="n9Y-u4-J1l"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="52.566964285714285"/>
+        </tableViewCell>
+    </objects>
+</document>

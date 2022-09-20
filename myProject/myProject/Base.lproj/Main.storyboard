@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dxf-lb-7Nz">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--消費分析-->
+        <scene sceneID="6CV-7q-gTh">
+            <objects>
+                <viewController id="ccV-EC-bTW" customClass="ConsumptionAnalysisViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K3W-js-Uat">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RaY-rU-lCn">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="圖表分析" id="55W-g4-B5e"/>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6vY-0u-ySv">
+                                <rect key="frame" x="30" y="158" width="354" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uee-ZZ-A9e"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="RaY-rU-lCn" firstAttribute="top" secondItem="uee-ZZ-A9e" secondAttribute="top" id="LkP-e7-Nvm"/>
+                            <constraint firstItem="RaY-rU-lCn" firstAttribute="centerX" secondItem="K3W-js-Uat" secondAttribute="centerX" id="e1e-Dv-UGZ"/>
+                            <constraint firstItem="6vY-0u-ySv" firstAttribute="leading" secondItem="uee-ZZ-A9e" secondAttribute="leading" constant="30" id="iHF-I0-h4O"/>
+                            <constraint firstItem="RaY-rU-lCn" firstAttribute="leading" secondItem="uee-ZZ-A9e" secondAttribute="leading" id="qbR-o4-0Yb"/>
+                            <constraint firstItem="uee-ZZ-A9e" firstAttribute="trailing" secondItem="6vY-0u-ySv" secondAttribute="trailing" constant="30" id="uO7-66-37w"/>
+                            <constraint firstItem="6vY-0u-ySv" firstAttribute="top" secondItem="RaY-rU-lCn" secondAttribute="bottom" constant="70" id="zBf-sZ-5bX"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="消費分析" image="chart.pie" catalog="system" selectedImage="chart.pie" id="oig-P3-DIy"/>
+                    <connections>
+                        <outlet property="yearTextField" destination="6vY-0u-ySv" id="Z32-S6-0Xx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AHC-4Z-F0g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1293" y="811"/>
+        </scene>
+        <!--新增發票-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomePageViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="xFB-TW-Rif">
+                                <rect key="frame" x="103" y="765" width="208" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tHP-Ar-Ejt">
+                                        <rect key="frame" x="0.0" y="0.0" width="81.5" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="儲存發票"/>
+                                        <connections>
+                                            <action selector="storeInvoice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xie-6b-wuX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDU-Vz-uya">
+                                        <rect key="frame" x="126.5" y="0.0" width="81.5" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Reset"/>
+                                        <connections>
+                                            <action selector="touchResetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CIl-A0-E7Q"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Zr8-RI-JIB">
+                                <rect key="frame" x="79" y="279.5" width="256" height="177"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="spm-sa-jJ5">
+                                        <rect key="frame" x="0.0" y="0.0" width="256" height="177"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="qXV-bF-Vap">
+                                                <rect key="frame" x="0.0" y="0.0" width="106" height="177"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="發票號碼     " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zqx-b0-Xvk">
+                                                        <rect key="frame" x="0.0" y="0.0" width="106" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="發票日期" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwJ-UD-Qos">
+                                                        <rect key="frame" x="0.0" y="51" width="82" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="店名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEF-He-eon">
+                                                        <rect key="frame" x="0.0" y="102" width="41" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="總金額" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taO-V7-z6d">
+                                                        <rect key="frame" x="0.0" y="153" width="61.5" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="uLt-J3-KiT">
+                                                <rect key="frame" x="106" y="0.0" width="150" height="177"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="NjA-V0-ZBG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="150" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="150" id="7ro-c7-Jhk"/>
+                                                            <constraint firstAttribute="height" constant="40" id="YVf-m4-ndT"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Pol-nn-lOa">
+                                                        <rect key="frame" x="0.0" y="49" width="150" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="150" id="1tR-II-b3o"/>
+                                                            <constraint firstAttribute="height" constant="40" id="IRy-dD-o2Y"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="可留空" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="cce-tj-ecL">
+                                                        <rect key="frame" x="0.0" y="98" width="150" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="JhD-Gq-6dm"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金額" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="srv-Ac-31C">
+                                                        <rect key="frame" x="0.0" y="147" width="150" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="(可留空)" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gIa-zJ-k92">
+                                <rect key="frame" x="57" y="548" width="300" height="100"/>
+                                <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="5WH-zM-6dQ"/>
+                                    <constraint firstAttribute="height" constant="100" id="mcY-Ds-hMv"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="te3-MC-kI6">
+                                <rect key="frame" x="154" y="469" width="106" height="38"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="新增品項">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="addItemAndPrice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vRo-0T-4LA"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u0l-wa-6b2">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="新增發票" id="dCp-Tn-4fZ">
+                                        <barButtonItem key="rightBarButtonItem" title="Item" image="camera" catalog="system" id="NrO-aQ-Wrb">
+                                            <connections>
+                                                <action selector="openCamera:" destination="BYZ-38-t0r" id="0ch-31-pkd"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="u0l-wa-6b2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4YE-oX-top"/>
+                            <constraint firstItem="u0l-wa-6b2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7be-dg-ia4"/>
+                            <constraint firstItem="Zr8-RI-JIB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-80" id="FZK-F9-TZJ"/>
+                            <constraint firstItem="gIa-zJ-k92" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LdI-ny-z97"/>
+                            <constraint firstItem="te3-MC-kI6" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="40" id="RAy-N4-ggZ"/>
+                            <constraint firstItem="xFB-TW-Rif" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bw0-CF-BCE"/>
+                            <constraint firstItem="u0l-wa-6b2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cgn-bi-d6I"/>
+                            <constraint firstItem="gIa-zJ-k92" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="150" id="rnm-E2-xcE"/>
+                            <constraint firstItem="Zr8-RI-JIB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sa9-OQ-Szh"/>
+                            <constraint firstAttribute="bottom" secondItem="xFB-TW-Rif" secondAttribute="bottom" constant="100" id="v8a-R9-sIw"/>
+                            <constraint firstItem="u0l-wa-6b2" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vV4-L8-QVN"/>
+                            <constraint firstItem="te3-MC-kI6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zuC-7Y-AZ3"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="新增發票" image="plus.app" catalog="system" id="4kZ-yo-TMi"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="invoiceDateTextField" destination="Pol-nn-lOa" id="mAC-dk-lv4"/>
+                        <outlet property="invoiceNumberTextField" destination="NjA-V0-ZBG" id="Pl8-Mo-xHe"/>
+                        <outlet property="invoiceStoreTextField" destination="cce-tj-ecL" id="s9v-Q2-cRR"/>
+                        <outlet property="invoiceTotalPriceLabel" destination="srv-Ac-31C" id="r0X-rw-91F"/>
+                        <outlet property="itemAndPriceTextView" destination="gIa-zJ-k92" id="Urt-VW-r2s"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28.985507246376812" y="810.9375"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="nhD-Uw-WL8">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="dxf-lb-7Nz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Qiy-qg-nHL">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="iMe-cq-9FR"/>
+                        <segue destination="tfZ-VH-xc4" kind="relationship" relationship="viewControllers" id="WYs-mK-xe9"/>
+                        <segue destination="iMv-wV-uTU" kind="relationship" relationship="viewControllers" id="cne-fj-Loj"/>
+                        <segue destination="ccV-EC-bTW" kind="relationship" relationship="viewControllers" id="N37-9T-bj0"/>
+                        <segue destination="KJQ-Bi-cyh" kind="relationship" relationship="viewControllers" id="S7A-y0-Dj9"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zoX-gN-klq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28.985507246376812" y="83.705357142857139"/>
+        </scene>
+        <!--Objc Table View Controller-->
+        <scene sceneID="fMN-QV-wJ8">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L1c-78-yku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="wf0-V7-ZX0" customClass="ObjcTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZFY-gr-Yte">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bKC-0H-yad">
+                                <rect key="frame" x="0.0" y="198" width="414" height="615"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022, 05-06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNm-7J-oqL">
+                                <rect key="frame" x="155.5" y="113" width="103" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2YC-5u-RQ9">
+                                <rect key="frame" x="5" y="108" width="37" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="37" id="LRM-vD-yFN"/>
+                                    <constraint firstAttribute="height" constant="31" id="yj0-At-uJi"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="1"/>
+                                <connections>
+                                    <action selector="selectedMonth:" destination="wf0-V7-ZX0" eventType="touchUpInside" id="Elm-P1-nt7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBH-5q-Xni">
+                                <rect key="frame" x="372" y="108" width="37" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="37" id="cYg-wl-Eha"/>
+                                    <constraint firstAttribute="height" constant="31" id="lfc-lf-8p3"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="2"/>
+                                <connections>
+                                    <action selector="selectedMonth:" destination="L1c-78-yku" eventType="touchUpInside" id="Is5-Ja-WyT"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="K7a-wd-1D3">
+                                <rect key="frame" x="153.5" y="148" width="107" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="107" id="78p-KL-hva"/>
+                                    <constraint firstAttribute="height" constant="45" id="GNh-qT-ugB"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="changeSelectedDate:" destination="wf0-V7-ZX0" eventType="valueChanged" id="3Ap-KX-XmX"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="z2e-Jv-dct"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="z2e-Jv-dct" firstAttribute="trailing" secondItem="FBH-5q-Xni" secondAttribute="trailing" constant="5" id="42Z-3d-yCT"/>
+                            <constraint firstItem="bKC-0H-yad" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="110" id="5zN-PA-Msp"/>
+                            <constraint firstItem="z2e-Jv-dct" firstAttribute="trailing" secondItem="bKC-0H-yad" secondAttribute="trailing" id="BcO-jL-b51"/>
+                            <constraint firstItem="2YC-5u-RQ9" firstAttribute="leading" secondItem="z2e-Jv-dct" secondAttribute="leading" constant="5" id="GjS-Pt-sF3"/>
+                            <constraint firstItem="YNm-7J-oqL" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="25" id="Jop-zq-jiY"/>
+                            <constraint firstItem="bKC-0H-yad" firstAttribute="leading" secondItem="z2e-Jv-dct" secondAttribute="leading" id="Oud-oV-Uvh"/>
+                            <constraint firstItem="YNm-7J-oqL" firstAttribute="centerX" secondItem="ZFY-gr-Yte" secondAttribute="centerX" id="PR5-qb-3xf"/>
+                            <constraint firstItem="z2e-Jv-dct" firstAttribute="bottom" secondItem="bKC-0H-yad" secondAttribute="bottom" id="PRT-ki-OS4"/>
+                            <constraint firstItem="FBH-5q-Xni" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="20" id="SSM-rr-MgZ"/>
+                            <constraint firstItem="2YC-5u-RQ9" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="20" id="Vso-xH-T97"/>
+                            <constraint firstItem="bKC-0H-yad" firstAttribute="top" secondItem="K7a-wd-1D3" secondAttribute="bottom" constant="5" id="Zgg-Ox-wNX"/>
+                            <constraint firstItem="K7a-wd-1D3" firstAttribute="centerX" secondItem="ZFY-gr-Yte" secondAttribute="centerX" id="ooQ-Ut-XRz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ogI-1g-9jE">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="AIt-FM-QDk">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="6iG-V2-nLi">
+                                <rect key="frame" x="20" y="6" width="65" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="日"/>
+                                    <segment title="月"/>
+                                </segments>
+                                <connections>
+                                    <action selector="dayOrMonthChange:" destination="wf0-V7-ZX0" eventType="valueChanged" id="JxR-fq-caX"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="xGQ-qk-Gds">
+                            <connections>
+                                <segue destination="jLV-Jc-cTY" kind="show" id="yJC-M2-bRL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="backMonthButton" destination="2YC-5u-RQ9" id="NJl-Pl-hA6"/>
+                        <outlet property="forwardMonthButton" destination="FBH-5q-Xni" id="Pe5-d0-gPU"/>
+                        <outlet property="monthOrDaySegmentedControl" destination="6iG-V2-nLi" id="JOg-mE-sJF"/>
+                        <outlet property="tableView" destination="bKC-0H-yad" id="DAj-M9-mOR"/>
+                        <outlet property="tableViewDatePicker" destination="K7a-wd-1D3" id="yUI-iv-lql"/>
+                        <outlet property="tableViewShowByMonthLabel" destination="YNm-7J-oqL" id="xFz-0d-mY7"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1651" y="73"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="9ks-99-iDj">
+            <objects>
+                <viewController id="Bhu-2Q-xu6" customClass="TableViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cDk-Cq-Cub">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-fm-eQT">
+                                <rect key="frame" x="0.0" y="163" width="414" height="650"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Bhu-2Q-xu6" id="HTk-CH-hYY"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mun-pg-nWD">
+                                <rect key="frame" x="20" y="93" width="37.5" height="32"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="←">
+                                    <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="selectedMonth:" destination="Bhu-2Q-xu6" eventType="touchUpInside" id="x1E-VO-9j9"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="wFX-T6-tnL">
+                                <rect key="frame" x="151" y="127" width="112.5" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="112.5" id="KP3-7N-f0N"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="changeSelectedDate:" destination="Bhu-2Q-xu6" eventType="valueChanged" id="Wgh-c2-xMN"/>
+                                </connections>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nij-rP-ywK">
+                                <rect key="frame" x="356.5" y="93" width="37.5" height="32"/>
+                                <buttonConfiguration key="configuration" style="gray" title="→">
+                                    <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="selectedMonth:" destination="Bhu-2Q-xu6" eventType="touchUpInside" id="Ylc-wz-5sh"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022, 05-06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUH-qf-YV8">
+                                <rect key="frame" x="155.5" y="98" width="103" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="O2x-aG-CYA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ZmG-fm-eQT" firstAttribute="bottom" secondItem="O2x-aG-CYA" secondAttribute="bottom" id="6MB-JM-Lyb"/>
+                            <constraint firstItem="rUH-qf-YV8" firstAttribute="centerX" secondItem="cDk-Cq-Cub" secondAttribute="centerX" id="7DC-23-9Xm"/>
+                            <constraint firstItem="ZmG-fm-eQT" firstAttribute="top" secondItem="O2x-aG-CYA" secondAttribute="top" constant="75" id="7Le-nn-Rhs"/>
+                            <constraint firstItem="rUH-qf-YV8" firstAttribute="top" secondItem="O2x-aG-CYA" secondAttribute="top" constant="10" id="9Hs-H7-RCY"/>
+                            <constraint firstItem="wFX-T6-tnL" firstAttribute="centerX" secondItem="cDk-Cq-Cub" secondAttribute="centerX" id="ejP-Ly-OXM"/>
+                            <constraint firstItem="mun-pg-nWD" firstAttribute="top" secondItem="O2x-aG-CYA" secondAttribute="top" constant="5" id="hzZ-Oc-r9d"/>
+                            <constraint firstItem="mun-pg-nWD" firstAttribute="leading" secondItem="O2x-aG-CYA" secondAttribute="leading" constant="20" id="ibG-8S-l22"/>
+                            <constraint firstItem="ZmG-fm-eQT" firstAttribute="trailing" secondItem="O2x-aG-CYA" secondAttribute="trailing" id="m89-r9-VB4"/>
+                            <constraint firstItem="ZmG-fm-eQT" firstAttribute="top" secondItem="wFX-T6-tnL" secondAttribute="bottom" constant="5" id="oVT-Fs-OCZ"/>
+                            <constraint firstItem="ZmG-fm-eQT" firstAttribute="leading" secondItem="O2x-aG-CYA" secondAttribute="leading" id="oXt-5e-h4k"/>
+                            <constraint firstItem="nij-rP-ywK" firstAttribute="top" secondItem="O2x-aG-CYA" secondAttribute="top" constant="5" id="pcL-m1-qTP"/>
+                            <constraint firstItem="O2x-aG-CYA" firstAttribute="trailing" secondItem="nij-rP-ywK" secondAttribute="trailing" constant="20" id="yrR-8C-ajZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="1QL-W9-GCH">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="awj-fP-ML4">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Ebi-dx-8zc">
+                                <rect key="frame" x="20" y="6" width="65" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="日"/>
+                                    <segment title="月"/>
+                                </segments>
+                                <connections>
+                                    <action selector="dayOrMonthChange:" destination="Bhu-2Q-xu6" eventType="valueChanged" id="YoQ-95-2FK"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="qeX-sR-HLe">
+                            <connections>
+                                <segue destination="jLV-Jc-cTY" kind="show" id="T1Z-jc-1gO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="backMonthButton" destination="mun-pg-nWD" id="Yyx-ZA-rfJ"/>
+                        <outlet property="forwardMonthButton" destination="nij-rP-ywK" id="83s-a0-GVh"/>
+                        <outlet property="monthOrDaySegmentedControl" destination="Ebi-dx-8zc" id="eJl-R4-1YF"/>
+                        <outlet property="tableView" destination="ZmG-fm-eQT" id="nvQ-PT-2RN"/>
+                        <outlet property="tableViewDatePicker" destination="wFX-T6-tnL" id="qjU-0X-aYD"/>
+                        <outlet property="tableViewShowByMonthLabel" destination="rUH-qf-YV8" id="yNG-Vc-gB1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YPZ-3f-kmR" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1650.7246376811595" y="814.95535714285711"/>
+        </scene>
+        <!--Search Invice View Controller-->
+        <scene sceneID="J9P-dM-Ucj">
+            <objects>
+                <viewController id="jLV-Jc-cTY" customClass="SearchInviceViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rrr-BM-pNC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="搜尋店名或品項" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nrO-cM-ze4">
+                                <rect key="frame" x="143" y="98" width="128" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="searchEditingChanged:" destination="jLV-Jc-cTY" eventType="editingChanged" id="YVo-p5-odc"/>
+                                </connections>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OVu-gI-TDB">
+                                <rect key="frame" x="0.0" y="152" width="414" height="661"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="b3O-ZJ-7c0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nrO-cM-ze4" firstAttribute="centerX" secondItem="rrr-BM-pNC" secondAttribute="centerX" id="AJa-Bo-6lL"/>
+                            <constraint firstItem="nrO-cM-ze4" firstAttribute="top" secondItem="b3O-ZJ-7c0" secondAttribute="top" constant="10" id="B2a-Z5-Jgw"/>
+                            <constraint firstItem="b3O-ZJ-7c0" firstAttribute="bottom" secondItem="OVu-gI-TDB" secondAttribute="bottom" id="FnO-vr-Mi4"/>
+                            <constraint firstItem="OVu-gI-TDB" firstAttribute="top" secondItem="nrO-cM-ze4" secondAttribute="bottom" constant="20" id="K46-1M-V94"/>
+                            <constraint firstItem="OVu-gI-TDB" firstAttribute="leading" secondItem="b3O-ZJ-7c0" secondAttribute="leading" id="VsA-2w-s4B"/>
+                            <constraint firstItem="b3O-ZJ-7c0" firstAttribute="trailing" secondItem="OVu-gI-TDB" secondAttribute="trailing" id="kGX-HM-H5G"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="GgY-1w-d52"/>
+                    <connections>
+                        <outlet property="keywordSearchTextField" destination="nrO-cM-ze4" id="sBl-Q0-aYD"/>
+                        <outlet property="searchInvoiceTableView" destination="OVu-gI-TDB" id="X6x-yd-7hf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j3x-Nq-0ZV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2435" y="56"/>
+        </scene>
+        <!--確認中獎-->
+        <scene sceneID="wkx-PD-79R">
+            <objects>
+                <viewController id="iMv-wV-uTU" customClass="BonusViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J7y-yA-91C">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4V1-Qb-HGJ">
+                                <rect key="frame" x="0.0" y="234" width="414" height="579"/>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="mVi-il-6YV">
+                                <rect key="frame" x="87" y="64" width="240" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x56-Ty-9ki">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="cPq-5E-cGp"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="←"/>
+                                        <connections>
+                                            <action selector="selectedMonth:" destination="iMv-wV-uTU" eventType="touchUpInside" id="1gT-oe-8T0"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022, 05-06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efY-ds-NNn">
+                                        <rect key="frame" x="71" y="0.0" width="98" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACR-bT-GB4">
+                                        <rect key="frame" x="200" y="0.0" width="40" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="q2Z-JI-gKG"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="→"/>
+                                        <connections>
+                                            <action selector="selectedMonth:" destination="iMv-wV-uTU" eventType="touchUpInside" id="gS0-jb-kDg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="DUP-s5-GYh"/>
+                                    <constraint firstAttribute="height" constant="31" id="fle-8j-O6g"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="uSE-OD-yKt" userLabel="新增中獎號碼Stack View">
+                                <rect key="frame" x="86.5" y="110" width="241" height="34"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5W-bw-QXc">
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="34"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="新增中獎號碼"/>
+                                        <connections>
+                                            <action selector="addBonusNumber:" destination="iMv-wV-uTU" eventType="touchUpInside" id="snZ-i3-u6M"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Pp-f6-u2C">
+                                        <rect key="frame" x="131" y="0.0" width="110" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="110" id="kmF-Yy-qbw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zin-ly-1zp">
+                                <rect key="frame" x="132" y="169" width="150" height="60"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Ozo-Cm-xFe"/>
+                                    <constraint firstAttribute="height" constant="60" id="ri7-1K-xGd"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="頭獎號碼：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWk-VJ-3cp">
+                                <rect key="frame" x="163.5" y="149" width="87" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbf-EK-7u6">
+                                <rect key="frame" x="341" y="179" width="53" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="兌獎"/>
+                                <connections>
+                                    <action selector="checkBonus:" destination="iMv-wV-uTU" eventType="touchUpInside" id="Ed1-K1-pIA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WGv-h1-06C"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WGv-h1-06C" firstAttribute="bottom" secondItem="4V1-Qb-HGJ" secondAttribute="bottom" id="23b-se-vhd"/>
+                            <constraint firstItem="4V1-Qb-HGJ" firstAttribute="leading" secondItem="WGv-h1-06C" secondAttribute="leading" id="5Bg-gk-9Qi"/>
+                            <constraint firstItem="zin-ly-1zp" firstAttribute="centerX" secondItem="J7y-yA-91C" secondAttribute="centerX" id="BxF-2b-Sr7"/>
+                            <constraint firstItem="XWk-VJ-3cp" firstAttribute="centerX" secondItem="J7y-yA-91C" secondAttribute="centerX" id="F1h-Cp-1Dc"/>
+                            <constraint firstItem="zin-ly-1zp" firstAttribute="top" secondItem="uSE-OD-yKt" secondAttribute="bottom" constant="25" id="GEg-Jt-czN"/>
+                            <constraint firstItem="nbf-EK-7u6" firstAttribute="top" secondItem="WGv-h1-06C" secondAttribute="top" constant="135" id="H97-HP-2tS"/>
+                            <constraint firstItem="4V1-Qb-HGJ" firstAttribute="top" secondItem="uSE-OD-yKt" secondAttribute="bottom" constant="90" id="MWy-IW-Dal"/>
+                            <constraint firstItem="mVi-il-6YV" firstAttribute="centerX" secondItem="J7y-yA-91C" secondAttribute="centerX" id="Vug-ah-IbE"/>
+                            <constraint firstItem="WGv-h1-06C" firstAttribute="trailing" secondItem="4V1-Qb-HGJ" secondAttribute="trailing" id="W6L-yO-Ley"/>
+                            <constraint firstItem="WGv-h1-06C" firstAttribute="trailing" secondItem="nbf-EK-7u6" secondAttribute="trailing" constant="20" id="Y0j-wa-9iB"/>
+                            <constraint firstItem="mVi-il-6YV" firstAttribute="top" secondItem="WGv-h1-06C" secondAttribute="top" constant="20" id="fvi-Fr-Zy0"/>
+                            <constraint firstItem="uSE-OD-yKt" firstAttribute="centerX" secondItem="J7y-yA-91C" secondAttribute="centerX" id="l2H-Eo-fKG"/>
+                            <constraint firstItem="XWk-VJ-3cp" firstAttribute="top" secondItem="uSE-OD-yKt" secondAttribute="bottom" constant="5" id="lkE-YR-8J0"/>
+                            <constraint firstItem="uSE-OD-yKt" firstAttribute="top" secondItem="mVi-il-6YV" secondAttribute="bottom" constant="15" id="uuF-mI-eId"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="確認中獎" image="star.square.fill" catalog="system" id="d3S-2h-tnN"/>
+                    <connections>
+                        <outlet property="backMonthButton" destination="x56-Ty-9ki" id="EYg-zs-hWc"/>
+                        <outlet property="bonusMonthLabel" destination="efY-ds-NNn" id="8NS-Ai-qsx"/>
+                        <outlet property="bonusNumberTextField" destination="8Pp-f6-u2C" id="1Fx-Dw-lXh"/>
+                        <outlet property="bonusNumberTextView" destination="zin-ly-1zp" id="s7a-s8-PyH"/>
+                        <outlet property="bonusTableView" destination="4V1-Qb-HGJ" id="xFU-vV-26r"/>
+                        <outlet property="forwardMonthButton" destination="ACR-bT-GB4" id="DWM-wX-K9Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifF-3y-Bmy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-642" y="815"/>
+        </scene>
+        <!--顯示發票-->
+        <scene sceneID="GDE-4Q-Ev4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tfZ-VH-xc4" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="顯示發票" image="folder" catalog="system" id="5qb-xi-dHs"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rJ5-Rr-MRb">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bhu-2Q-xu6" kind="relationship" relationship="rootViewController" id="0bl-qK-dC9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ycn-JQ-nRm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="754" y="815"/>
+        </scene>
+        <!--objcTableView-->
+        <scene sceneID="06Q-cH-hzH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KJQ-Bi-cyh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="objcTableView" image="questionmark.circle" catalog="system" id="V7I-fM-5gR"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SPz-6r-f6K">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wf0-V7-ZX0" kind="relationship" relationship="rootViewController" id="Z3p-xn-UlI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q8G-XS-pET" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="899" y="73"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="yJC-M2-bRL"/>
+    </inferredMetricsTieBreakers>
+    <resources>
+        <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="chart.pie" catalog="system" width="128" height="121"/>
+        <image name="folder" catalog="system" width="128" height="97"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
+        <image name="questionmark.circle" catalog="system" width="128" height="121"/>
+        <image name="star.square.fill" catalog="system" width="128" height="114"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
