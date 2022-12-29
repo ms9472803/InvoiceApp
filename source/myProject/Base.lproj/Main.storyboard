@@ -1,54 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dxf-lb-7Nz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dxf-lb-7Nz">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--消費分析-->
-        <scene sceneID="6CV-7q-gTh">
-            <objects>
-                <viewController id="ccV-EC-bTW" customClass="ConsumptionAnalysisViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="K3W-js-Uat">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RaY-rU-lCn">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <items>
-                                    <navigationItem title="圖表分析" id="55W-g4-B5e"/>
-                                </items>
-                            </navigationBar>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6vY-0u-ySv">
-                                <rect key="frame" x="30" y="158" width="354" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="uee-ZZ-A9e"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="RaY-rU-lCn" firstAttribute="top" secondItem="uee-ZZ-A9e" secondAttribute="top" id="LkP-e7-Nvm"/>
-                            <constraint firstItem="RaY-rU-lCn" firstAttribute="centerX" secondItem="K3W-js-Uat" secondAttribute="centerX" id="e1e-Dv-UGZ"/>
-                            <constraint firstItem="6vY-0u-ySv" firstAttribute="leading" secondItem="uee-ZZ-A9e" secondAttribute="leading" constant="30" id="iHF-I0-h4O"/>
-                            <constraint firstItem="RaY-rU-lCn" firstAttribute="leading" secondItem="uee-ZZ-A9e" secondAttribute="leading" id="qbR-o4-0Yb"/>
-                            <constraint firstItem="uee-ZZ-A9e" firstAttribute="trailing" secondItem="6vY-0u-ySv" secondAttribute="trailing" constant="30" id="uO7-66-37w"/>
-                            <constraint firstItem="6vY-0u-ySv" firstAttribute="top" secondItem="RaY-rU-lCn" secondAttribute="bottom" constant="70" id="zBf-sZ-5bX"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="消費分析" image="chart.pie" catalog="system" selectedImage="chart.pie" id="oig-P3-DIy"/>
-                    <connections>
-                        <outlet property="yearTextField" destination="6vY-0u-ySv" id="Z32-S6-0Xx"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AHC-4Z-F0g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1293" y="811"/>
-        </scene>
         <!--新增發票-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -58,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="xFB-TW-Rif">
-                                <rect key="frame" x="103" y="765" width="208" height="31"/>
+                                <rect key="frame" x="91" y="761.5" width="232" height="34.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tHP-Ar-Ejt">
-                                        <rect key="frame" x="0.0" y="0.0" width="81.5" height="31"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="93.5" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="儲存發票"/>
                                         <connections>
@@ -69,7 +29,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDU-Vz-uya">
-                                        <rect key="frame" x="126.5" y="0.0" width="81.5" height="31"/>
+                                        <rect key="frame" x="138.5" y="0.0" width="93.5" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Reset"/>
                                         <connections>
@@ -176,7 +136,7 @@
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u0l-wa-6b2">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="新增發票" id="dCp-Tn-4fZ">
                                         <barButtonItem key="rightBarButtonItem" title="Item" image="camera" catalog="system" id="NrO-aQ-Wrb">
@@ -234,7 +194,6 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="iMe-cq-9FR"/>
                         <segue destination="tfZ-VH-xc4" kind="relationship" relationship="viewControllers" id="WYs-mK-xe9"/>
                         <segue destination="iMv-wV-uTU" kind="relationship" relationship="viewControllers" id="cne-fj-Loj"/>
-                        <segue destination="ccV-EC-bTW" kind="relationship" relationship="viewControllers" id="N37-9T-bj0"/>
                         <segue destination="KJQ-Bi-cyh" kind="relationship" relationship="viewControllers" id="S7A-y0-Dj9"/>
                     </connections>
                 </tabBarController>
@@ -245,23 +204,22 @@
         <!--Objc Table View Controller-->
         <scene sceneID="fMN-QV-wJ8">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L1c-78-yku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="wf0-V7-ZX0" customClass="ObjcTableViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZFY-gr-Yte">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bKC-0H-yad">
-                                <rect key="frame" x="0.0" y="198" width="414" height="615"/>
+                                <rect key="frame" x="0.0" y="202" width="414" height="611"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022, 05-06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNm-7J-oqL">
-                                <rect key="frame" x="155.5" y="113" width="103" height="22"/>
+                                <rect key="frame" x="155.5" y="117" width="103" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2YC-5u-RQ9">
-                                <rect key="frame" x="5" y="108" width="37" height="31"/>
+                                <rect key="frame" x="5" y="112" width="37" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="37" id="LRM-vD-yFN"/>
                                     <constraint firstAttribute="height" constant="31" id="yj0-At-uJi"/>
@@ -273,7 +231,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBH-5q-Xni">
-                                <rect key="frame" x="372" y="108" width="37" height="31"/>
+                                <rect key="frame" x="372" y="112" width="37" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="37" id="cYg-wl-Eha"/>
                                     <constraint firstAttribute="height" constant="31" id="lfc-lf-8p3"/>
@@ -285,7 +243,7 @@
                                 </connections>
                             </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="K7a-wd-1D3">
-                                <rect key="frame" x="153.5" y="148" width="107" height="45"/>
+                                <rect key="frame" x="153.5" y="152" width="107" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="107" id="78p-KL-hva"/>
                                     <constraint firstAttribute="height" constant="45" id="GNh-qT-ugB"/>
@@ -341,6 +299,7 @@
                         <outlet property="tableViewShowByMonthLabel" destination="YNm-7J-oqL" id="xFz-0d-mY7"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L1c-78-yku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1651" y="73"/>
         </scene>
@@ -353,13 +312,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-fm-eQT">
-                                <rect key="frame" x="0.0" y="163" width="414" height="650"/>
+                                <rect key="frame" x="0.0" y="167" width="414" height="646"/>
                                 <connections>
                                     <outlet property="delegate" destination="Bhu-2Q-xu6" id="HTk-CH-hYY"/>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mun-pg-nWD">
-                                <rect key="frame" x="20" y="93" width="37.5" height="32"/>
+                                <rect key="frame" x="20" y="97" width="37.5" height="32"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="←">
                                     <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
@@ -369,7 +328,7 @@
                                 </connections>
                             </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="wFX-T6-tnL">
-                                <rect key="frame" x="151" y="127" width="112.5" height="31"/>
+                                <rect key="frame" x="151" y="127.5" width="112.5" height="34.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="112.5" id="KP3-7N-f0N"/>
                                 </constraints>
@@ -378,7 +337,7 @@
                                 </connections>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nij-rP-ywK">
-                                <rect key="frame" x="356.5" y="93" width="37.5" height="32"/>
+                                <rect key="frame" x="356.5" y="97" width="37.5" height="32"/>
                                 <buttonConfiguration key="configuration" style="gray" title="→">
                                     <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 </buttonConfiguration>
@@ -387,7 +346,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022, 05-06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUH-qf-YV8">
-                                <rect key="frame" x="155.5" y="98" width="103" height="21.5"/>
+                                <rect key="frame" x="155.5" y="102" width="103" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -453,7 +412,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="搜尋店名或品項" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nrO-cM-ze4">
-                                <rect key="frame" x="143" y="98" width="128" height="34"/>
+                                <rect key="frame" x="143" y="102" width="128" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -461,7 +420,7 @@
                                 </connections>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OVu-gI-TDB">
-                                <rect key="frame" x="0.0" y="152" width="414" height="661"/>
+                                <rect key="frame" x="0.0" y="156" width="414" height="657"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -495,10 +454,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4V1-Qb-HGJ">
-                                <rect key="frame" x="0.0" y="234" width="414" height="579"/>
+                                <rect key="frame" x="0.0" y="238.5" width="414" height="574.5"/>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="31" translatesAutoresizingMaskIntoConstraints="NO" id="mVi-il-6YV">
-                                <rect key="frame" x="87" y="64" width="240" height="31"/>
+                                <rect key="frame" x="87" y="68" width="240" height="31"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x56-Ty-9ki">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="31"/>
@@ -535,10 +494,10 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="uSE-OD-yKt" userLabel="新增中獎號碼Stack View">
-                                <rect key="frame" x="86.5" y="110" width="241" height="34"/>
+                                <rect key="frame" x="77.5" y="114" width="259" height="34.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5W-bw-QXc">
-                                        <rect key="frame" x="0.0" y="0.0" width="110" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="新增中獎號碼"/>
                                         <connections>
@@ -546,7 +505,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Pp-f6-u2C">
-                                        <rect key="frame" x="131" y="0.0" width="110" height="34"/>
+                                        <rect key="frame" x="149" y="0.0" width="110" height="34.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="110" id="kmF-Yy-qbw"/>
                                         </constraints>
@@ -556,7 +515,7 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zin-ly-1zp">
-                                <rect key="frame" x="132" y="169" width="150" height="60"/>
+                                <rect key="frame" x="132" y="173.5" width="150" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Ozo-Cm-xFe"/>
@@ -568,13 +527,13 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="頭獎號碼：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWk-VJ-3cp">
-                                <rect key="frame" x="163.5" y="149" width="87" height="20.5"/>
+                                <rect key="frame" x="163.5" y="153.5" width="87" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbf-EK-7u6">
-                                <rect key="frame" x="341" y="179" width="53" height="31"/>
+                                <rect key="frame" x="335" y="183" width="59" height="34.5"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="兌獎"/>
                                 <connections>
@@ -622,7 +581,7 @@
                     <tabBarItem key="tabBarItem" title="顯示發票" image="folder" catalog="system" id="5qb-xi-dHs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rJ5-Rr-MRb">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -641,7 +600,7 @@
                     <tabBarItem key="tabBarItem" title="objcTableView" image="questionmark.circle" catalog="system" id="V7I-fM-5gR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SPz-6r-f6K">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -658,15 +617,14 @@
         <segue reference="yJC-M2-bRL"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="chart.pie" catalog="system" width="128" height="121"/>
-        <image name="folder" catalog="system" width="128" height="97"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="camera" catalog="system" width="128" height="93"/>
+        <image name="folder" catalog="system" width="128" height="96"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="plus.app" catalog="system" width="128" height="114"/>
-        <image name="questionmark.circle" catalog="system" width="128" height="121"/>
+        <image name="questionmark.circle" catalog="system" width="128" height="123"/>
         <image name="star.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

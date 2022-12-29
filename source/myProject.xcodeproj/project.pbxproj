@@ -32,8 +32,6 @@
 		D38377A6284456E700C79ADF /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */; };
 		D38377A7284456E700C79ADF /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */; };
 		D38377AD2845A1B000C79ADF /* ObjcTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */; };
-		D3900B1B283D0FA8008AD9ED /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3900B18283D0F8C008AD9ED /* Charts.framework */; platformFilter = ios; };
-		D3900B1C283D0FA8008AD9ED /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3900B18283D0F8C008AD9ED /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D3FE31382831E68D0065E12C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31372831E68D0065E12C /* AppDelegate.swift */; };
 		D3FE313A2831E68D0065E12C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31392831E68D0065E12C /* SceneDelegate.swift */; };
 		D3FE313C2831E68D0065E12C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE313B2831E68D0065E12C /* HomePageViewController.swift */; };
@@ -75,20 +73,6 @@
 			remoteInfo = myProject;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		D3900B1D283D0FA8008AD9ED /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D3900B1C283D0FA8008AD9ED /* Charts.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D316508128332C7600C46AD4 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
@@ -137,7 +121,6 @@
 			files = (
 				D340C79C283B705200B5819D /* FirebaseDatabase in Frameworks */,
 				D316508B2833A39500C46AD4 /* FirebaseAnalytics in Frameworks */,
-				D3900B1B283D0FA8008AD9ED /* Charts.framework in Frameworks */,
 				D316508828334A8300C46AD4 /* FirebaseAnalytics in Frameworks */,
 				D340C79E283B705500B5819D /* FirebaseAuth in Frameworks */,
 			);
@@ -262,7 +245,6 @@
 				D3FE31302831E68D0065E12C /* Sources */,
 				D3FE31312831E68D0065E12C /* Frameworks */,
 				D3FE31322831E68D0065E12C /* Resources */,
-				D3900B1D283D0FA8008AD9ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
