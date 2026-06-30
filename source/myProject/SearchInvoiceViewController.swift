@@ -22,8 +22,6 @@ var searchInvoiceArray: [Invoice] = []
         title = "搜尋"
         
         searchInvoiceTableView.register(UINib(nibName: "MyCustomTableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
-        
-        //searchInvoiceTableView.register(MyCustonTableViewCell.self, forCellReuseIdentifier: "customCell")
         searchInvoiceTableView.delegate = self
         searchInvoiceTableView.dataSource = self
         searchInvoiceTableView.separatorStyle = .none
