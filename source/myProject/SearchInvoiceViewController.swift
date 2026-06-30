@@ -1,5 +1,5 @@
 //
-//  SearchInviceViewController.swift
+//  SearchInvoiceViewController.swift
 //  myProject
 //
 //  Created by Ryan Chen on 2022/5/23.
@@ -10,7 +10,7 @@ import CoreAudio
 
 var searchInvoiceArray: [Invoice] = []
 
-@objcMembers class SearchInviceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+@objcMembers class SearchInvoiceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     @IBOutlet var searchInvoiceTableView: UITableView!

@@ -406,7 +406,7 @@
         <!--Search Invice View Controller-->
         <scene sceneID="J9P-dM-Ucj">
             <objects>
-                <viewController id="jLV-Jc-cTY" customClass="SearchInviceViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jLV-Jc-cTY" customClass="SearchInvoiceViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rrr-BM-pNC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
