@@ -65,6 +65,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.separatorStyle = .none
         tableView.backgroundColor = .systemGroupedBackground
         monthOrDaySegmentedControl.selectedSegmentIndex = 1
+        // 初始期別依當下日期決定，而非 storyboard 固定值
+        tableViewShowByMonthLabel.text = currentInvoicePeriod()
         tableViewDatePicker.maximumDate = Date()
         backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
         forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)

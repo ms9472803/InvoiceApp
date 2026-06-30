@@ -393,6 +393,16 @@ func transformDatePickerToString(_ datePicker: UIDatePicker) -> String {
     return returnString
 }
 
+// 依日期回傳當前發票期別（雙月一期），格式 "YYYY, MM-MM"，例如 "2026, 05-06"
+func currentInvoicePeriod(_ date: Date = Date()) -> String {
+    let calendar = Calendar.current
+    let year = calendar.component(.year, from: date)
+    let month = calendar.component(.month, from: date)
+    let startMonth = ((month - 1) / 2) * 2 + 1   // 1,3,5,7,9,11
+    let endMonth = startMonth + 1
+    return String(format: "%d, %02d-%02d", year, startMonth, endMonth)
+}
+
 // 發票號碼格式檢查
 func invoiceNumberFormatCheck(_ invoiceNumber: String) -> Bool{
     invoiceNumber.count == 10 && String(invoiceNumber.suffix(8)).isInt &&

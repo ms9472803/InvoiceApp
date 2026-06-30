@@ -29,7 +29,9 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         bonusTableView.dataSource = self
         bonusTableView.separatorStyle = .none
         bonusTableView.backgroundColor = .systemGroupedBackground
-        
+
+        // 初始期別依當下日期決定，而非 storyboard 固定值
+        bonusMonthLabel.text = currentInvoicePeriod()
         bonusTableViewHeader = bonusMonthLabel.text!
         
         backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
