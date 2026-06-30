@@ -274,4 +274,34 @@ func keywordSearch(_ keyword: String = "") -> [Invoice] {
     return retInvoice
 }
 
+// MARK: - CSV 匯出
+
+// 把發票資料匯出成 CSV 字串，供「分享 / 匯出」功能使用。
+enum InvoiceCSVExporter {
+    static func csv(from invoices: [Invoice]) -> String {
+        // 處理含有逗號、引號、換行的欄位
+        func escape(_ field: String) -> String {
+            if field.contains(",") || field.contains("\"") || field.contains("\n") {
+                return "\"" + field.replacingOccurrences(of: "\"", with: "\"\"") + "\""
+            }
+            return field
+        }
+
+        var lines = ["發票號碼,日期,店名,品項,數量,金額"]
+        for invoice in invoices {
+            if invoice.itemAndPrice.isEmpty {
+                let row = [invoice.number, invoice.date, invoice.storeName, "", "", ""]
+                lines.append(row.map(escape).joined(separator: ","))
+            } else {
+                for item in invoice.itemAndPrice {
+                    let row = [invoice.number, invoice.date, invoice.storeName, item.itemName, item.amount, item.price]
+                    lines.append(row.map(escape).joined(separator: ","))
+                }
+            }
+        }
+        // 加上 UTF-8 BOM，讓 Excel 正確顯示中文
+        return "\u{FEFF}" + lines.joined(separator: "\n")
+    }
+}
+
 // 把有相關功能的function放在一起

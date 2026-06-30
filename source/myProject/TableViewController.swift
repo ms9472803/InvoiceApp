@@ -57,6 +57,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "顯示發票"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportInvoicesCSV))
         tableView.register(UINib(nibName: "TotalConsumptionOfMonthTableViewCell", bundle: nil), forCellReuseIdentifier: "consumptionOfMonthCell")
         tableView.register(UINib(nibName: "MyCustomTableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         tableView.delegate = self
@@ -70,6 +71,31 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
+    // 匯出所有發票成 CSV 並開啟分享面板
+    @objc func exportInvoicesCSV() {
+        let invoices = Invoice.globalInvoiceArray
+        guard !invoices.isEmpty else {
+            let alert = UIAlertController(title: "沒有可匯出的發票", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "確定", style: .default))
+            present(alert, animated: true)
+            return
+        }
+
+        let csv = InvoiceCSVExporter.csv(from: invoices)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("invoices.csv")
+        do {
+            try csv.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print("匯出 CSV 失敗: \(error.localizedDescription)")
+            return
+        }
+
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        // iPad 需要 anchor，否則會 crash
+        activityVC.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityVC, animated: true)
+    }
+
     // 在view呈現前 刷新tableView
     override func viewWillAppear(_ animated: Bool) {
         arrayInit()
