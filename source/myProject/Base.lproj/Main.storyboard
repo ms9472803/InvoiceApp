@@ -415,8 +415,8 @@
                                 <rect key="frame" x="132" y="173.5" width="150" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="Ozo-Cm-xFe"/>
-                                    <constraint firstAttribute="height" constant="60" id="ri7-1K-xGd"/>
+                                    <constraint firstAttribute="width" constant="240" id="Ozo-Cm-xFe"/>
+                                    <constraint firstAttribute="height" constant="150" id="ri7-1K-xGd"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -447,7 +447,7 @@
                             <constraint firstItem="XWk-VJ-3cp" firstAttribute="centerX" secondItem="J7y-yA-91C" secondAttribute="centerX" id="F1h-Cp-1Dc"/>
                             <constraint firstItem="zin-ly-1zp" firstAttribute="top" secondItem="uSE-OD-yKt" secondAttribute="bottom" constant="25" id="GEg-Jt-czN"/>
                             <constraint firstItem="nbf-EK-7u6" firstAttribute="top" secondItem="WGv-h1-06C" secondAttribute="top" constant="135" id="H97-HP-2tS"/>
-                            <constraint firstItem="4V1-Qb-HGJ" firstAttribute="top" secondItem="uSE-OD-yKt" secondAttribute="bottom" constant="90" id="MWy-IW-Dal"/>
+                            <constraint firstItem="4V1-Qb-HGJ" firstAttribute="top" secondItem="uSE-OD-yKt" secondAttribute="bottom" constant="200" id="MWy-IW-Dal"/>
                             <constraint firstItem="mVi-il-6YV" firstAttribute="centerX" secondItem="J7y-yA-91C" secondAttribute="centerX" id="Vug-ah-IbE"/>
                             <constraint firstItem="WGv-h1-06C" firstAttribute="trailing" secondItem="4V1-Qb-HGJ" secondAttribute="trailing" id="W6L-yO-Ley"/>
                             <constraint firstItem="WGv-h1-06C" firstAttribute="trailing" secondItem="nbf-EK-7u6" secondAttribute="trailing" constant="20" id="Y0j-wa-9iB"/>

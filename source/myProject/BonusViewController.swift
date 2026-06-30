@@ -36,9 +36,10 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
         forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
-        // 中獎號碼改由網路取得，隱藏手動輸入欄位
+        // Winning numbers now come from the network; hide the manual input field
         bonusNumberTextField.isHidden = true
         bonusNumberTextView.isEditable = false
+        bonusNumberTextView.font = .systemFont(ofSize: 15)
     }
     
     override func viewWillAppear(_ animated: Bool) {
