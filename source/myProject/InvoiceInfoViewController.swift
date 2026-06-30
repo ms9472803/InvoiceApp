@@ -10,7 +10,7 @@ import UIKit
 func addLabel(text: String) -> UILabel {
     let retLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 80))
     retLabel.text = text
-    retLabel.textColor = .black
+    retLabel.textColor = .label
     retLabel.font = UIFont.systemFont(ofSize: 20)
     retLabel.textAlignment = .center
     return retLabel
@@ -45,7 +45,7 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
+        view.backgroundColor = .systemBackground
 
         title = "發票資訊"
         
@@ -100,7 +100,7 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         // 看品項金額詳細資訊
         let itemAndPriceInfoButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         itemAndPriceInfoButton.setTitle("點我查看", for: .normal)
-        itemAndPriceInfoButton.setTitleColor(.black, for: .normal)
+        itemAndPriceInfoButton.setTitleColor(.systemBlue, for: .normal)
         itemAndPriceInfoButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         itemAndPriceInfoButton.addTarget(nil, action: #selector(goItemAndPriceInfo), for: .touchUpInside)
         self.view.addSubview(itemAndPriceInfoButton)

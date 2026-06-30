@@ -13,8 +13,8 @@ var canModify = false
 func addTextField(text: String) -> UITextField {
     let retTextField = UITextField(frame: CGRect(x: 0, y: 0, width: 150, height: 80))
     retTextField.text = text
-    retTextField.textColor = .black
-    retTextField.borderStyle = .bezel
+    retTextField.textColor = .label
+    retTextField.borderStyle = .roundedRect
     retTextField.clearButtonMode = .always
     return retTextField
 }
@@ -44,6 +44,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
         title = "修改發票"
 
         
@@ -99,7 +100,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
         
         // 修改品項按鈕
         modifyItemButton.setTitle("點我修改", for: .normal)
-        modifyItemButton.setTitleColor(.black, for: .normal)
+        modifyItemButton.setTitleColor(.systemBlue, for: .normal)
         modifyItemButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         modifyItemButton.addTarget(nil, action: #selector(switchToModifyMode), for: .touchUpInside)
         self.view.addSubview(modifyItemButton)
@@ -111,9 +112,12 @@ class ModifyInvoiceInfoViewController: UIViewController {
         
         // 儲存按鈕
         storeInvoiceInfoButton = UIButton()
-        storeInvoiceInfoButton.setTitle("儲存", for: .normal)
-        storeInvoiceInfoButton.setTitleColor(.black, for: .normal)
-        storeInvoiceInfoButton.backgroundColor = .yellow
+        storeInvoiceInfoButton.setTitle("  儲存  ", for: .normal)
+        storeInvoiceInfoButton.setTitleColor(.white, for: .normal)
+        storeInvoiceInfoButton.backgroundColor = .systemBlue
+        storeInvoiceInfoButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        storeInvoiceInfoButton.layer.cornerRadius = 10
+        storeInvoiceInfoButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
         storeInvoiceInfoButton.isEnabled = true
         storeInvoiceInfoButton.addTarget(self, action: #selector(storeModification), for: .touchUpInside)
         view.addSubview(storeInvoiceInfoButton)

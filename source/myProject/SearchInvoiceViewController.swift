@@ -25,6 +25,7 @@ var searchInvoiceArray: [Invoice] = []
         searchInvoiceTableView.delegate = self
         searchInvoiceTableView.dataSource = self
         searchInvoiceTableView.separatorStyle = .none
+        searchInvoiceTableView.backgroundColor = .systemGroupedBackground
         
         //searchInvoiceArray = [Invoice(number: "12345678", date: "123", storeName: "123", itemAndPrice: [])]
         // Do any additional setup after loading the view.

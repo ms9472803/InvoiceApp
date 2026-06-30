@@ -28,6 +28,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         bonusTableView.delegate = self
         bonusTableView.dataSource = self
         bonusTableView.separatorStyle = .none
+        bonusTableView.backgroundColor = .systemGroupedBackground
         
         bonusTableViewHeader = bonusMonthLabel.text!
         

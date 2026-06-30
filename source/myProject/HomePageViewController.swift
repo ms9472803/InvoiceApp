@@ -32,6 +32,10 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         invoiceNumberTextField.clearButtonMode = .always
         invoiceStoreTextField.clearButtonMode = .always
         itemAndPriceTextView.isEditable = false
+        itemAndPriceTextView.backgroundColor = .secondarySystemBackground
+        itemAndPriceTextView.layer.cornerRadius = 10
+        itemAndPriceTextView.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        itemAndPriceTextView.font = .systemFont(ofSize: 15)
         invoiceTotalPriceLabel.text = "$0"
         
         let toolbar = UIToolbar()
@@ -46,16 +50,23 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         invoiceDateTextField.placeholder = "選擇日期"
         
         let fullScreenSize = UIScreen.main.bounds.size
-        loadingDBView = UIView(frame: CGRect(x: 0, y: 0, width: fullScreenSize.width, height: fullScreenSize.height))
-        loadingDBView?.backgroundColor = .white
-        view.addSubview(loadingDBView!)
-        
-        let loadingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 100))
-        loadingLabel.center = CGPoint(x: fullScreenSize.width * 0.5, y: fullScreenSize.height * 0.5)
-        loadingLabel.text = "Database is loading"
-        loadingLabel.font = UIFont(name: "Helvetica-Light", size: 24)
+        let loading = UIView(frame: CGRect(x: 0, y: 0, width: fullScreenSize.width, height: fullScreenSize.height))
+        loading.backgroundColor = .systemBackground
+        view.addSubview(loading)
+        loadingDBView = loading
+
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.center = CGPoint(x: fullScreenSize.width * 0.5, y: fullScreenSize.height * 0.5 - 24)
+        spinner.startAnimating()
+        loading.addSubview(spinner)
+
+        let loadingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 30))
+        loadingLabel.center = CGPoint(x: fullScreenSize.width * 0.5, y: fullScreenSize.height * 0.5 + 24)
+        loadingLabel.text = "載入中…"
+        loadingLabel.font = .systemFont(ofSize: 16)
+        loadingLabel.textColor = .secondaryLabel
         loadingLabel.textAlignment = .center
-        loadingDBView?.addSubview(loadingLabel)
+        loading.addSubview(loadingLabel)
         
         // Core Data 為同步讀取，App 啟動時通常已就緒；若已就緒則直接解除 loading 畫面
         if MyDatabase.isReady {

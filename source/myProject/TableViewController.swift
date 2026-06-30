@@ -63,6 +63,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemGroupedBackground
         monthOrDaySegmentedControl.selectedSegmentIndex = 1
         tableViewDatePicker.maximumDate = Date()
         backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
@@ -193,7 +194,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if indexPath.row == 0 { // 第一個 row 顯示總金額
             let cell = tableView.dequeueReusableCell(withIdentifier: "consumptionOfMonthCell", for: indexPath) as? TotalConsumptionOfMonthTableViewCell
             var sum = 0
-            cell?.backgroundColor = .yellow
             switch mode {
             case .dayMode:
                 cell?.monthLabel.text = " 總消費"
