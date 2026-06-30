@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import Charts
+import UserNotifications
 
 // MARK: - Data model
 
@@ -179,6 +180,14 @@ class ConsumptionAnalysisViewController: UIViewController {
         title = "消費分析"
         view.backgroundColor = .systemBackground
 
+        // 開獎提醒設定入口
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "bell"),
+            style: .plain,
+            target: self,
+            action: #selector(toggleDrawReminder)
+        )
+
         if #available(iOS 16.0, *) {
             let model = ConsumptionViewModel()
             viewModel = model
@@ -220,6 +229,60 @@ class ConsumptionAnalysisViewController: UIViewController {
         super.viewWillAppear(animated)
         if #available(iOS 16.0, *), let model = viewModel as? ConsumptionViewModel {
             model.reload()
+        }
+    }
+
+    @objc private func toggleDrawReminder() {
+        DrawReminder.requestAndSchedule { [weak self] granted in
+            let title = granted ? "已開啟開獎提醒" : "無法開啟通知"
+            let message = granted
+                ? "將於每期開獎日（每單月 25 日）上午提醒你對獎。"
+                : "請至「設定」開啟本 App 的通知權限。"
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "確定", style: .default))
+            self?.present(alert, animated: true)
+        }
+    }
+}
+
+// MARK: - 開獎提醒
+
+// 統一發票每期於次月 25 日開獎（即每單月 25 日）。以本機通知於開獎日提醒對獎。
+enum DrawReminder {
+    static let drawMonths = [1, 3, 5, 7, 9, 11]
+    static let identifierPrefix = "invoiceDrawReminder-"
+
+    static func requestAndSchedule(completion: @escaping (Bool) -> Void) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
+            if granted { schedule() }
+            DispatchQueue.main.async { completion(granted) }
+        }
+    }
+
+    static func schedule() {
+        let center = UNUserNotificationCenter.current()
+        let identifiers = drawMonths.map { identifierPrefix + String($0) }
+        center.removePendingNotificationRequests(withIdentifiers: identifiers)
+
+        for month in drawMonths {
+            var dateComponents = DateComponents()
+            dateComponents.month = month
+            dateComponents.day = 25
+            dateComponents.hour = 10
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+
+            let content = UNMutableNotificationContent()
+            content.title = "統一發票開獎日"
+            content.body = "今天是開獎日，記得打開 App 對獎！"
+            content.sound = .default
+
+            let request = UNNotificationRequest(
+                identifier: identifierPrefix + String(month),
+                content: content,
+                trigger: trigger
+            )
+            center.add(request)
         }
     }
 }
