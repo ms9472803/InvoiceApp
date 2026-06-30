@@ -10,16 +10,11 @@ import SwiftUI
 
 class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var itemAndPriceTableView: UITableView!
-    
-    @IBOutlet weak var addItemButton: UIButton!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
 
-        
-        // Do any additional setup after loading the view.
-        
         let fullScreenSize = UIScreen.main.bounds.size
         itemAndPriceTableView = UITableView(frame: CGRect(x: 0, y: 30, width: fullScreenSize.width, height: fullScreenSize.height-20))
         itemAndPriceTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -39,10 +34,11 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
     override func viewWillAppear(_ animated: Bool) {
         if canModify == true {
             title = "編輯品項"
-            addItemButton.isHidden = false
+            // Show an add button in the nav bar only in edit mode
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItemTapped))
         } else {
             title = "品項資訊"
-            addItemButton.isHidden = true
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
@@ -84,7 +80,7 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     
-    @IBAction func addItemButton(_ sender: UIButton) {
+    @objc func addItemTapped() {
         let alertController = UIAlertController(title: "新增品項數量金額", message: "請輸入資訊", preferredStyle: UIAlertController.Style.alert)
         
         alertController.addTextField { textField in textField.placeholder = "品項" }

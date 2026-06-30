@@ -11,28 +11,18 @@ import SwiftUI
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    /*
-    // MARK: - Navigation
+    // UI built programmatically (no storyboard)
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let monthOrDaySegmentedControl = UISegmentedControl(items: ["日", "月"])
+    private let tableViewShowByMonthLabel = UILabel()
+    private let backMonthButton = UIButton(type: .system)
+    private let forwardMonthButton = UIButton(type: .system)
+    private let tableViewDatePicker = UIDatePicker()
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet weak var monthOrDaySegmentedControl: UISegmentedControl!
-    @IBOutlet weak var tableViewShowByMonthLabel: UILabel!
-    @IBOutlet weak var backMonthButton: UIButton!
-    @IBOutlet weak var forwardMonthButton: UIButton!
-    @IBOutlet weak var tableViewDatePicker: UIDatePicker!
-    
-    
     var backMonthButtonTitle = "\u{2190}"
     var forwardMonthButtonTitle = "\u{2192}"
     var tableViewHeader = ""
-    
+
     // Array shown in the "顯示發票" tableView in day mode
     var currentDayInvoiceArray: [Invoice] = []
 
@@ -41,38 +31,83 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var currentSecondMonth = ""
     var currentFirstMonthInvoice: [Invoice] = []
     var currentSecondMonthInvoice: [Invoice] = []
-    
+
     enum Mode {
         case dayMode
         case monthMode
     }
     var mode = Mode.monthMode
-    
-    /*enum CurrentMonth {
-        case first
-        case second
-    }*/
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemGroupedBackground
         title = "顯示發票"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportInvoicesCSV))
+
+        // Left: day/month segmented control. Right: search + export
+        monthOrDaySegmentedControl.selectedSegmentIndex = 1
+        monthOrDaySegmentedControl.addTarget(self, action: #selector(dayOrMonthChange(_:)), for: .valueChanged)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: monthOrDaySegmentedControl)
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportInvoicesCSV)),
+            UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(openSearch))
+        ]
+
+        // Period header: ← label → and a date picker (day mode)
+        tableViewShowByMonthLabel.text = currentInvoicePeriod()
+        tableViewShowByMonthLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        tableViewShowByMonthLabel.textAlignment = .center
+        backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
+        forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
+        backMonthButton.titleLabel?.font = .systemFont(ofSize: 22)
+        forwardMonthButton.titleLabel?.font = .systemFont(ofSize: 22)
+        backMonthButton.addTarget(self, action: #selector(selectedMonth(_:)), for: .touchUpInside)
+        forwardMonthButton.addTarget(self, action: #selector(selectedMonth(_:)), for: .touchUpInside)
+
+        tableViewDatePicker.datePickerMode = .date
+        tableViewDatePicker.maximumDate = Date()
+        if #available(iOS 14.0, *) { tableViewDatePicker.preferredDatePickerStyle = .compact }
+        tableViewDatePicker.addTarget(self, action: #selector(changeSelectedDate(_:)), for: .valueChanged)
+
+        let monthRow = UIStackView(arrangedSubviews: [backMonthButton, tableViewShowByMonthLabel, forwardMonthButton])
+        monthRow.axis = .horizontal
+        monthRow.alignment = .center
+        monthRow.distribution = .equalSpacing
+
+        let header = UIStackView(arrangedSubviews: [monthRow, tableViewDatePicker])
+        header.axis = .vertical
+        header.alignment = .center
+        header.spacing = 8
+        header.translatesAutoresizingMaskIntoConstraints = false
+
         tableView.register(UINib(nibName: "TotalConsumptionOfMonthTableViewCell", bundle: nil), forCellReuseIdentifier: "consumptionOfMonthCell")
         tableView.register(UINib(nibName: "MyCustomTableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .systemGroupedBackground
-        monthOrDaySegmentedControl.selectedSegmentIndex = 1
-        // Initial period is determined by the current date rather than a fixed storyboard value
-        tableViewShowByMonthLabel.text = currentInvoicePeriod()
-        tableViewDatePicker.maximumDate = Date()
-        backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
-        forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
 
+        view.addSubview(header)
+        view.addSubview(tableView)
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            header.topAnchor.constraint(equalTo: guide.topAnchor, constant: 8),
+            header.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20),
+            header.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20),
+            monthRow.leadingAnchor.constraint(equalTo: header.leadingAnchor),
+            monthRow.trailingAnchor.constraint(equalTo: header.trailingAnchor),
+
+            tableView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 8),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
-    
+
+    @objc private func openSearch() {
+        navigationController?.pushViewController(SearchInvoiceViewController(), animated: true)
+    }
+
     
     // Export all invoices as CSV and open the share sheet
     @objc func exportInvoicesCSV() {

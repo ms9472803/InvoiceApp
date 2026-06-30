@@ -9,11 +9,8 @@
 /* Begin PBXBuildFile section */
 		D316508228332C7600C46AD4 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316508128332C7600C46AD4 /* TableViewController.swift */; };
 		D316509628347D7A00C46AD4 /* InvoiceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316509428347D7A00C46AD4 /* InvoiceInfoViewController.swift */; };
-		D316509728347D7A00C46AD4 /* InvoiceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D316509528347D7A00C46AD4 /* InvoiceInfoViewController.xib */; };
 		D316509A28360EA500C46AD4 /* ModifyInvoiceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316509828360EA400C46AD4 /* ModifyInvoiceInfoViewController.swift */; };
-		D316509B28360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D316509928360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib */; };
 		D316509E28362E6B00C46AD4 /* ItemAndPriceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316509C28362E6B00C46AD4 /* ItemAndPriceInfoViewController.swift */; };
-		D316509F28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D316509D28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib */; };
 		D31650A7283737D200C46AD4 /* BonusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31650A6283737D200C46AD4 /* BonusViewController.swift */; };
 		D31D27A7283F0AE2003523DE /* MyInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D27A6283F0AE2003523DE /* MyInvoice.swift */; };
 		D31D27A9283F0CE6003523DE /* MyDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D27A8283F0CE6003523DE /* MyDatabase.swift */; };
@@ -25,11 +22,9 @@
 		D31FCEFE283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FCEFD283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift */; };
 		D340C7A4283B79EF00B5819D /* SearchInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */; };
 		D38377A6284456E700C79ADF /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */; };
-		D38377A7284456E700C79ADF /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */; };
 		D3FE31382831E68D0065E12C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31372831E68D0065E12C /* AppDelegate.swift */; };
 		D3FE313A2831E68D0065E12C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31392831E68D0065E12C /* SceneDelegate.swift */; };
 		D3FE313C2831E68D0065E12C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE313B2831E68D0065E12C /* HomePageViewController.swift */; };
-		D3FE313F2831E68D0065E12C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3FE313D2831E68D0065E12C /* Main.storyboard */; };
 		D3FE31412831E68D0065E12C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3FE31402831E68D0065E12C /* Assets.xcassets */; };
 		D3FE31442831E68D0065E12C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3FE31422831E68D0065E12C /* LaunchScreen.storyboard */; };
 		D3FE314F2831E68E0065E12C /* myProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE314E2831E68E0065E12C /* myProjectTests.swift */; };
@@ -57,11 +52,8 @@
 /* Begin PBXFileReference section */
 		D316508128332C7600C46AD4 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		D316509428347D7A00C46AD4 /* InvoiceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceInfoViewController.swift; sourceTree = "<group>"; };
-		D316509528347D7A00C46AD4 /* InvoiceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InvoiceInfoViewController.xib; sourceTree = "<group>"; };
 		D316509828360EA400C46AD4 /* ModifyInvoiceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyInvoiceInfoViewController.swift; sourceTree = "<group>"; };
-		D316509928360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModifyInvoiceInfoViewController.xib; sourceTree = "<group>"; };
 		D316509C28362E6B00C46AD4 /* ItemAndPriceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAndPriceInfoViewController.swift; sourceTree = "<group>"; };
-		D316509D28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemAndPriceInfoViewController.xib; sourceTree = "<group>"; };
 		D31650A6283737D200C46AD4 /* BonusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusViewController.swift; sourceTree = "<group>"; };
 		D31D27A6283F0AE2003523DE /* MyInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoice.swift; sourceTree = "<group>"; };
 		D31D27A8283F0CE6003523DE /* MyDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatabase.swift; sourceTree = "<group>"; };
@@ -73,13 +65,11 @@
 		D31FCEFD283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumptionAnalysisViewController.swift; sourceTree = "<group>"; };
 		D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInvoiceViewController.swift; sourceTree = "<group>"; };
 		D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
-		D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRCodeScannerViewController.xib; sourceTree = "<group>"; };
 		D38377AA2845A1B000C79ADF /* myProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "myProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3FE31342831E68D0065E12C /* myProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FE31372831E68D0065E12C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3FE31392831E68D0065E12C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3FE313B2831E68D0065E12C /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
-		D3FE313E2831E68D0065E12C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3FE31402831E68D0065E12C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3FE31432831E68D0065E12C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3FE31452831E68D0065E12C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -151,7 +141,6 @@
 				D31D27AA283F12C8003523DE /* MyExtension.swift */,
 				D3FE313B2831E68D0065E12C /* HomePageViewController.swift */,
 				D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */,
-				D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */,
 				D316508128332C7600C46AD4 /* TableViewController.swift */,
 				D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */,
 				D316509428347D7A00C46AD4 /* InvoiceInfoViewController.swift */,
@@ -163,11 +152,7 @@
 				D31D27B7283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.swift */,
 				D3FE31372831E68D0065E12C /* AppDelegate.swift */,
 				D3FE31392831E68D0065E12C /* SceneDelegate.swift */,
-				D3FE313D2831E68D0065E12C /* Main.storyboard */,
 				D3FE31422831E68D0065E12C /* LaunchScreen.storyboard */,
-				D316509928360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib */,
-				D316509528347D7A00C46AD4 /* InvoiceInfoViewController.xib */,
-				D316509D28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib */,
 				D31D27B4283F4B33003523DE /* MyCustomTableViewCell.xib */,
 				D31D27B8283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib */,
 				D3FE31452831E68D0065E12C /* Info.plist */,
@@ -302,13 +287,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3FE31442831E68D0065E12C /* LaunchScreen.storyboard in Resources */,
-				D38377A7284456E700C79ADF /* QRCodeScannerViewController.xib in Resources */,
-				D316509B28360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib in Resources */,
-				D316509728347D7A00C46AD4 /* InvoiceInfoViewController.xib in Resources */,
 				D3FE31412831E68D0065E12C /* Assets.xcassets in Resources */,
-				D3FE313F2831E68D0065E12C /* Main.storyboard in Resources */,
 				D31D27B6283F4B33003523DE /* MyCustomTableViewCell.xib in Resources */,
-				D316509F28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib in Resources */,
 				D31D27BA283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,14 +366,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D3FE313D2831E68D0065E12C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D3FE313E2831E68D0065E12C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D3FE31422831E68D0065E12C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -536,7 +508,6 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要存取相片以選取發票圖片。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -572,7 +543,6 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要存取相片以選取發票圖片。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

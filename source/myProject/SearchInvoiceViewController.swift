@@ -12,37 +12,46 @@ var searchInvoiceArray: [Invoice] = []
 
 @objcMembers class SearchInvoiceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
-    @IBOutlet var searchInvoiceTableView: UITableView!
-    @IBOutlet var keywordSearchTextField: UITextField!
-    
+    // UI built programmatically (no storyboard)
+    private let searchInvoiceTableView = UITableView(frame: .zero, style: .plain)
+    private let keywordSearchTextField = UITextField()
+
     var totalSearchInvoice = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemGroupedBackground
         title = "搜尋"
-        
+
+        keywordSearchTextField.borderStyle = .roundedRect
+        keywordSearchTextField.placeholder = "輸入店名或品項關鍵字"
+        keywordSearchTextField.clearButtonMode = .always
+        keywordSearchTextField.addTarget(self, action: #selector(searchEditingChanged(_:)), for: .editingChanged)
+        keywordSearchTextField.translatesAutoresizingMaskIntoConstraints = false
+
         searchInvoiceTableView.register(UINib(nibName: "MyCustomTableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         searchInvoiceTableView.delegate = self
         searchInvoiceTableView.dataSource = self
         searchInvoiceTableView.separatorStyle = .none
         searchInvoiceTableView.backgroundColor = .systemGroupedBackground
-        
-        //searchInvoiceArray = [Invoice(number: "12345678", date: "123", storeName: "123", itemAndPrice: [])]
-        // Do any additional setup after loading the view.
+        searchInvoiceTableView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(keywordSearchTextField)
+        view.addSubview(searchInvoiceTableView)
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            keywordSearchTextField.topAnchor.constraint(equalTo: guide.topAnchor, constant: 12),
+            keywordSearchTextField.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20),
+            keywordSearchTextField.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20),
+
+            searchInvoiceTableView.topAnchor.constraint(equalTo: keywordSearchTextField.bottomAnchor, constant: 12),
+            searchInvoiceTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchInvoiceTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchInvoiceTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
-    
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    
     override func viewWillAppear(_ animated: Bool) {
         searchInvoiceArray = []
         totalSearchInvoice = searchInvoiceArray.count

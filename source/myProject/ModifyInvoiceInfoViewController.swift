@@ -35,11 +35,11 @@ class ModifyInvoiceInfoViewController: UIViewController {
     var invoiceDateTextField: UITextField!
     var itemAndPriceTextView: UITextView!
     var storeInvoiceInfoButton: UIButton!
-    //@IBOutlet weak var modifyItemButton: UIButton!
-    
+
     let datePicker = UIDatePicker()
-    
-    @IBOutlet weak var modifyItemButton: UIButton!
+
+    // Built in code (no storyboard/xib)
+    let modifyItemButton = UIButton(type: .system)
     override func viewDidLoad() {
         super.viewDidLoad()
 

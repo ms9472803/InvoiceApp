@@ -48,7 +48,8 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         view.backgroundColor = .systemBackground
 
         title = "發票資訊"
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "修改", style: .plain, target: self, action: #selector(goModify))
+
         /* Invoice number */
         var invoiceNumberLabel = addLabel(text: "發票號碼")
         view.addSubview(invoiceNumberLabel)
@@ -126,7 +127,7 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
     }
     
     
-    @IBAction func goModify(_ sender: UIButton) {
+    @objc func goModify() {
         self.navigationController?.pushViewController(ModifyInvoiceInfoViewController(), animated: true)
     }
 }

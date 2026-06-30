@@ -8,38 +8,98 @@
 import UIKit
 
 class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    
-    @IBOutlet weak var bonusTableView: UITableView!
-    @IBOutlet weak var bonusMonthLabel: UILabel!
-    
-    @IBOutlet weak var backMonthButton: UIButton!
-    @IBOutlet weak var forwardMonthButton: UIButton!
-    @IBOutlet weak var bonusNumberTextField: UITextField!
-    @IBOutlet weak var bonusNumberTextView: UITextView!
+
+    // UI built programmatically (no storyboard)
+    private let bonusTableView = UITableView(frame: .zero, style: .plain)
+    private let bonusMonthLabel = UILabel()
+    private let backMonthButton = UIButton(type: .system)
+    private let forwardMonthButton = UIButton(type: .system)
+    private let bonusNumberTextView = UITextView()
     var backMonthButtonTitle = "\u{2190}"
     var forwardMonthButtonTitle = "\u{2192}"
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemGroupedBackground
+        title = "確認中獎"
+
+        // Determine the initial period from the current date instead of a fixed storyboard value
+        bonusMonthLabel.text = currentInvoicePeriod()
+        bonusMonthLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        bonusMonthLabel.textAlignment = .center
+        bonusTableViewHeader = bonusMonthLabel.text!
+
+        backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
+        forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
+        backMonthButton.titleLabel?.font = .systemFont(ofSize: 22)
+        forwardMonthButton.titleLabel?.font = .systemFont(ofSize: 22)
+        backMonthButton.addTarget(self, action: #selector(selectedMonth(_:)), for: .touchUpInside)
+        forwardMonthButton.addTarget(self, action: #selector(selectedMonth(_:)), for: .touchUpInside)
+
+        let updateButton = actionButton("更新中獎號碼", action: #selector(addBonusNumber(_:)))
+        let checkButton = actionButton("兌獎", action: #selector(checkBonus(_:)))
+
+        let titleLabel = UILabel()
+        titleLabel.text = "本期中獎號碼"
+        titleLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        titleLabel.textColor = .secondaryLabel
+
+        bonusNumberTextView.isEditable = false
+        bonusNumberTextView.font = .systemFont(ofSize: 15)
+        bonusNumberTextView.backgroundColor = .secondarySystemBackground
+        bonusNumberTextView.layer.cornerRadius = 10
+        bonusNumberTextView.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+
         bonusTableView.register(UINib(nibName: "MyCustomTableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         bonusTableView.delegate = self
         bonusTableView.dataSource = self
         bonusTableView.separatorStyle = .none
         bonusTableView.backgroundColor = .systemGroupedBackground
 
-        // Determine the initial period from the current date instead of a fixed storyboard value
-        bonusMonthLabel.text = currentInvoicePeriod()
-        bonusTableViewHeader = bonusMonthLabel.text!
-        
-        backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
-        forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
-        // Winning numbers now come from the network; hide the manual input field
-        bonusNumberTextField.isHidden = true
-        bonusNumberTextView.isEditable = false
-        bonusNumberTextView.font = .systemFont(ofSize: 15)
+        let monthRow = UIStackView(arrangedSubviews: [backMonthButton, bonusMonthLabel, forwardMonthButton])
+        monthRow.axis = .horizontal
+        monthRow.distribution = .equalSpacing
+        monthRow.alignment = .center
+
+        let actionRow = UIStackView(arrangedSubviews: [updateButton, checkButton])
+        actionRow.axis = .horizontal
+        actionRow.spacing = 12
+        actionRow.distribution = .fillEqually
+
+        let topStack = UIStackView(arrangedSubviews: [monthRow, actionRow, titleLabel, bonusNumberTextView])
+        topStack.axis = .vertical
+        topStack.spacing = 12
+        topStack.translatesAutoresizingMaskIntoConstraints = false
+        bonusTableView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(topStack)
+        view.addSubview(bonusTableView)
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            topStack.topAnchor.constraint(equalTo: guide.topAnchor, constant: 12),
+            topStack.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20),
+            topStack.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20),
+            monthRow.leadingAnchor.constraint(equalTo: topStack.leadingAnchor),
+            monthRow.trailingAnchor.constraint(equalTo: topStack.trailingAnchor),
+            bonusNumberTextView.heightAnchor.constraint(equalToConstant: 130),
+
+            bonusTableView.topAnchor.constraint(equalTo: topStack.bottomAnchor, constant: 12),
+            bonusTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bonusTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bonusTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+
+    private func actionButton(_ title: String, action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
+        button.layer.cornerRadius = 10
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,8 +184,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBAction func selectedMonth(_ sender: UIButton) {
         selectedInvoiceArrayByBonus = []
         bonusTableView.reloadData()
-        
-        bonusNumberTextField.text = ""
+
         let curSelectedMonth = bonusMonthLabel.text?.suffix(5)
         let curSelectedYear = bonusMonthLabel.text?.prefix(4)
         if let title = sender.currentTitle {
