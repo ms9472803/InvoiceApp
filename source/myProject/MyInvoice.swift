@@ -281,6 +281,104 @@ func loadWinningNumbers() {
     grandPrizeNumberArray = store.grand
 }
 
+// MARK: - 從財政部開放資料取得中獎號碼
+
+// 財政部「統一發票中獎號碼」開放資料 RSS，包含最近數期的特別獎/特獎/頭獎號碼。
+enum WinningNumberService {
+    static let feedURLString = "https://invoice.etax.nat.gov.tw/invoice.xml"
+
+    enum ServiceError: Error { case badURL, network, parse }
+
+    struct Period {
+        let key: String          // 期別，格式 "YYYY, MM-MM"
+        let special: String?     // 特別獎（8 碼）
+        let grand: String?       // 特獎（8 碼）
+        let firstPrizes: [String] // 頭獎（多組 8 碼）
+    }
+
+    /// 下載並解析最新中獎號碼，更新全域資料並持久化。完成回呼回傳更新的期數。
+    static func update(completion: @escaping (Result<Int, Error>) -> Void) {
+        guard let url = URL(string: feedURLString) else {
+            DispatchQueue.main.async { completion(.failure(ServiceError.badURL)) }
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            DispatchQueue.main.async {
+                if error != nil {
+                    completion(.failure(ServiceError.network)); return
+                }
+                guard let data = data, let xml = String(data: data, encoding: .utf8) else {
+                    completion(.failure(ServiceError.parse)); return
+                }
+                let periods = parse(xml)
+                guard !periods.isEmpty else {
+                    completion(.failure(ServiceError.parse)); return
+                }
+                apply(periods)
+                saveWinningNumbers()
+                completion(.success(periods.count))
+            }
+        }.resume()
+    }
+
+    /// 解析 RSS XML，回傳各期中獎號碼。（公開以便單元測試）
+    static func parse(_ xml: String) -> [Period] {
+        var periods: [Period] = []
+        for item in matches(in: xml, pattern: "<item>(.*?)</item>", dotAll: true).map({ $0[1] }) {
+            guard let title = firstGroup(item, "<title><!\\[CDATA\\[(.*?)\\]\\]></title>", dotAll: true),
+                  let desc = firstGroup(item, "<description><!\\[CDATA\\[(.*?)\\]\\]></description>", dotAll: true),
+                  let key = periodKey(fromTitle: title) else { continue }
+
+            let special = firstGroup(desc, "特別獎：(\\d{8})")
+            let grand = firstGroup(desc, "特獎：(\\d{8})")
+            var firstPrizes: [String] = []
+            if let section = firstGroup(desc, "頭獎：([\\d、,]+)") {
+                firstPrizes = matches(in: section, pattern: "(\\d{8})").map { $0[1] }
+            }
+            periods.append(Period(key: key, special: special, grand: grand, firstPrizes: firstPrizes))
+        }
+        return periods
+    }
+
+    /// 把標題（如「115年 03~04月」）轉成期別 key「2026, 03-04」。
+    static func periodKey(fromTitle title: String) -> String? {
+        guard let rocString = firstGroup(title, "(\\d+)年"), let roc = Int(rocString) else { return nil }
+        guard let monthGroups = matches(in: title, pattern: "(\\d{1,2})\\s*[~～\\-]\\s*(\\d{1,2})\\s*月").first else { return nil }
+        let adYear = roc + 1911
+        let m1 = String(format: "%02d", Int(monthGroups[1]) ?? 0)
+        let m2 = String(format: "%02d", Int(monthGroups[2]) ?? 0)
+        return "\(adYear), \(m1)-\(m2)"
+    }
+
+    private static func apply(_ periods: [Period]) {
+        for period in periods {
+            if let special = period.special { specialPrizeNumberArray[period.key] = special }
+            if let grand = period.grand { grandPrizeNumberArray[period.key] = grand }
+            if !period.firstPrizes.isEmpty { jackpotNumberArray[period.key] = period.firstPrizes }
+        }
+    }
+
+    // MARK: Regex 小工具
+
+    private static func matches(in text: String, pattern: String, dotAll: Bool = false) -> [[String]] {
+        var options: NSRegularExpression.Options = []
+        if dotAll { options.insert(.dotMatchesLineSeparators) }
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else { return [] }
+        let nsText = text as NSString
+        return regex.matches(in: text, range: NSRange(location: 0, length: nsText.length)).map { match in
+            (0..<match.numberOfRanges).map { index in
+                let range = match.range(at: index)
+                return range.location == NSNotFound ? "" : nsText.substring(with: range)
+            }
+        }
+    }
+
+    private static func firstGroup(_ text: String, _ pattern: String, dotAll: Bool = false) -> String? {
+        guard let groups = matches(in: text, pattern: pattern, dotAll: dotAll).first, groups.count > 1 else { return nil }
+        return groups[1]
+    }
+}
+
 // 存放暫時的品項, 目前一次新增一個item
 var temporaryItemAndPrice: [Item] = []
 

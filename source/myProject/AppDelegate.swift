@@ -12,8 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // 載入已儲存的中獎號碼
+        // 載入已儲存的中獎號碼（離線可用），並在背景嘗試從財政部更新
         loadWinningNumbers()
+        WinningNumberService.update { _ in }
 
         // 從本機 Core Data 讀取所有發票到 globalInvoiceArray（同步、即時、可離線）
         let invoiceDB = MyDatabase()

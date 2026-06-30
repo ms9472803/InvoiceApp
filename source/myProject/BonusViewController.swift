@@ -33,7 +33,8 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
         forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
-        bonusNumberTextField.clearButtonMode = .always
+        // 中獎號碼改由網路取得，隱藏手動輸入欄位
+        bonusNumberTextField.isHidden = true
         bonusNumberTextView.isEditable = false
     }
     
@@ -163,59 +164,21 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    private enum PrizeCategory {
-        case special  // 特別獎
-        case grand    // 特獎
-        case first    // 頭獎（含各獎別）
-    }
-
+    // 中獎號碼改由財政部開放資料取得，使用者不再自行新增。
+    // 沿用 storyboard 既有的 addBonusNumber: 連線，改為「更新中獎號碼」動作。
     @IBAction func addBonusNumber(_ sender: UIButton) {
-        print("新增中獎號碼")
-        let bonusNumber = bonusNumberTextField.text ?? ""
-
-        /* 檢查發票號碼格式（8 位數字） */
-        guard bonusNumberFormatCheck(bonusNumber) else {
-            showSimpleAlert(title: "儲存失敗", message: "中獎號碼需為 8 位數字")
-            return
+        sender.isEnabled = false
+        WinningNumberService.update { [weak self] result in
+            sender.isEnabled = true
+            switch result {
+            case .success(let count):
+                self?.refreshBonusNumberDisplay()
+                self?.bonusTableView.reloadData()
+                self?.showSimpleAlert(title: "已更新中獎號碼", message: "已從財政部取得 \(count) 期開獎號碼")
+            case .failure:
+                self?.showSimpleAlert(title: "更新失敗", message: "無法連線取得中獎號碼，請稍後再試。")
+            }
         }
-        /* 檢查是否已存在於任一獎別 */
-        guard !isBonusNumberTaken(bonusNumber) else {
-            showSimpleAlert(title: "新增失敗", message: "號碼已存在")
-            return
-        }
-
-        // 讓使用者選擇此號碼的獎別
-        let sheet = UIAlertController(title: "選擇獎別", message: "請選擇此中獎號碼的獎別", preferredStyle: .actionSheet)
-        sheet.addAction(UIAlertAction(title: "特別獎（1000萬）", style: .default) { _ in self.store(bonusNumber, as: .special) })
-        sheet.addAction(UIAlertAction(title: "特獎（200萬）", style: .default) { _ in self.store(bonusNumber, as: .grand) })
-        sheet.addAction(UIAlertAction(title: "頭獎（含各獎別）", style: .default) { _ in self.store(bonusNumber, as: .first) })
-        sheet.addAction(UIAlertAction(title: "取消", style: .cancel))
-        // iPad 需要 anchor，否則會 crash
-        sheet.popoverPresentationController?.sourceView = sender
-        sheet.popoverPresentationController?.sourceRect = sender.bounds
-        present(sheet, animated: true)
-    }
-
-    private func isBonusNumberTaken(_ number: String) -> Bool {
-        if specialPrizeNumberArray[bonusTableViewHeader] == number { return true }
-        if grandPrizeNumberArray[bonusTableViewHeader] == number { return true }
-        if jackpotNumberArray[bonusTableViewHeader]?.contains(number) == true { return true }
-        return false
-    }
-
-    private func store(_ number: String, as category: PrizeCategory) {
-        switch category {
-        case .special:
-            specialPrizeNumberArray[bonusTableViewHeader] = number
-        case .grand:
-            grandPrizeNumberArray[bonusTableViewHeader] = number
-        case .first:
-            jackpotNumberArray[bonusTableViewHeader, default: []].append(number)
-        }
-        saveWinningNumbers()
-        bonusNumberTextField.text = ""
-        refreshBonusNumberDisplay()
-        showSimpleAlert(title: "新增成功", message: nil)
     }
 
     private func showSimpleAlert(title: String, message: String?) {
