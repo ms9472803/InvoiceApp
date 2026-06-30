@@ -68,7 +68,13 @@ var searchInvoiceArray: [Invoice] = []
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchInvoiceArray.count
+        if searchInvoiceArray.isEmpty {
+            let keywordEmpty = keywordSearchTextField.text?.isEmpty ?? true
+            tableView.setEmptyMessage(keywordEmpty ? "輸入關鍵字以搜尋發票" : "找不到符合的發票")
+        } else {
+            tableView.setEmptyMessage(nil)
+        }
+        return searchInvoiceArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

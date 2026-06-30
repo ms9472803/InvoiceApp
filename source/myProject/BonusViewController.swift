@@ -78,7 +78,12 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        selectedInvoiceArrayByBonus.count
+        if selectedInvoiceArrayByBonus.isEmpty {
+            bonusTableView.setEmptyMessage("按下「確認中獎」以列出本期中獎發票")
+        } else {
+            bonusTableView.setEmptyMessage(nil)
+        }
+        return selectedInvoiceArrayByBonus.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
