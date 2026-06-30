@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 
-//兩個結構抽出來放到另一個檔案
+// Extract these two structs into a separate file
 
-// @objcMembers 把swift類的全部方法和屬性給 Objective-C 訪問和呼叫
-// 如果只是要部分開放單一屬性，則使用@objc即可
+// @objcMembers exposes all of the Swift class's methods and properties to Objective-C
+// If you only need to expose a single property, use @objc instead
 
 @objcMembers class Item: NSObject {
     var itemName: String = ""
@@ -27,7 +27,7 @@ import UIKit
     
 }
 
-// 變數該是什麼type就要是什麼type, 要畫在UI上再轉
+// Keep each variable in its proper type; only convert when rendering it in the UI
 @objcMembers class Invoice: NSObject {
     var number: String = ""
     var date: String = ""
@@ -39,7 +39,7 @@ import UIKit
     static var globalInvoiceArray: [Invoice] = [] {
         didSet {
             //print("globalInvoiceArray didSet")
-            if globalInvoiceArray.count == oldValue.count + 1 { //append的時候保持排序
+            if globalInvoiceArray.count == oldValue.count + 1 { // keep sorted on append
                 for i in stride(from: globalInvoiceArray.count - 1, to: 0, by: -1) {
                     if globalInvoiceArray[i].date < globalInvoiceArray[i-1].date {
                         let temp = globalInvoiceArray[i]
@@ -50,8 +50,8 @@ import UIKit
             }
         }
     }
-    
-    
+
+
     override init() {}
     
     init(number: String, date: String, storeName: String, itemAndPrice: [Item], category: String = "其他") {
@@ -86,7 +86,7 @@ import UIKit
         return invoiceInfo
     }
     
-    // 改
+    // revise
     func printInfo() {
         print(number, date, storeName, totalPrice)
         for i in itemAndPrice {
@@ -96,12 +96,12 @@ import UIKit
     }
     
     
-    // 兌獎：依官方統一發票對獎規則計算此發票在指定期別可中的最高獎金，回傳金額字串（未中為 "0"）
+    // Prize check: compute the highest prize this invoice can win in the given period per the official uniform invoice rules, returning the amount as a string ("0" if no win)
     func currentBonusCheck(_ currentBonusMonth: String) -> String {
-        // currentBonusMonth 格式為 "2022, 05-06"
+        // currentBonusMonth is formatted as "2022, 05-06"
         let year = currentBonusMonth.prefix(4)
         let month = currentBonusMonth.suffix(5)
-        // 發票日期格式為 2022-05-06，年月不符先 return
+        // The invoice date is formatted as 2022-05-06; return early if the year/month doesn't match
         if (date.prefix(4) != year) || ( (date.prefix(7).suffix(2) != month.prefix(2)) && (date.prefix(7).suffix(2) != month.suffix(2)) ) {
             return "0"
         }
@@ -122,8 +122,8 @@ import UIKit
 }
 
 class InvoiceGenerator: NSObject {
-    // 隨機產生一張發票
-    // 有一個struct 是 generator
+    // Randomly generate an invoice
+    // There is a struct named generator
     static func invoiceRandomGenerator() -> Invoice {
         func randomInvoiceNumber() -> String {
             let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -165,23 +165,23 @@ class InvoiceGenerator: NSObject {
 }
 
 
-// MARK: - 統一發票對獎規則
+// MARK: - Uniform Invoice Prize Rules
 
-// 依財政部統一發票獎別規則計算獎金。
+// Computes the prize amount per the Ministry of Finance uniform invoice prize tiers.
 enum TaiwanInvoicePrize {
-    static let special = 10_000_000  // 特別獎：對中 8 碼
-    static let grand   = 2_000_000   // 特獎：對中 8 碼
-    // 頭獎及各獎別：依對中末幾碼決定
-    // 8碼=頭獎 20萬, 7碼=二獎 4萬, 6碼=三獎 1萬, 5碼=四獎 4千, 4碼=五獎 1千, 3碼=六獎 2百
+    static let special = 10_000_000  // Special prize: match all 8 digits
+    static let grand   = 2_000_000   // Grand prize: match all 8 digits
+    // First prize and other tiers: determined by how many trailing digits match
+    // 8 digits = first prize 200k, 7 = second 40k, 6 = third 10k, 5 = fourth 4k, 4 = fifth 1k, 3 = sixth 200
     static let firstPrizeTiers: [Int: Int] = [8: 200_000, 7: 40_000, 6: 10_000, 5: 4_000, 4: 1_000, 3: 200]
 
-    /// 計算一張發票可中的最高獎金。
+    /// Computes the highest prize an invoice can win.
     /// - Parameters:
-    ///   - invoiceNumber: 發票號碼（可含前兩碼英文，會自動取末 8 碼數字比對）
-    ///   - firstPrizeNumbers: 該期頭獎號碼（可多組，各 8 碼）
-    ///   - specialNumber: 該期特別獎號碼（8 碼，可為 nil）
-    ///   - grandNumber: 該期特獎號碼（8 碼，可為 nil）
-    /// - Returns: 中獎金額（新台幣），未中獎為 0
+    ///   - invoiceNumber: invoice number (may include the leading two letters; the last 8 digits are taken automatically for comparison)
+    ///   - firstPrizeNumbers: this period's first-prize numbers (may be multiple, each 8 digits)
+    ///   - specialNumber: this period's special-prize number (8 digits, may be nil)
+    ///   - grandNumber: this period's grand-prize number (8 digits, may be nil)
+    /// - Returns: prize amount (TWD), or 0 if no win
     static func amount(invoiceNumber: String,
                        firstPrizeNumbers: [String],
                        specialNumber: String? = nil,
@@ -189,7 +189,7 @@ enum TaiwanInvoicePrize {
         let digits = String(invoiceNumber.suffix(8))
         guard digits.count == 8, digits.isInt else { return 0 }
 
-        // 特別獎 / 特獎：需對中全部 8 碼
+        // Special / grand prize: must match all 8 digits
         if let s = specialNumber, !s.isEmpty, digits == String(s.suffix(8)) {
             return special
         }
@@ -197,7 +197,7 @@ enum TaiwanInvoicePrize {
             return grand
         }
 
-        // 頭獎及各獎別（含增開六獎）：取對中末碼數最長者
+        // First prize and other tiers (including the additional sixth prize): take the longest trailing-digit match
         var best = 0
         for number in firstPrizeNumbers {
             let winning = String(number.suffix(8))
@@ -219,12 +219,12 @@ let defaultItem2 = Item(itemName: "monitor", amount: "2", price: "5000")
 let defaultInvoice1 = Invoice(number: "AA20220518", date: "2022-05-18", storeName: "Synology", itemAndPrice: [defaultItem1, defaultItem2])
 let defaultInvoice2 = Invoice(number: "AB20320518", date: "2022-05-17", storeName: "Synology", itemAndPrice: [defaultItem1, defaultItem2])
 let defaultInvoice3 = Invoice(number: "AA20220317", date: "2022-03-17", storeName: "Synology", itemAndPrice: [defaultItem1, defaultItem2])*/
-// 先塞假資料,之後要先從DB抓發票資料下來放在globalInvoiceArray裡面
-// 存放所有發票的array, 改成type property
+// Seed dummy data for now; later, fetch invoice data from the DB and put it into globalInvoiceArray
+// Array holding all invoices, changed to a type property
 /*var globalInvoiceArray: [Invoice] = [] {
     didSet {
         //print("globalInvoiceArray didSet")
-        if globalInvoiceArray.count == oldValue.count + 1 { //append的時候保持排序
+        if globalInvoiceArray.count == oldValue.count + 1 { // keep sorted on append
             for i in stride(from: globalInvoiceArray.count - 1, to: 0, by: -1) {
                 if globalInvoiceArray[i].date < globalInvoiceArray[i-1].date {
                     let temp = globalInvoiceArray[i]
@@ -236,23 +236,23 @@ let defaultInvoice3 = Invoice(number: "AA20220317", date: "2022-03-17", storeNam
     }
 }*/
 
-// 顯示在"顯示發票"tableView或搜尋時點擊看哪個發票, 改成type property
+// Shown in the "顯示發票" tableView, or which invoice is tapped during search; changed to a type property
 //var invoiceShowCurrent = Invoice(number: "", date: "", storeName: "", itemAndPrice: [])
 
-// 顯示在"確認中獎"tableView上的array
+// Array shown in the "確認中獎" tableView
 var selectedInvoiceArrayByBonus: [Invoice] = []
-// 當前中獎月份
+// Current prize-drawing month
 var bonusTableViewHeader = ""
 
-// 頭獎號碼（每期可有多組，對中末 3~8 碼可得頭獎到六獎）
+// First-prize numbers (each period may have multiple; matching the last 3~8 digits wins first through sixth prize)
 var jackpotNumberArray: [String: [String]] = [ "2022, 05-06": ["20220518", "87654321"], "2022, 01-02": ["66220202"] ]
-// 特別獎號碼（每期一組，對中 8 碼得 1000 萬）
+// Special-prize number (one per period; matching all 8 digits wins 10 million)
 var specialPrizeNumberArray: [String: String] = [:]
-// 特獎號碼（每期一組，對中 8 碼得 200 萬）
+// Grand-prize number (one per period; matching all 8 digits wins 2 million)
 var grandPrizeNumberArray: [String: String] = [:]
-// 把前兩個英文字拿掉
+// Strip off the leading two letters
 
-// MARK: - 中獎號碼持久化（存於 UserDefaults，避免重啟後遺失）
+// MARK: - Persisting winning numbers (stored in UserDefaults to survive restarts)
 
 private let winningNumbersDefaultsKey = "winningNumbers.v1"
 
@@ -281,22 +281,22 @@ func loadWinningNumbers() {
     grandPrizeNumberArray = store.grand
 }
 
-// MARK: - 從財政部開放資料取得中獎號碼
+// MARK: - Fetching winning numbers from the Ministry of Finance open data
 
-// 財政部「統一發票中獎號碼」開放資料 RSS，包含最近數期的特別獎/特獎/頭獎號碼。
+// The Ministry of Finance "uniform invoice winning numbers" open-data RSS, containing the special/grand/first-prize numbers for the most recent periods.
 enum WinningNumberService {
     static let feedURLString = "https://invoice.etax.nat.gov.tw/invoice.xml"
 
     enum ServiceError: Error { case badURL, network, parse }
 
     struct Period {
-        let key: String          // 期別，格式 "YYYY, MM-MM"
-        let special: String?     // 特別獎（8 碼）
-        let grand: String?       // 特獎（8 碼）
-        let firstPrizes: [String] // 頭獎（多組 8 碼）
+        let key: String          // period, formatted "YYYY, MM-MM"
+        let special: String?     // special prize (8 digits)
+        let grand: String?       // grand prize (8 digits)
+        let firstPrizes: [String] // first prizes (multiple 8-digit numbers)
     }
 
-    /// 下載並解析最新中獎號碼，更新全域資料並持久化。完成回呼回傳更新的期數。
+    /// Downloads and parses the latest winning numbers, updates global data, and persists it. The completion handler returns the number of periods updated.
     static func update(completion: @escaping (Result<Int, Error>) -> Void) {
         guard let url = URL(string: feedURLString) else {
             DispatchQueue.main.async { completion(.failure(ServiceError.badURL)) }
@@ -321,7 +321,7 @@ enum WinningNumberService {
         }.resume()
     }
 
-    /// 解析 RSS XML，回傳各期中獎號碼。（公開以便單元測試）
+    /// Parses the RSS XML and returns the winning numbers for each period. (Public to allow unit testing.)
     static func parse(_ xml: String) -> [Period] {
         var periods: [Period] = []
         for item in matches(in: xml, pattern: "<item>(.*?)</item>", dotAll: true).map({ $0[1] }) {
@@ -340,7 +340,7 @@ enum WinningNumberService {
         return periods
     }
 
-    /// 把標題（如「115年 03~04月」）轉成期別 key「2026, 03-04」。
+    /// Converts a title (e.g. "115年 03~04月") into the period key "2026, 03-04".
     static func periodKey(fromTitle title: String) -> String? {
         guard let rocString = firstGroup(title, "(\\d+)年"), let roc = Int(rocString) else { return nil }
         guard let monthGroups = matches(in: title, pattern: "(\\d{1,2})\\s*[~～\\-]\\s*(\\d{1,2})\\s*月").first else { return nil }
@@ -358,7 +358,7 @@ enum WinningNumberService {
         }
     }
 
-    // MARK: Regex 小工具
+    // MARK: Regex helpers
 
     private static func matches(in text: String, pattern: String, dotAll: Bool = false) -> [[String]] {
         var options: NSRegularExpression.Options = []
@@ -379,21 +379,21 @@ enum WinningNumberService {
     }
 }
 
-// 存放暫時的品項, 目前一次新增一個item
+// Holds temporary items; currently one item is added at a time
 var temporaryItemAndPrice: [Item] = []
 
-// 可選的消費分類
+// Available spending categories
 let invoiceCategories = ["餐飲", "交通", "購物", "娛樂", "醫療", "其他"]
 
 
 func transformDatePickerToString(_ datePicker: UIDatePicker) -> String {
-    // 把datePicker轉為YYYY-MM-DD格式的String
+    // Convert the datePicker to a YYYY-MM-DD formatted String
     let blankIndexAt = datePicker.date.description.firstIndex(of: " ")!
     let returnString = String(datePicker.date.description[..<blankIndexAt])
     return returnString
 }
 
-// 依日期回傳當前發票期別（雙月一期），格式 "YYYY, MM-MM"，例如 "2026, 05-06"
+// Returns the current invoice period for a date (one period per two months), formatted "YYYY, MM-MM", e.g. "2026, 05-06"
 func currentInvoicePeriod(_ date: Date = Date()) -> String {
     let calendar = Calendar.current
     let year = calendar.component(.year, from: date)
@@ -403,25 +403,25 @@ func currentInvoicePeriod(_ date: Date = Date()) -> String {
     return String(format: "%d, %02d-%02d", year, startMonth, endMonth)
 }
 
-// 發票號碼格式檢查
+// Invoice number format check
 func invoiceNumberFormatCheck(_ invoiceNumber: String) -> Bool{
     invoiceNumber.count == 10 && String(invoiceNumber.suffix(8)).isInt &&
     invoiceNumber.prefix(1) >= "A" && invoiceNumber.prefix(1) <= "Z" &&
     invoiceNumber.prefix(2).suffix(1) >= "A" && invoiceNumber.prefix(2).suffix(1) <= "Z"
 }
 
-// 新增中獎號碼時, 檢查格式
+// Check the format when adding a winning number
 func bonusNumberFormatCheck(_ invoiceNumber: String) -> Bool {
     invoiceNumber.count == 8 && invoiceNumber.isInt
 }
 
-// 發票日期格式檢查
+// Invoice date format check
 func invoiceDateFormatCheck(_ invoiceDate: String) -> Bool {
     invoiceDate.count == 10 && String(invoiceDate.prefix(4)).isInt &&
     String(invoiceDate.prefix(7).suffix(2)).isInt && String(invoiceDate.suffix(2)).isInt
 }
 
-//發票號碼是否唯一
+// Whether the invoice number is unique
 func isUnique(_ invoiceNumber: String) -> Bool {
     for i in Invoice.globalInvoiceArray {
         if i.number == invoiceNumber {
@@ -431,7 +431,7 @@ func isUnique(_ invoiceNumber: String) -> Bool {
     return true
 }
 
-// 利用店名與品項做關鍵字搜尋
+// Keyword search using store name and items
 func keywordSearch(_ keyword: String = "") -> [Invoice] {
     print("keyword search")
     let retInvoice = Invoice.globalInvoiceArray.filter { invoice in
@@ -447,12 +447,12 @@ func keywordSearch(_ keyword: String = "") -> [Invoice] {
     return retInvoice
 }
 
-// MARK: - CSV 匯出
+// MARK: - CSV Export
 
-// 把發票資料匯出成 CSV 字串，供「分享 / 匯出」功能使用。
+// Exports invoice data into a CSV string for use by the "share / export" feature.
 enum InvoiceCSVExporter {
     static func csv(from invoices: [Invoice]) -> String {
-        // 處理含有逗號、引號、換行的欄位
+        // Handle fields containing commas, quotes, or newlines
         func escape(_ field: String) -> String {
             if field.contains(",") || field.contains("\"") || field.contains("\n") {
                 return "\"" + field.replacingOccurrences(of: "\"", with: "\"\"") + "\""
@@ -472,9 +472,9 @@ enum InvoiceCSVExporter {
                 }
             }
         }
-        // 加上 UTF-8 BOM，讓 Excel 正確顯示中文
+        // Add a UTF-8 BOM so Excel displays Chinese correctly
         return "\u{FEFF}" + lines.joined(separator: "\n")
     }
 }
 
-// 把有相關功能的function放在一起
+// Group related functions together

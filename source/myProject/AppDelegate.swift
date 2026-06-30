@@ -12,11 +12,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // 載入已儲存的中獎號碼（離線可用），並在背景嘗試從財政部更新
+        // Load the saved winning numbers (available offline) and try to update from the Ministry of Finance in the background
         loadWinningNumbers()
         WinningNumberService.update { _ in }
 
-        // 從本機 Core Data 讀取所有發票到 globalInvoiceArray（同步、即時、可離線）
+        // Read all invoices from the local Core Data store into globalInvoiceArray (synchronous, immediate, offline-capable)
         let invoiceDB = MyDatabase()
         invoiceDB.readFromDB()
 

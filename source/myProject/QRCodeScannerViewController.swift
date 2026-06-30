@@ -10,7 +10,7 @@ import AVFoundation
 
 class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, AVCaptureMetadataOutputObjectsDelegate {
 
-    // 拍照掃QR用的
+    // Used for capturing photos / scanning QR codes
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -28,11 +28,11 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // 離開頁面時停止擷取，避免相機持續運作 / session 洩漏
+        // Stop capturing when leaving the page to avoid keeping the camera running / leaking the session
         stopCaptureSession()
     }
 
-    // 先檢查相機權限，避免未授權時直接存取相機而失敗
+    // Check camera permission first to avoid accessing the camera and failing when not authorized
     private func requestCameraAccessAndSetup() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
@@ -65,14 +65,14 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
     func cameraSetup() {
         print("open camera")
 
-        // 取得後置鏡頭來擷取影片
+        // Get the back camera to capture video
         guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
             print("Failed to get the camera device")
             return
         }
 
         do {
-            // 先加入 input / output，最後才開始擷取（原本順序顛倒會導致擷取不到畫面）
+            // Add input / output first, then start capturing last (reversing the order would result in no captured frames)
             let input = try AVCaptureDeviceInput(device: captureDevice)
             guard captureSession.canAddInput(input) else {
                 print("Failed to add camera input")
@@ -86,18 +86,18 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
                 return
             }
             captureSession.addOutput(captureMetadataOutput)
-            // 設定委派並使用預設的調度佇列來執行回呼（call back）
+            // Set the delegate and use the default dispatch queue to run the callback
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
 
-            // 初始化影片預覽層，並將其作為子層加入 view 的圖層中
+            // Initialize the video preview layer and add it as a sublayer of the view's layer
             let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             previewLayer.videoGravity = .resizeAspectFill
             previewLayer.frame = view.layer.bounds
             view.layer.addSublayer(previewLayer)
             videoPreviewLayer = previewLayer
 
-            // 初始化 QR Code 框來突顯 QR code
+            // Initialize the QR code frame to highlight the QR code
             let frameView = UIView()
             frameView.layer.borderColor = UIColor.green.cgColor
             frameView.layer.borderWidth = 2
@@ -105,7 +105,7 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
             view.bringSubviewToFront(frameView)
             qrCodeFrameView = frameView
 
-            // startRunning() 是 blocking call，必須在背景佇列執行，避免卡住主執行緒
+            // startRunning() is a blocking call and must run on a background queue to avoid blocking the main thread
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.captureSession.startRunning()
             }
@@ -123,21 +123,21 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        // 如果 metadataObjects 是空陣列
-        // 那麼將我們搜尋框的 frame 設為 zero，並且 return
+        // If metadataObjects is an empty array,
+        // set our search frame's frame to zero and return
         if metadataObjects.isEmpty {
           qrCodeFrameView?.frame = CGRect.zero
           return
         }
-        // 如果能夠取得 metadataObjects 並且能夠轉換成 AVMetadataMachineReadableCodeObject（條碼訊息）
+        // If metadataObjects can be obtained and cast to AVMetadataMachineReadableCodeObject (barcode message)
         guard let metadataObj = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
             return
         }
 
-        // 判斷 metadataObj 的類型是否為 QR Code
+        // Check whether metadataObj's type is QR Code
 
         if metadataObj.type == AVMetadataObject.ObjectType.qr {
-            //  如果 metadata 與 QR code metadata 相同，則更新搜尋框的 frame
+            //  If the metadata matches the QR code metadata, update the search frame's frame
             if let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj) {
                 qrCodeFrameView?.frame = barCodeObject.bounds
             }
@@ -164,7 +164,7 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
         let month = invoiceDate.suffix(4).prefix(2)
         let day = invoiceDate.suffix(2)
         let date = year + "-" + month + "-" + day
-        let storeUniformNumber = qrString.prefix(53).suffix(8) //統一編號
+        let storeUniformNumber = qrString.prefix(53).suffix(8) // Business uniform number
         
         let splitQRString = qrString.components(separatedBy: ":")
         
@@ -196,7 +196,7 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
                 print(self.addInvoice.transformToInfo())
                 if isUnique(self.addInvoice.number) {
                     Invoice.globalInvoiceArray.append(self.addInvoice)
-                    // 寫入本機資料庫，避免重啟後遺失
+                    // Write to the local database to avoid losing data after restart
                     MyDatabase().addInvoiceToDB(self.addInvoice)
                 }
             }
@@ -232,7 +232,7 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
                 
                 if isUnique(self.addInvoice.number) {
                     Invoice.globalInvoiceArray.append(self.addInvoice)
-                    // 寫入本機資料庫，避免重啟後遺失
+                    // Write to the local database to avoid losing data after restart
                     MyDatabase().addInvoiceToDB(self.addInvoice)
                 }
             }

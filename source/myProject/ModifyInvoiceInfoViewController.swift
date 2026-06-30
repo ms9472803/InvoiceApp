@@ -48,7 +48,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
         title = "修改發票"
 
         
-        /* 發票號碼 */
+        /* Invoice number */
         var invoiceNumberLabel = addLabel(text: "發票號碼")
         view.addSubview(invoiceNumberLabel)
         setLabelConstraint(view: view, label: &invoiceNumberLabel, centerYAnchorConstant: -100, centerXAnchorConstant: -100)
@@ -59,8 +59,8 @@ class ModifyInvoiceInfoViewController: UIViewController {
         setTextFieldConstraint(view: view, textField: &invoiceNumberTextField, centerXAnchorConstant: -100, centerYAnchorConstant: 50, widthAnchorConstant: 150)
         
         
-        /* 發票日期 */
-        
+        /* Invoice date */
+
         var invoiceDateLabel = addLabel(text: "發票日期")
         view.addSubview(invoiceDateLabel)
         setLabelConstraint(view: view, label: &invoiceDateLabel, centerYAnchorConstant: -50, centerXAnchorConstant: -100)
@@ -82,7 +82,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
         invoiceDateTextField.inputView = datePicker
         
         
-        /* 店名 */
+        /* Store name */
         var invoiceStoreLabel = addLabel(text: "店名")
         view.addSubview(invoiceStoreLabel)
         setLabelConstraint(view: view, label: &invoiceStoreLabel, centerYAnchorConstant: 0, centerXAnchorConstant: -100)
@@ -93,12 +93,12 @@ class ModifyInvoiceInfoViewController: UIViewController {
         setTextFieldConstraint(view: view, textField: &invoiceStoreTextField, centerXAnchorConstant: 0, centerYAnchorConstant: 50, widthAnchorConstant: 150)
         
         
-        /* 品項金額 */
+        /* Items and prices */
         var invoiceItemAndPriceLabel = addLabel(text: "品項金額")
         view.addSubview(invoiceItemAndPriceLabel)
         setLabelConstraint(view: view, label: &invoiceItemAndPriceLabel, centerYAnchorConstant: 50, centerXAnchorConstant: -100)
-        
-        // 修改品項按鈕
+
+        // Edit items button
         modifyItemButton.setTitle("點我修改", for: .normal)
         modifyItemButton.setTitleColor(.systemBlue, for: .normal)
         modifyItemButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
@@ -110,7 +110,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
             modifyItemButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 50),
         ])
         
-        // 儲存按鈕
+        // Save button
         storeInvoiceInfoButton = UIButton()
         storeInvoiceInfoButton.setTitle("  儲存  ", for: .normal)
         storeInvoiceInfoButton.setTitleColor(.white, for: .normal)
@@ -145,7 +145,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
         var alertControllerMessage: String?
         
         
-        /* 檢查發票號碼格式 */
+        /* Validate the invoice number format */
         if !invoiceNumberFormatCheck(invoiceNumber) || !invoiceDateFormatCheck(invoiceDate) {
             alertControllerTitle = "儲存失敗"
             alertControllerMessage = "發票格式不符合"
@@ -153,7 +153,7 @@ class ModifyInvoiceInfoViewController: UIViewController {
             alertControllerTitle = "儲存成功"
             let invoiceDB = MyDatabase()
             invoiceDB.removeInvoiceFromDB(Invoice.invoiceShowCurrent.number)
-            /* 修改發票 */
+            /* Update the invoice */
             let tempNumber = Invoice.invoiceShowCurrent.number
             Invoice.invoiceShowCurrent.number = invoiceNumber
             Invoice.invoiceShowCurrent.storeName = invoiceStore

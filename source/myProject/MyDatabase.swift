@@ -13,13 +13,13 @@ import CoreData
 
     static let databaseReadyNotification = NSNotification.Name("DatabaseReady")
 
-    /// 資料是否已經從本機讀取完成。供 UI 判斷是否仍需顯示 loading 畫面。
+    /// Whether data has finished loading from local storage. Used by the UI to decide whether to keep showing the loading screen.
     static private(set) var isReady = false
 
     // MARK: - Core Data stack
 
-    // 以程式碼建立資料模型，免去額外加入 .xcdatamodeld 檔到專案的麻煩。
-    // 兩個 entity：InvoiceEntity（發票）與 ItemEntity（品項），以一對多關聯連結。
+    // Build the data model in code, avoiding the hassle of adding a separate .xcdatamodeld file to the project.
+    // Two entities: InvoiceEntity (invoice) and ItemEntity (line item), linked by a one-to-many relationship.
     private static let managedObjectModel: NSManagedObjectModel = {
         let model = NSManagedObjectModel()
 
@@ -39,16 +39,16 @@ import CoreData
             return attribute
         }
 
-        // 一對多：一張發票有多個品項
+        // One-to-many: an invoice has multiple line items
         let itemsRelationship = NSRelationshipDescription()
         itemsRelationship.name = "items"
         itemsRelationship.destinationEntity = itemEntity
         itemsRelationship.minCount = 0
-        itemsRelationship.maxCount = 0 // 0 代表 to-many
+        itemsRelationship.maxCount = 0 // 0 means to-many
         itemsRelationship.deleteRule = .cascadeDeleteRule
         itemsRelationship.isOptional = true
 
-        // 反向關聯：一個品項屬於一張發票
+        // Inverse relationship: a line item belongs to one invoice
         let invoiceRelationship = NSRelationshipDescription()
         invoiceRelationship.name = "invoice"
         invoiceRelationship.destinationEntity = invoiceEntity
@@ -78,7 +78,7 @@ import CoreData
         return model
     }()
 
-    // 整個 App 共用同一個 persistent container（SQLite 檔案）。
+    // The whole app shares a single persistent container (SQLite file).
     private static let container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "InvoiceModel", managedObjectModel: MyDatabase.managedObjectModel)
         container.loadPersistentStores { _, error in
@@ -86,25 +86,25 @@ import CoreData
                 print("Core Data 載入失敗: \(error.localizedDescription)")
             }
         }
-        // 後台寫入與主執行緒讀取合併時，以新資料為準
+        // When merging background writes with main-thread reads, the newer data wins
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         return container
     }()
 
     private var context: NSManagedObjectContext { MyDatabase.container.viewContext }
 
-    // MARK: - Public API（維持與原本 Firebase 版本相同的介面）
+    // MARK: - Public API (keeps the same interface as the original Firebase version)
 
-    /// 把目前 globalInvoiceArray 內的發票全部寫入本機資料庫。
+    /// Writes all invoices currently in globalInvoiceArray to the local database.
     func upLoadToDB() {
         for invoice in Invoice.globalInvoiceArray {
             addInvoiceToDB(invoice)
         }
     }
 
-    /// 新增（或更新）一張發票。以發票號碼做為唯一鍵，存在則覆蓋。
+    /// Adds (or updates) an invoice. Uses the invoice number as the unique key, overwriting if it already exists.
     func addInvoiceToDB(_ invoice: Invoice) {
-        // upsert：先刪掉同號碼的舊資料，再寫入新的
+        // upsert: delete any existing record with the same number first, then write the new one
         deleteInvoiceObjects(numbered: invoice.number)
 
         let invoiceObject = NSEntityDescription.insertNewObject(forEntityName: "InvoiceEntity", into: context)
@@ -125,13 +125,13 @@ import CoreData
         saveContext()
     }
 
-    /// 刪除指定發票號碼的發票。
+    /// Deletes the invoice with the given invoice number.
     func removeInvoiceFromDB(_ invoiceNumber: String) {
         deleteInvoiceObjects(numbered: invoiceNumber)
         saveContext()
     }
 
-    /// 從本機資料庫讀出所有發票，放進 globalInvoiceArray，並通知 UI 更新。
+    /// Reads all invoices from the local database into globalInvoiceArray and notifies the UI to update.
     func readFromDB() {
         let request = NSFetchRequest<NSManagedObject>(entityName: "InvoiceEntity")
         var invoices: [Invoice] = []
@@ -160,7 +160,7 @@ import CoreData
             print("讀取發票失敗: \(error.localizedDescription)")
         }
 
-        // 依日期排序（與原本由舊到新的呈現一致）
+        // Sort by date (consistent with the original oldest-to-newest presentation)
         Invoice.globalInvoiceArray = invoices.sorted { $0.date < $1.date }
 
         MyDatabase.isReady = true

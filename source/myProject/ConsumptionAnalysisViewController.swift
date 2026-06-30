@@ -13,7 +13,7 @@ import UserNotifications
 
 // MARK: - Data model
 
-/// 單一月份的消費資料，供 Swift Charts 繪圖使用。
+/// Consumption data for a single month, used by Swift Charts for plotting.
 struct MonthlyConsumption: Identifiable {
     let id = UUID()
     let monthIndex: Int      // 0 = Jan ... 11 = Dec
@@ -21,21 +21,21 @@ struct MonthlyConsumption: Identifiable {
     let amount: Int
 }
 
-/// 單一分類的消費資料。
+/// Consumption data for a single category.
 struct CategoryConsumption: Identifiable {
     let id = UUID()
     let category: String
     let amount: Int
 }
 
-/// 把 `Invoice.globalInvoiceArray` 依年份彙總成每月消費金額。
+/// Aggregates `Invoice.globalInvoiceArray` by year into monthly consumption amounts.
 enum ConsumptionStats {
     static let monthCodes = ["01", "02", "03", "04", "05", "06",
                              "07", "08", "09", "10", "11", "12"]
     static let monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-    /// 計算指定年份每個月的消費總額。
+    /// Computes the total consumption for each month of the given year.
     static func monthlyConsumption(for year: String) -> [MonthlyConsumption] {
         var sums = Array(repeating: 0, count: 12)
         for invoice in Invoice.globalInvoiceArray where invoice.date.prefix(4) == year {
@@ -47,7 +47,7 @@ enum ConsumptionStats {
         return (0..<12).map { MonthlyConsumption(monthIndex: $0, monthLabel: monthLabels[$0], amount: sums[$0]) }
     }
 
-    /// 計算指定年份各分類的消費總額（僅回傳有消費的分類，由高到低）。
+    /// Computes the total consumption per category for the given year (returns only categories with spending, highest to lowest).
     static func categoryConsumption(for year: String) -> [CategoryConsumption] {
         var sums: [String: Int] = [:]
         for invoice in Invoice.globalInvoiceArray where invoice.date.prefix(4) == year {
@@ -59,7 +59,7 @@ enum ConsumptionStats {
             .sorted { $0.amount > $1.amount }
     }
 
-    /// 從現有發票資料推導出可選的年份清單（永遠包含當年）。
+    /// Derives the list of selectable years from existing invoice data (always includes the current year).
     static func availableYears() -> [String] {
         var years = Set(Invoice.globalInvoiceArray.map { String($0.date.prefix(4)) })
         years = years.filter { $0.count == 4 && Int($0) != nil }
@@ -180,7 +180,7 @@ class ConsumptionAnalysisViewController: UIViewController {
         title = "消費分析"
         view.backgroundColor = .systemBackground
 
-        // 開獎提醒設定入口
+        // Entry point for the lottery-draw reminder settings
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "bell"),
             style: .plain,
@@ -203,7 +203,7 @@ class ConsumptionAnalysisViewController: UIViewController {
             ])
             host.didMove(toParent: self)
 
-            // 資料庫非同步載入完成後，重新整理圖表。
+            // Refresh the chart once the database finishes loading asynchronously.
             NotificationCenter.default.addObserver(
                 forName: NSNotification.Name("DatabaseReady"),
                 object: nil,
@@ -245,9 +245,9 @@ class ConsumptionAnalysisViewController: UIViewController {
     }
 }
 
-// MARK: - 開獎提醒
+// MARK: - Lottery-draw reminder
 
-// 統一發票每期於次月 25 日開獎（即每單月 25 日）。以本機通知於開獎日提醒對獎。
+// The uniform invoice lottery is drawn on the 25th of the following month each period (i.e. the 25th of every odd month). A local notification reminds the user to check their numbers on the draw day.
 enum DrawReminder {
     static let drawMonths = [1, 3, 5, 7, 9, 11]
     static let identifierPrefix = "invoiceDrawReminder-"

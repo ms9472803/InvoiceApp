@@ -68,12 +68,12 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         loadingLabel.textAlignment = .center
         loading.addSubview(loadingLabel)
         
-        // Core Data 為同步讀取，App 啟動時通常已就緒；若已就緒則直接解除 loading 畫面
+        // Core Data reads synchronously, so it is usually ready by app launch; if already ready, dismiss the loading screen right away
         if MyDatabase.isReady {
             dbReady()
         } else {
             NotificationCenter.default.addObserver(self, selector: #selector(dbReady), name: MyDatabase.databaseReadyNotification, object: nil)
-            // 安全機制：避免任何意外導致畫面永遠卡在 loading
+            // Safety net: prevent the screen from getting stuck on loading due to any unexpected issue
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
                 self?.dbReady()
             }
@@ -91,7 +91,7 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("DatabaseReady"), object: nil)
     }
     @IBAction func touchResetButton(_ sender: UIButton) {
-        // 可以提供reset button 一鍵清除
+        // The reset button clears all fields in one tap
         invoiceNumberTextField.text = ""
         invoiceDateTextField.text = ""
         invoiceStoreTextField.text = ""
@@ -101,12 +101,12 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
 
   
-    // 利用 @IBAction keyword 將這個method公開給interface builder
-    // 按下儲存發票後執行
+    // The @IBAction keyword exposes this method to Interface Builder
+    // Runs when the save-invoice button is tapped
     @IBAction func storeInvoice(_ sender: UIButton) {
         let invoiceNumber = invoiceNumberTextField.text ?? ""
 
-        /* 檢查發票號碼格式 */
+        /* Check the invoice number format */
         guard invoiceNumberFormatCheck(invoiceNumber) else {
             showSimpleAlert(title: "儲存失敗", message: "發票號碼格式不符合")
             return
@@ -116,7 +116,7 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
             return
         }
 
-        // 選擇消費分類後再儲存
+        // Save only after a spending category has been chosen
         let sheet = UIAlertController(title: "選擇消費分類", message: nil, preferredStyle: .actionSheet)
         for category in invoiceCategories {
             sheet.addAction(UIAlertAction(title: category, style: .default) { _ in
@@ -138,13 +138,13 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         Invoice.globalInvoiceArray.append(addInvoice)
         MyDatabase().addInvoiceToDB(addInvoice)
 
-        // 清空所有欄位
+        // Clear all fields
         invoiceNumberTextField.text = ""
         invoiceDateTextField.text = ""
         invoiceStoreTextField.text = ""
         itemAndPriceTextView.text = "(可留空)"
         invoiceTotalPriceLabel.text = "$0"
-        // temporaryItemAndPrice 是暫時的, 儲存後要清空
+        // temporaryItemAndPrice is temporary and must be cleared after saving
         temporaryItemAndPrice = []
 
         showSimpleAlert(title: "儲存成功", message: "分類：\(category)")
@@ -156,7 +156,7 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         present(alertController, animated: true)
     }
     
-    // 按下新增品項後執行
+    // Runs when the add-item button is tapped
     @IBAction func addItemAndPrice(_ sender: UIButton) {
         let alertController = UIAlertController(title: "新增品項數量金額", message: "請輸入資訊", preferredStyle: UIAlertController.Style.alert)
         alertController.addTextField { textField in textField.placeholder = "品項" }
@@ -165,7 +165,7 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         
         alertController.addAction(UIAlertAction(title: "取消", style: UIAlertAction.Style.cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "確定", style: UIAlertAction.Style.default) { action in
-            //點了確定後要做的事
+            // Actions to perform after Confirm is tapped
             let itemString = alertController.textFields?[0].text ?? ""
             let amountString = alertController.textFields?[1].text ?? ""
             let priceString = alertController.textFields?[2].text ?? ""
@@ -173,7 +173,7 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
             
 
                 
-            // 判斷價格是不是合法(Int && >=0)
+            // Validate that the price is legal (Int && >=0)
             if let priceInt = Int(priceString), let amountInt = Int(amountString), priceInt >= 0, amountInt > 0 {
                 print("輸入的品項為： \(itemString) \n 輸入的數量為： \(amountString) \n 輸入的金額為： \(priceString)")
 
@@ -195,7 +195,7 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         present(alertController, animated: true, completion: nil)
     }
     
-    // 要build到裝置中才可使用camera
+    // The camera is only available when built and run on a device
     @IBAction func openCamera(_ sender: UIBarButtonItem) {
         let vc = QRCodeScannerViewController()
         vc.modalPresentationStyle = .fullScreen

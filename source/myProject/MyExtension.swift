@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-// extension獨立一個file
+// Keep extensions in a separate file
 // check a String is Int or not
 extension String {
     var isInt: Bool {
@@ -18,7 +18,7 @@ extension String {
 }
 
 extension UITableView {
-    // 當清單沒有資料時，顯示置中的提示訊息；傳 nil 則清除提示。
+    // Show a centered placeholder message when the list has no data; pass nil to clear it.
     func setEmptyMessage(_ message: String?) {
         guard let message = message else {
             backgroundView = nil

@@ -57,10 +57,10 @@ var searchInvoiceArray: [Invoice] = []
         searchInvoiceTableView.reloadData()
     }
     
-    // 處理UITableView外觀
+    // Handle the UITableView appearance
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("按下發票")
-        // 取消cell的選取狀態
+        // Clear the cell's selected state
         searchInvoiceTableView.deselectRow(at: indexPath, animated: false)
         Invoice.invoiceShowCurrent = searchInvoiceArray[indexPath.row]
         self.navigationController?.pushViewController(InvoiceInfoViewController(), animated: true)
@@ -80,11 +80,11 @@ var searchInvoiceArray: [Invoice] = []
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // 取得 tableView 目前使用的 cell
+        // Get the cell the tableView is currently using
         //let cellIdentifier = "cell"
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? MyCustomTableViewCell
         
-        //dequeueReusableCell 以指定的cell Identifier取得queue中可再利用的表格cell
+        //dequeueReusableCell retrieves a reusable table cell from the queue by the given cell Identifier
         //cell.textLabel?.text = "發票號碼 " + selectedInvoiceArray[indexPath.row].number
         
         
@@ -103,7 +103,7 @@ var searchInvoiceArray: [Invoice] = []
         return cell!
     }
     
-    // 顯示tableView header
+    // Display the tableView header
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "總共 " + String(totalSearchInvoice) + " 張"
     }

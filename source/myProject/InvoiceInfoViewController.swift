@@ -36,7 +36,7 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         // Pass the selected object to the new view controller.
     }
     */
-    // !是有nib檔在拉過來的元件, 不是的話通常是用?
+    // Use ! for elements wired from a nib file; otherwise ? is typically used
     var selectedInvoiceNumberLabel: UILabel?
     var selectedInvoiceStoraNameLabel: UILabel?
     var selectedInvoiceDateLabel: UILabel?
@@ -49,12 +49,12 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
 
         title = "發票資訊"
         
-        /* 發票號碼 */
+        /* Invoice number */
         var invoiceNumberLabel = addLabel(text: "發票號碼")
         view.addSubview(invoiceNumberLabel)
         setLabelConstraint(view: view, label: &invoiceNumberLabel, centerYAnchorConstant: -100, centerXAnchorConstant: -100)
-        
-        // 抽成function, label, constant當作參數帶進去, 把下面的包起來
+
+        // Extract into a function, passing label and constants as parameters to wrap up the code below
         
         
         selectedInvoiceNumberLabel = addLabel(text: Invoice.invoiceShowCurrent.number)
@@ -65,7 +65,7 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         setLabelConstraint(view: view, label: &numberLabel, centerYAnchorConstant: -100, centerXAnchorConstant: 50)
         
 
-        /* 發票日期 */
+        /* Invoice date */
         var invoiceDateLabel = addLabel(text: "發票日期")
         view.addSubview(invoiceDateLabel)
         setLabelConstraint(view: view, label: &invoiceDateLabel, centerYAnchorConstant: -50, centerXAnchorConstant: -100)
@@ -78,7 +78,7 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         view.addSubview(dateLabel)
         setLabelConstraint(view: view, label: &dateLabel, centerYAnchorConstant: -50, centerXAnchorConstant: 50)
         
-        /* 店名 */
+        /* Store name */
         var invoiceStoreLabel1 = addLabel(text: "店名")
         view.addSubview(invoiceStoreLabel1)
         setLabelConstraint(view: view, label: &invoiceStoreLabel1, centerYAnchorConstant: 0, centerXAnchorConstant: -100)
@@ -91,13 +91,13 @@ func setLabelConstraint(view: UIView, label: inout UILabel, centerYAnchorConstan
         setLabelConstraint(view: view, label: &storeNameLabel, centerYAnchorConstant: 0, centerXAnchorConstant: 50)
         
         
-        /* 品項金額 */
+        /* Items and prices */
         var invoiceItemAndPriceLabel = addLabel(text: "品項金額")
         view.addSubview(invoiceItemAndPriceLabel)
         setLabelConstraint(view: view, label: &invoiceItemAndPriceLabel, centerYAnchorConstant: 50, centerXAnchorConstant: -100)
-        
-        
-        // 看品項金額詳細資訊
+
+
+        // View item and price details
         let itemAndPriceInfoButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         itemAndPriceInfoButton.setTitle("點我查看", for: .normal)
         itemAndPriceInfoButton.setTitleColor(.systemBlue, for: .normal)

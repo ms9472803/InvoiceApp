@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
 
-        // 以程式碼把「消費分析」加入既有的 tab bar，避免直接修改 storyboard。
+        // Add "消費分析" to the existing tab bar programmatically to avoid editing the storyboard directly.
         addConsumptionAnalysisTab()
     }
 

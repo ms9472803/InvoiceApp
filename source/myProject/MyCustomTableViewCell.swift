@@ -34,7 +34,7 @@ import UIKit
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        // 卡片式留白
+        // Card-style padding
         contentView.frame = bounds.inset(by: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
     }
 

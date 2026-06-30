@@ -30,7 +30,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         bonusTableView.separatorStyle = .none
         bonusTableView.backgroundColor = .systemGroupedBackground
 
-        // 初始期別依當下日期決定，而非 storyboard 固定值
+        // Determine the initial period from the current date instead of a fixed storyboard value
         bonusMonthLabel.text = currentInvoicePeriod()
         bonusTableViewHeader = bonusMonthLabel.text!
         
@@ -56,7 +56,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         bonusTableView.reloadData()
     }
 
-    // 把本期各獎別的中獎號碼整理顯示在 textView 上
+    // Format and display this period's winning numbers for each prize tier in the textView
     private func refreshBonusNumberDisplay() {
         var text = ""
         if let special = specialPrizeNumberArray[bonusTableViewHeader] {
@@ -73,22 +73,22 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         bonusNumberTextView.text = text
     }
     
-    /*/* 顯示tableView header */
+    /*/* Display the tableView header */
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         bonusTableViewHeader
     }*/
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("按下發票")
-        
-        // 取消cell的選取狀態
+
+        // Clear the cell's selected state
         bonusTableView.deselectRow(at: indexPath, animated: false)
         
         
         Invoice.invoiceShowCurrent = selectedInvoiceArrayByBonus[indexPath.row]
         self.navigationController?.pushViewController(InvoiceInfoViewController(), animated: true)
         /*
-        // 設定選取的發票index, 讓invoiceInfoView呈現出來
+        // Set the selected invoice index so invoiceInfoView can display it
         invoiceIndex = indexPath.row
         print(invoiceIndex)
         //goInvoiceInfo()*/
@@ -130,7 +130,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let curSelectedYear = bonusMonthLabel.text?.prefix(4)
         if let title = sender.currentTitle {
             switch title {
-            // 往左按鈕 月份往前
+            // Left button: move to the previous period
             case backMonthButtonTitle:
                 let backCircularSelectedMonth = ["01-02": "11-12", "03-04": "01-02", "05-06": "03-04", "07-08": "05-06", "09-10": "07-08", "11-12": "09-10"]
                 if let month = curSelectedMonth, let year = curSelectedYear {
@@ -144,7 +144,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     bonusMonthLabel.text = "\(updateYear), " + backCircularSelectedMonth[String(month)]!
                 }
 
-            // 往右按鈕 月份往後
+            // Right button: move to the next period
             case forwardMonthButtonTitle:
                 let forwardCircularSelectedMonth = ["01-02": "03-04", "03-04": "05-06", "05-06": "07-08", "07-08": "09-10", "09-10": "11-12", "11-12":  "01-02"]
                 if let month = curSelectedMonth, let year = curSelectedYear {
@@ -168,8 +168,8 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    // 中獎號碼改由財政部開放資料取得，使用者不再自行新增。
-    // 沿用 storyboard 既有的 addBonusNumber: 連線，改為「更新中獎號碼」動作。
+    // Winning numbers now come from the Ministry of Finance open data, so the user no longer adds them manually.
+    // Reuse the storyboard's existing addBonusNumber: connection, repurposed as an "update winning numbers" action.
     @IBAction func addBonusNumber(_ sender: UIButton) {
         sender.isEnabled = false
         WinningNumberService.update { [weak self] result in
