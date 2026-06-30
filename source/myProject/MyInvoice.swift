@@ -94,44 +94,23 @@ import UIKit
     }
     
     
-    // 兌獎
+    // 兌獎：依官方統一發票對獎規則計算此發票在指定期別可中的最高獎金，回傳金額字串（未中為 "0"）
     func currentBonusCheck(_ currentBonusMonth: String) -> String {
-        // 優化 看能不能更快
-        // bonus前兩個一樣 其中一個可以拿掉, 用加減去看對應中獎金額
-        let bonus = ["0", "200", "1000", "4000", "10000", "40000", "200000"]
-        let invoiceLen = 8
-        
-        // currentBonusMonth format is 2022, 05-06
+        // currentBonusMonth 格式為 "2022, 05-06"
         let year = currentBonusMonth.prefix(4)
         let month = currentBonusMonth.suffix(5)
-        // 如果這張發票是當前顯示的bonus月份, date format is 2022-05-06
-        
-        // 不符合年月先return
+        // 發票日期格式為 2022-05-06，年月不符先 return
         if (date.prefix(4) != year) || ( (date.prefix(7).suffix(2) != month.prefix(2)) && (date.prefix(7).suffix(2) != month.suffix(2)) ) {
             return "0"
         }
-        
-        // 可以用guard let判斷
-        
 
-        // 看是否中獎
-        if let currentJackpotNumberArray = jackpotNumberArray[currentBonusMonth] {
-            var maxBonus = "0"
-            for jackpotNumber in currentJackpotNumberArray {
-                for i in stride(from: invoiceLen, to: 1, by: -1) {
-                    if self.number.suffix(i) == jackpotNumber.suffix(i) {
-                        //print(i)
-                        if Int(bonus[i-2])! > Int(maxBonus)! {
-                            maxBonus = bonus[i-2]
-                        }
-                        break
-                    }
-                }
-            }
-            return maxBonus
-        }
-        
-        return "0"
+        let amount = TaiwanInvoicePrize.amount(
+            invoiceNumber: number,
+            firstPrizeNumbers: jackpotNumberArray[currentBonusMonth] ?? [],
+            specialNumber: specialPrizeNumberArray[currentBonusMonth],
+            grandNumber: grandPrizeNumberArray[currentBonusMonth]
+        )
+        return String(amount)
     }
     
     static func removeGlobalInvoiceElement(_ index: Int) {
@@ -178,8 +157,56 @@ class InvoiceGenerator: NSObject {
         }
         
         let invoice = Invoice(number: randomInvoiceNumber(), date: randomInvoiceDate(), storeName: randomInvoiceStore(), itemAndPrice: randomInvoiceItem(Int.random(in: 1...5)) )
-        
+
         return invoice
+    }
+}
+
+
+// MARK: - 統一發票對獎規則
+
+// 依財政部統一發票獎別規則計算獎金。
+enum TaiwanInvoicePrize {
+    static let special = 10_000_000  // 特別獎：對中 8 碼
+    static let grand   = 2_000_000   // 特獎：對中 8 碼
+    // 頭獎及各獎別：依對中末幾碼決定
+    // 8碼=頭獎 20萬, 7碼=二獎 4萬, 6碼=三獎 1萬, 5碼=四獎 4千, 4碼=五獎 1千, 3碼=六獎 2百
+    static let firstPrizeTiers: [Int: Int] = [8: 200_000, 7: 40_000, 6: 10_000, 5: 4_000, 4: 1_000, 3: 200]
+
+    /// 計算一張發票可中的最高獎金。
+    /// - Parameters:
+    ///   - invoiceNumber: 發票號碼（可含前兩碼英文，會自動取末 8 碼數字比對）
+    ///   - firstPrizeNumbers: 該期頭獎號碼（可多組，各 8 碼）
+    ///   - specialNumber: 該期特別獎號碼（8 碼，可為 nil）
+    ///   - grandNumber: 該期特獎號碼（8 碼，可為 nil）
+    /// - Returns: 中獎金額（新台幣），未中獎為 0
+    static func amount(invoiceNumber: String,
+                       firstPrizeNumbers: [String],
+                       specialNumber: String? = nil,
+                       grandNumber: String? = nil) -> Int {
+        let digits = String(invoiceNumber.suffix(8))
+        guard digits.count == 8, digits.isInt else { return 0 }
+
+        // 特別獎 / 特獎：需對中全部 8 碼
+        if let s = specialNumber, !s.isEmpty, digits == String(s.suffix(8)) {
+            return special
+        }
+        if let g = grandNumber, !g.isEmpty, digits == String(g.suffix(8)) {
+            return grand
+        }
+
+        // 頭獎及各獎別（含增開六獎）：取對中末碼數最長者
+        var best = 0
+        for number in firstPrizeNumbers {
+            let winning = String(number.suffix(8))
+            for matchLength in stride(from: 8, through: 3, by: -1) where digits.count >= matchLength && winning.count >= matchLength {
+                if digits.suffix(matchLength) == winning.suffix(matchLength) {
+                    best = max(best, firstPrizeTiers[matchLength] ?? 0)
+                    break
+                }
+            }
+        }
+        return best
     }
 }
 
@@ -215,8 +242,12 @@ var selectedInvoiceArrayByBonus: [Invoice] = []
 // 當前中獎月份
 var bonusTableViewHeader = ""
 
-// 頭獎號碼
+// 頭獎號碼（每期可有多組，對中末 3~8 碼可得頭獎到六獎）
 var jackpotNumberArray: [String: [String]] = [ "2022, 05-06": ["20220518", "87654321"], "2022, 01-02": ["66220202"] ]
+// 特別獎號碼（每期一組，對中 8 碼得 1000 萬）
+var specialPrizeNumberArray: [String: String] = [:]
+// 特獎號碼（每期一組，對中 8 碼得 200 萬）
+var grandPrizeNumberArray: [String: String] = [:]
 // 把前兩個英文字拿掉
 
 // 存放暫時的品項, 目前一次新增一個item
