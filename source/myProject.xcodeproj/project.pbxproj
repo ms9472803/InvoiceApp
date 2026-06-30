@@ -26,7 +26,6 @@
 		D340C7A4283B79EF00B5819D /* SearchInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */; };
 		D38377A6284456E700C79ADF /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */; };
 		D38377A7284456E700C79ADF /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */; };
-		D38377AD2845A1B000C79ADF /* ObjcTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */; };
 		D3FE31382831E68D0065E12C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31372831E68D0065E12C /* AppDelegate.swift */; };
 		D3FE313A2831E68D0065E12C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31392831E68D0065E12C /* SceneDelegate.swift */; };
 		D3FE313C2831E68D0065E12C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE313B2831E68D0065E12C /* HomePageViewController.swift */; };
@@ -76,8 +75,6 @@
 		D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRCodeScannerViewController.xib; sourceTree = "<group>"; };
 		D38377AA2845A1B000C79ADF /* myProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "myProject-Bridging-Header.h"; sourceTree = "<group>"; };
-		D38377AB2845A1B000C79ADF /* ObjcTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcTableViewController.h; sourceTree = "<group>"; };
-		D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjcTableViewController.m; sourceTree = "<group>"; };
 		D3FE31342831E68D0065E12C /* myProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FE31372831E68D0065E12C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3FE31392831E68D0065E12C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,8 +172,6 @@
 				D31D27B8283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib */,
 				D3FE31452831E68D0065E12C /* Info.plist */,
 				D3FE31402831E68D0065E12C /* Assets.xcassets */,
-				D38377AB2845A1B000C79ADF /* ObjcTableViewController.h */,
-				D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */,
 				D38377AA2845A1B000C79ADF /* myProject-Bridging-Header.h */,
 			);
 			path = myProject;
@@ -349,7 +344,6 @@
 				D316509A28360EA500C46AD4 /* ModifyInvoiceInfoViewController.swift in Sources */,
 				D340C7A4283B79EF00B5819D /* SearchInvoiceViewController.swift in Sources */,
 				D38377A6284456E700C79ADF /* QRCodeScannerViewController.swift in Sources */,
-				D38377AD2845A1B000C79ADF /* ObjcTableViewController.m in Sources */,
 				D31D27B5283F4B33003523DE /* MyCustomTableViewCell.swift in Sources */,
 				D31FCEFE283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift in Sources */,
 				D31D27A9283F0CE6003523DE /* MyDatabase.swift in Sources */,

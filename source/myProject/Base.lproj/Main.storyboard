@@ -194,114 +194,11 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="iMe-cq-9FR"/>
                         <segue destination="tfZ-VH-xc4" kind="relationship" relationship="viewControllers" id="WYs-mK-xe9"/>
                         <segue destination="iMv-wV-uTU" kind="relationship" relationship="viewControllers" id="cne-fj-Loj"/>
-                        <segue destination="KJQ-Bi-cyh" kind="relationship" relationship="viewControllers" id="S7A-y0-Dj9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zoX-gN-klq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="28.985507246376812" y="83.705357142857139"/>
-        </scene>
-        <!--Objc Table View Controller-->
-        <scene sceneID="fMN-QV-wJ8">
-            <objects>
-                <viewController id="wf0-V7-ZX0" customClass="ObjcTableViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ZFY-gr-Yte">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bKC-0H-yad">
-                                <rect key="frame" x="0.0" y="202" width="414" height="611"/>
-                            </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022, 05-06" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNm-7J-oqL">
-                                <rect key="frame" x="155.5" y="117" width="103" height="22"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2YC-5u-RQ9">
-                                <rect key="frame" x="5" y="112" width="37" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="37" id="LRM-vD-yFN"/>
-                                    <constraint firstAttribute="height" constant="31" id="yj0-At-uJi"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="1"/>
-                                <connections>
-                                    <action selector="selectedMonth:" destination="wf0-V7-ZX0" eventType="touchUpInside" id="Elm-P1-nt7"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBH-5q-Xni">
-                                <rect key="frame" x="372" y="112" width="37" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="37" id="cYg-wl-Eha"/>
-                                    <constraint firstAttribute="height" constant="31" id="lfc-lf-8p3"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="2"/>
-                                <connections>
-                                    <action selector="selectedMonth:" destination="L1c-78-yku" eventType="touchUpInside" id="Is5-Ja-WyT"/>
-                                </connections>
-                            </button>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="K7a-wd-1D3">
-                                <rect key="frame" x="153.5" y="152" width="107" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="107" id="78p-KL-hva"/>
-                                    <constraint firstAttribute="height" constant="45" id="GNh-qT-ugB"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="changeSelectedDate:" destination="wf0-V7-ZX0" eventType="valueChanged" id="3Ap-KX-XmX"/>
-                                </connections>
-                            </datePicker>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="z2e-Jv-dct"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="z2e-Jv-dct" firstAttribute="trailing" secondItem="FBH-5q-Xni" secondAttribute="trailing" constant="5" id="42Z-3d-yCT"/>
-                            <constraint firstItem="bKC-0H-yad" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="110" id="5zN-PA-Msp"/>
-                            <constraint firstItem="z2e-Jv-dct" firstAttribute="trailing" secondItem="bKC-0H-yad" secondAttribute="trailing" id="BcO-jL-b51"/>
-                            <constraint firstItem="2YC-5u-RQ9" firstAttribute="leading" secondItem="z2e-Jv-dct" secondAttribute="leading" constant="5" id="GjS-Pt-sF3"/>
-                            <constraint firstItem="YNm-7J-oqL" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="25" id="Jop-zq-jiY"/>
-                            <constraint firstItem="bKC-0H-yad" firstAttribute="leading" secondItem="z2e-Jv-dct" secondAttribute="leading" id="Oud-oV-Uvh"/>
-                            <constraint firstItem="YNm-7J-oqL" firstAttribute="centerX" secondItem="ZFY-gr-Yte" secondAttribute="centerX" id="PR5-qb-3xf"/>
-                            <constraint firstItem="z2e-Jv-dct" firstAttribute="bottom" secondItem="bKC-0H-yad" secondAttribute="bottom" id="PRT-ki-OS4"/>
-                            <constraint firstItem="FBH-5q-Xni" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="20" id="SSM-rr-MgZ"/>
-                            <constraint firstItem="2YC-5u-RQ9" firstAttribute="top" secondItem="z2e-Jv-dct" secondAttribute="top" constant="20" id="Vso-xH-T97"/>
-                            <constraint firstItem="bKC-0H-yad" firstAttribute="top" secondItem="K7a-wd-1D3" secondAttribute="bottom" constant="5" id="Zgg-Ox-wNX"/>
-                            <constraint firstItem="K7a-wd-1D3" firstAttribute="centerX" secondItem="ZFY-gr-Yte" secondAttribute="centerX" id="ooQ-Ut-XRz"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="ogI-1g-9jE">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="AIt-FM-QDk">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="6iG-V2-nLi">
-                                <rect key="frame" x="20" y="6" width="65" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="日"/>
-                                    <segment title="月"/>
-                                </segments>
-                                <connections>
-                                    <action selector="dayOrMonthChange:" destination="wf0-V7-ZX0" eventType="valueChanged" id="JxR-fq-caX"/>
-                                </connections>
-                            </segmentedControl>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="xGQ-qk-Gds">
-                            <connections>
-                                <segue destination="jLV-Jc-cTY" kind="show" id="yJC-M2-bRL"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="backMonthButton" destination="2YC-5u-RQ9" id="NJl-Pl-hA6"/>
-                        <outlet property="forwardMonthButton" destination="FBH-5q-Xni" id="Pe5-d0-gPU"/>
-                        <outlet property="monthOrDaySegmentedControl" destination="6iG-V2-nLi" id="JOg-mE-sJF"/>
-                        <outlet property="tableView" destination="bKC-0H-yad" id="DAj-M9-mOR"/>
-                        <outlet property="tableViewDatePicker" destination="K7a-wd-1D3" id="yUI-iv-lql"/>
-                        <outlet property="tableViewShowByMonthLabel" destination="YNm-7J-oqL" id="xFz-0d-mY7"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L1c-78-yku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1651" y="73"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="9ks-99-iDj">
@@ -593,35 +490,12 @@
             </objects>
             <point key="canvasLocation" x="754" y="815"/>
         </scene>
-        <!--objcTableView-->
-        <scene sceneID="06Q-cH-hzH">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KJQ-Bi-cyh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="objcTableView" image="questionmark.circle" catalog="system" id="V7I-fM-5gR"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SPz-6r-f6K">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="wf0-V7-ZX0" kind="relationship" relationship="rootViewController" id="Z3p-xn-UlI"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="q8G-XS-pET" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="899" y="73"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="yJC-M2-bRL"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="93"/>
         <image name="folder" catalog="system" width="128" height="96"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="plus.app" catalog="system" width="128" height="114"/>
-        <image name="questionmark.circle" catalog="system" width="128" height="123"/>
         <image name="star.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
