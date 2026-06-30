@@ -250,6 +250,35 @@ var specialPrizeNumberArray: [String: String] = [:]
 var grandPrizeNumberArray: [String: String] = [:]
 // 把前兩個英文字拿掉
 
+// MARK: - 中獎號碼持久化（存於 UserDefaults，避免重啟後遺失）
+
+private let winningNumbersDefaultsKey = "winningNumbers.v1"
+
+private struct WinningNumbersStore: Codable {
+    var jackpot: [String: [String]]
+    var special: [String: String]
+    var grand: [String: String]
+}
+
+func saveWinningNumbers() {
+    let store = WinningNumbersStore(jackpot: jackpotNumberArray,
+                                    special: specialPrizeNumberArray,
+                                    grand: grandPrizeNumberArray)
+    if let data = try? JSONEncoder().encode(store) {
+        UserDefaults.standard.set(data, forKey: winningNumbersDefaultsKey)
+    }
+}
+
+func loadWinningNumbers() {
+    guard let data = UserDefaults.standard.data(forKey: winningNumbersDefaultsKey),
+          let store = try? JSONDecoder().decode(WinningNumbersStore.self, from: data) else {
+        return
+    }
+    jackpotNumberArray = store.jackpot
+    specialPrizeNumberArray = store.special
+    grandPrizeNumberArray = store.grand
+}
+
 // 存放暫時的品項, 目前一次新增一個item
 var temporaryItemAndPrice: [Item] = []
 

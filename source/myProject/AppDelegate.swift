@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // 載入已儲存的中獎號碼
+        loadWinningNumbers()
+
         // 從本機 Core Data 讀取所有發票到 globalInvoiceArray（同步、即時、可離線）
         let invoiceDB = MyDatabase()
         invoiceDB.readFromDB()

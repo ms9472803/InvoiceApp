@@ -212,6 +212,7 @@ class BonusViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case .first:
             jackpotNumberArray[bonusTableViewHeader, default: []].append(number)
         }
+        saveWinningNumbers()
         bonusNumberTextField.text = ""
         refreshBonusNumberDisplay()
         showSimpleAlert(title: "新增成功", message: nil)

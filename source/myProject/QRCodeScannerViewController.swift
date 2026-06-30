@@ -196,6 +196,8 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
                 print(self.addInvoice.transformToInfo())
                 if isUnique(self.addInvoice.number) {
                     Invoice.globalInvoiceArray.append(self.addInvoice)
+                    // 寫入本機資料庫，避免重啟後遺失
+                    MyDatabase().addInvoiceToDB(self.addInvoice)
                 }
             }
         })
@@ -230,6 +232,8 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
                 
                 if isUnique(self.addInvoice.number) {
                     Invoice.globalInvoiceArray.append(self.addInvoice)
+                    // 寫入本機資料庫，避免重啟後遺失
+                    MyDatabase().addInvoiceToDB(self.addInvoice)
                 }
             }
         })
