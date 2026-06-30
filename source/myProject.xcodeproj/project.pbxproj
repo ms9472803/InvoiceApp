@@ -39,20 +39,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D3900B17283D0F8C008AD9ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
-			remoteInfo = Charts;
-		};
-		D3900B19283D0F8C008AD9ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
-			remoteInfo = ChartsTests;
-		};
 		D3FE314B2831E68E0065E12C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FE312C2831E68D0065E12C /* Project object */;
@@ -92,7 +78,6 @@
 		D38377AA2845A1B000C79ADF /* myProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "myProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		D38377AB2845A1B000C79ADF /* ObjcTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcTableViewController.h; sourceTree = "<group>"; };
 		D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjcTableViewController.m; sourceTree = "<group>"; };
-		D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		D3FE31342831E68D0065E12C /* myProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FE31372831E68D0065E12C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3FE31392831E68D0065E12C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,19 +125,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D3900B13283D0F8C008AD9ED /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D3900B18283D0F8C008AD9ED /* Charts.framework */,
-				D3900B1A283D0F8C008AD9ED /* ChartsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D3FE312B2831E68D0065E12C = {
 			isa = PBXGroup;
 			children = (
-				D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */,
 				D3FE31362831E68D0065E12C /* myProject */,
 				D3FE314D2831E68E0065E12C /* myProjectTests */,
 				D3FE31572831E68E0065E12C /* myProjectUITests */,
@@ -317,12 +292,6 @@
 			mainGroup = D3FE312B2831E68D0065E12C;
 			productRefGroup = D3FE31352831E68D0065E12C /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D3900B13283D0F8C008AD9ED /* Products */;
-					ProjectRef = D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D3FE31332831E68D0065E12C /* myProject */,
@@ -331,23 +300,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D3900B18283D0F8C008AD9ED /* Charts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Charts.framework;
-			remoteRef = D3900B17283D0F8C008AD9ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D3900B1A283D0F8C008AD9ED /* ChartsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ChartsTests.xctest;
-			remoteRef = D3900B19283D0F8C008AD9ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D3FE31322831E68D0065E12C /* Resources */ = {
