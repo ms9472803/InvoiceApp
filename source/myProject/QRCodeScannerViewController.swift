@@ -21,14 +21,47 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        cameraSetup()
-        
+        view.backgroundColor = .black
+        requestCameraAccessAndSetup()
         // Do any additional setup after loading the view.
     }
 
-    
-    // 要build到裝置中才可使用camera, 有bug
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 離開頁面時停止擷取，避免相機持續運作 / session 洩漏
+        stopCaptureSession()
+    }
+
+    // 先檢查相機權限，避免未授權時直接存取相機而失敗
+    private func requestCameraAccessAndSetup() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            cameraSetup()
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        self?.cameraSetup()
+                    } else {
+                        self?.showCameraPermissionAlert()
+                    }
+                }
+            }
+        default:
+            showCameraPermissionAlert()
+        }
+    }
+
+    private func showCameraPermissionAlert() {
+        let alert = UIAlertController(title: "無法使用相機",
+                                      message: "請至「設定」開啟相機權限後再試一次。",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "關閉", style: .cancel) { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+        present(alert, animated: true)
+    }
+
     func cameraSetup() {
         print("open camera")
 
@@ -37,43 +70,56 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
             print("Failed to get the camera device")
             return
         }
-        
+
         do {
-            
-            // 開始影片的擷取
-            captureSession.startRunning()
-            
+            // 先加入 input / output，最後才開始擷取（原本順序顛倒會導致擷取不到畫面）
             let input = try AVCaptureDeviceInput(device: captureDevice)
+            guard captureSession.canAddInput(input) else {
+                print("Failed to add camera input")
+                return
+            }
             captureSession.addInput(input)
+
             let captureMetadataOutput = AVCaptureMetadataOutput()
+            guard captureSession.canAddOutput(captureMetadataOutput) else {
+                print("Failed to add metadata output")
+                return
+            }
             captureSession.addOutput(captureMetadataOutput)
             // 設定委派並使用預設的調度佇列來執行回呼（call back）
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
-            
-            // 初始化影片預覽層，並將其作為子層加入 viewPreview 視圖的圖層中
-            videoPreviewLayer?.isHidden = false
-            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            videoPreviewLayer?.frame = view.layer.bounds
-            view.layer.addSublayer(videoPreviewLayer!)
-            
-            
-            // 初始化 QR Code 框來突顯 QR code
-            qrCodeFrameView = UIView()
 
-            if let qrCodeFrameView = qrCodeFrameView {
-                qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-                qrCodeFrameView.layer.borderWidth = 2
-                view.addSubview(qrCodeFrameView)
-                view.bringSubviewToFront(qrCodeFrameView)
+            // 初始化影片預覽層，並將其作為子層加入 view 的圖層中
+            let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            previewLayer.videoGravity = .resizeAspectFill
+            previewLayer.frame = view.layer.bounds
+            view.layer.addSublayer(previewLayer)
+            videoPreviewLayer = previewLayer
+
+            // 初始化 QR Code 框來突顯 QR code
+            let frameView = UIView()
+            frameView.layer.borderColor = UIColor.green.cgColor
+            frameView.layer.borderWidth = 2
+            view.addSubview(frameView)
+            view.bringSubviewToFront(frameView)
+            qrCodeFrameView = frameView
+
+            // startRunning() 是 blocking call，必須在背景佇列執行，避免卡住主執行緒
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.captureSession.startRunning()
             }
-            
         } catch {
             print(error)
             return
         }
-        
+    }
+
+    private func stopCaptureSession() {
+        guard captureSession.isRunning else { return }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.captureSession.stopRunning()
+        }
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -84,14 +130,17 @@ class QRCodeScannerViewController: UIViewController, UIImagePickerControllerDele
           return
         }
         // 如果能夠取得 metadataObjects 並且能夠轉換成 AVMetadataMachineReadableCodeObject（條碼訊息）
-        let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
-        
+        guard let metadataObj = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
+            return
+        }
+
         // 判斷 metadataObj 的類型是否為 QR Code
-        
+
         if metadataObj.type == AVMetadataObject.ObjectType.qr {
             //  如果 metadata 與 QR code metadata 相同，則更新搜尋框的 frame
-            let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
-            qrCodeFrameView?.frame = barCodeObject!.bounds
+            if let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj) {
+                qrCodeFrameView?.frame = barCodeObject.bounds
+            }
             if let value = metadataObj.stringValue {
                 if value.first == "*" {
                     qrCodeRightToInvoiceFormat(value)
