@@ -3,106 +3,191 @@
 //  myProject
 //
 //  Created by Ryan Chen on 2022/5/26.
+//  Reworked to use Apple's built-in Core Data instead of Firebase.
 //
 
 import Foundation
-import FirebaseCore
-import FirebaseDatabase
+import CoreData
 
 @objcMembers class MyDatabase: NSObject {
-    var db = Database.database().reference()
-    
-    
-    // 跟db有關的抽成一個class, 把db放進class當成是member
-    // 把所有global裡的發票上傳到db, 用途: 隨機產生一些發票上傳db時用到
+
+    static let databaseReadyNotification = NSNotification.Name("DatabaseReady")
+
+    /// Whether data has finished loading from local storage. Used by the UI to decide whether to keep showing the loading screen.
+    static private(set) var isReady = false
+
+    // MARK: - Core Data stack
+
+    // Build the data model in code, avoiding the hassle of adding a separate .xcdatamodeld file to the project.
+    // Two entities: InvoiceEntity (invoice) and ItemEntity (line item), linked by a one-to-many relationship.
+    private static let managedObjectModel: NSManagedObjectModel = {
+        let model = NSManagedObjectModel()
+
+        let invoiceEntity = NSEntityDescription()
+        invoiceEntity.name = "InvoiceEntity"
+        invoiceEntity.managedObjectClassName = NSStringFromClass(NSManagedObject.self)
+
+        let itemEntity = NSEntityDescription()
+        itemEntity.name = "ItemEntity"
+        itemEntity.managedObjectClassName = NSStringFromClass(NSManagedObject.self)
+
+        func stringAttribute(_ name: String) -> NSAttributeDescription {
+            let attribute = NSAttributeDescription()
+            attribute.name = name
+            attribute.attributeType = .stringAttributeType
+            attribute.isOptional = true
+            return attribute
+        }
+
+        // One-to-many: an invoice has multiple line items
+        let itemsRelationship = NSRelationshipDescription()
+        itemsRelationship.name = "items"
+        itemsRelationship.destinationEntity = itemEntity
+        itemsRelationship.minCount = 0
+        itemsRelationship.maxCount = 0 // 0 means to-many
+        itemsRelationship.deleteRule = .cascadeDeleteRule
+        itemsRelationship.isOptional = true
+
+        // Inverse relationship: a line item belongs to one invoice
+        let invoiceRelationship = NSRelationshipDescription()
+        invoiceRelationship.name = "invoice"
+        invoiceRelationship.destinationEntity = invoiceEntity
+        invoiceRelationship.minCount = 0
+        invoiceRelationship.maxCount = 1
+        invoiceRelationship.deleteRule = .nullifyDeleteRule
+        invoiceRelationship.isOptional = true
+
+        itemsRelationship.inverseRelationship = invoiceRelationship
+        invoiceRelationship.inverseRelationship = itemsRelationship
+
+        invoiceEntity.properties = [
+            stringAttribute("number"),
+            stringAttribute("date"),
+            stringAttribute("storeName"),
+            stringAttribute("category"),
+            itemsRelationship
+        ]
+        itemEntity.properties = [
+            stringAttribute("itemName"),
+            stringAttribute("amount"),
+            stringAttribute("price"),
+            invoiceRelationship
+        ]
+
+        model.entities = [invoiceEntity, itemEntity]
+        return model
+    }()
+
+    // The whole app shares a single persistent container (SQLite file).
+    private static let container: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "InvoiceModel", managedObjectModel: MyDatabase.managedObjectModel)
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                print("Core Data 載入失敗: \(error.localizedDescription)")
+            }
+        }
+        // When merging background writes with main-thread reads, the newer data wins
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        return container
+    }()
+
+    private var context: NSManagedObjectContext { MyDatabase.container.viewContext }
+
+    // MARK: - Public API (keeps the same interface as the original Firebase version)
+
+    /// Writes all invoices currently in globalInvoiceArray to the local database.
     func upLoadToDB() {
-        // i, j如果不是index, 可以訂有意義的名字
-        for i in Invoice.globalInvoiceArray {
-            // reuse
-            db.child("myInvoiceData/invoiceNumber: " + i.number + "/date").setValue(i.date)
-            db.child("myInvoiceData/invoiceNumber: " + i.number + "/storeName").setValue(i.storeName)
-            for j in i.itemAndPrice {
-                db.child("myInvoiceData/invoiceNumber: " + i.number + "/itemAndPrice: " + j.itemName + "/amount").setValue(j.amount)
-                db.child("myInvoiceData/invoiceNumber: " + i.number + "/itemAndPrice: " + j.itemName + "/price").setValue(j.price)
-            }
+        for invoice in Invoice.globalInvoiceArray {
+            addInvoiceToDB(invoice)
         }
-        
     }
 
-    // focus在function的設計
-    // 加入一張發票到db
+    /// Adds (or updates) an invoice. Uses the invoice number as the unique key, overwriting if it already exists.
     func addInvoiceToDB(_ invoice: Invoice) {
-        db.child("myInvoiceData/invoiceNumber: " + invoice.number + "/date").setValue(invoice.date)
-        db.child("myInvoiceData/invoiceNumber: " + invoice.number + "/storeName").setValue(invoice.storeName)
+        // upsert: delete any existing record with the same number first, then write the new one
+        deleteInvoiceObjects(numbered: invoice.number)
+
+        let invoiceObject = NSEntityDescription.insertNewObject(forEntityName: "InvoiceEntity", into: context)
+        invoiceObject.setValue(invoice.number, forKey: "number")
+        invoiceObject.setValue(invoice.date, forKey: "date")
+        invoiceObject.setValue(invoice.storeName, forKey: "storeName")
+        invoiceObject.setValue(invoice.category, forKey: "category")
+
+        let itemsSet = invoiceObject.mutableSetValue(forKey: "items")
         for item in invoice.itemAndPrice {
-            db.child("myInvoiceData/invoiceNumber: " + invoice.number + "/itemAndPrice: " + item.itemName + "/amount").setValue(item.amount)
-            db.child("myInvoiceData/invoiceNumber: " + invoice.number + "/itemAndPrice: " + item.itemName + "/price").setValue(item.price)
+            let itemObject = NSEntityDescription.insertNewObject(forEntityName: "ItemEntity", into: context)
+            itemObject.setValue(item.itemName, forKey: "itemName")
+            itemObject.setValue(item.amount, forKey: "amount")
+            itemObject.setValue(item.price, forKey: "price")
+            itemsSet.add(itemObject)
         }
+
+        saveContext()
     }
 
-    // 移除db中發票號碼為invoiceNumber的發票
+    /// Deletes the invoice with the given invoice number.
     func removeInvoiceFromDB(_ invoiceNumber: String) {
-        db.child("myInvoiceData/invoiceNumber: " + invoiceNumber).setValue(nil)
+        deleteInvoiceObjects(numbered: invoiceNumber)
+        saveContext()
     }
 
-    // 從db中讀資料到globalInvoiceArray中
+    /// Reads all invoices from the local database into globalInvoiceArray and notifies the UI to update.
     func readFromDB() {
-        db.removeAllObservers()
-        db.observe(.value) { snapshot in
-            Invoice.globalInvoiceArray = []
-            
-            // 不要force unwrapped 改成 as?, ***盡量避免, 不然會crash***
-            for child in snapshot.children.allObjects as! [DataSnapshot] {
-                // child is Snap (myInvoiceData)
-                // child.value is optional
-                
-                for readInvoice in child.value as! [String: AnyObject] {
-                    //print("*",readInvoice.key) // invoiceNumber: AA12345678
-                    var invoiceDate = ""
-                    var invoiceStoreName = ""
-                    var itemAndPrice: [Item] = []
-                    for invoiceField in readInvoice.value as! [String: AnyObject] {
-                        // date, storeName, itemAndPrice
-                        if invoiceField.key.prefix(12) == "itemAndPrice" {
-                            // itemAndPrice
-                            var itemName = "", itemAmount = "", itemPrice = ""
-                            var index = invoiceField.key.firstIndex(of: ":") ?? invoiceField.key.endIndex
-                            index = invoiceField.key.index(index, offsetBy: 2)
-                            //print(invoiceField.key[index...])
-                            itemName = String(invoiceField.key[index...])
-                            
-                            for item in invoiceField.value as! [String: AnyObject] {
-                                // enum 訂起來 , type string
-                                if item.key == "price" {
-                                    itemPrice = item.value as! String
-                                }
-                                if item.key == "amount" {
-                                    itemAmount = item.value as! String
-                                }
-                                //print("**", item.key, item.value)
-                            }
-                            itemAndPrice.append(Item(itemName: itemName, amount: itemAmount, price: itemPrice))
-                        }
-                        else if invoiceField.key == "date" {
-                            invoiceDate = invoiceField.value as! String
-                        }
-                        else if invoiceField.key == "storeName" {
-                            invoiceStoreName = invoiceField.value as! String
-                        }
+        let request = NSFetchRequest<NSManagedObject>(entityName: "InvoiceEntity")
+        var invoices: [Invoice] = []
 
+        do {
+            let results = try context.fetch(request)
+            for object in results {
+                let number = object.value(forKey: "number") as? String ?? ""
+                let date = object.value(forKey: "date") as? String ?? ""
+                let storeName = object.value(forKey: "storeName") as? String ?? ""
+                let category = object.value(forKey: "category") as? String ?? "其他"
+
+                var items: [Item] = []
+                if let itemObjects = object.value(forKey: "items") as? Set<NSManagedObject> {
+                    for itemObject in itemObjects {
+                        items.append(Item(
+                            itemName: itemObject.value(forKey: "itemName") as? String ?? "",
+                            amount: itemObject.value(forKey: "amount") as? String ?? "",
+                            price: itemObject.value(forKey: "price") as? String ?? ""
+                        ))
                     }
-                    //let invoice = Invoice(number: String(readInvoice.key.suffix(10)), date: invoiceDate, storeName: invoiceStoreName, itemAndPrice: itemAndPrice)
-                    //print(invoice.transformToInfo())
-       
-                    Invoice.globalInvoiceArray.append(Invoice(number: String(readInvoice.key.suffix(10)), date: invoiceDate, storeName: invoiceStoreName, itemAndPrice: itemAndPrice))
-                    //print(globalInvoiceArray.count)
                 }
-                //print(globalInvoiceArray.count)
-                NotificationCenter.default.post(name: NSNotification.Name("DatabaseReady"), object: nil, userInfo: nil)
-                
+                invoices.append(Invoice(number: number, date: date, storeName: storeName, itemAndPrice: items, category: category))
             }
+        } catch {
+            print("讀取發票失敗: \(error.localizedDescription)")
         }
-        
+
+        // Sort by date (consistent with the original oldest-to-newest presentation)
+        Invoice.globalInvoiceArray = invoices.sorted { $0.date < $1.date }
+
+        MyDatabase.isReady = true
+        NotificationCenter.default.post(name: MyDatabase.databaseReadyNotification, object: nil)
     }
 
+    // MARK: - Helpers
+
+    private func deleteInvoiceObjects(numbered invoiceNumber: String) {
+        let request = NSFetchRequest<NSManagedObject>(entityName: "InvoiceEntity")
+        request.predicate = NSPredicate(format: "number == %@", invoiceNumber)
+        do {
+            let results = try context.fetch(request)
+            for object in results {
+                context.delete(object)
+            }
+        } catch {
+            print("刪除發票失敗: \(error.localizedDescription)")
+        }
+    }
+
+    private func saveContext() {
+        guard context.hasChanges else { return }
+        do {
+            try context.save()
+        } catch {
+            print("儲存失敗: \(error.localizedDescription)")
+        }
+    }
 }

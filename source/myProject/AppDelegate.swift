@@ -6,47 +6,20 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        /*self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.backgroundColor = .white
-        self.window!.rootViewController = HomePageViewController()
-        self.window!.makeKeyAndVisible()*/
-        
-        // Override point for customization after application launch.
-        //NotificationCenter.default.addObserver(self, selector: #selector(test), name: NSNotification.Name("DatabaseReady"), object: nil)
-        
-        
-        FirebaseApp.configure()
-        // 連結資料庫, 把資料庫上全部發票存進globalInvoiceArray
-        // 匿名驗證
-        Auth.auth().signInAnonymously() { (user, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-        /*globalInvoiceArray = []
-        for _ in 0...10 {
-            let temp = InvoiceGenerator.invoiceRandomGenerator()
-            if isUnique(temp.number) {
-                globalInvoiceArray.append(temp)
-            }
-        }*/
-        
+
+        // Load the saved winning numbers (available offline) and try to update from the Ministry of Finance in the background
+        loadWinningNumbers()
+        WinningNumberService.update { _ in }
+
+        // Read all invoices from the local Core Data store into globalInvoiceArray (synchronous, immediate, offline-capable)
         let invoiceDB = MyDatabase()
-        //invoiceDB.upLoadToDB()
         invoiceDB.readFromDB()
-        // 通知其他人更新頁面
-        //NotificationCenter.default.post(name: NSNotification.Name("DatabaseReady"), object: nil, userInfo: nil)
-       
+
         return true
     }
     

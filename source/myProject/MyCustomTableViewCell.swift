@@ -16,7 +16,26 @@ import UIKit
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        selectionStyle = .none
+        backgroundColor = .clear
+        contentView.backgroundColor = .secondarySystemGroupedBackground
+        contentView.layer.cornerRadius = 12
+        contentView.layer.masksToBounds = true
+
+        numberLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        numberLabel.textColor = .label
+        storeLabel.font = .systemFont(ofSize: 15)
+        storeLabel.textColor = .secondaryLabel
+        dateLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        dateLabel.textColor = .secondaryLabel
+        totalPriceLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        totalPriceLabel.textColor = .systemBlue
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Card-style padding
+        contentView.frame = bounds.inset(by: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -24,5 +43,5 @@ import UIKit
 
         // Configure the view for the selected state
     }
-    
+
 }

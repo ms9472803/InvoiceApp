@@ -10,16 +10,11 @@ import SwiftUI
 
 class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var itemAndPriceTableView: UITableView!
-    
-    @IBOutlet weak var addItemButton: UIButton!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
 
-        
-        // Do any additional setup after loading the view.
-        
         let fullScreenSize = UIScreen.main.bounds.size
         itemAndPriceTableView = UITableView(frame: CGRect(x: 0, y: 30, width: fullScreenSize.width, height: fullScreenSize.height-20))
         itemAndPriceTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -39,15 +34,16 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
     override func viewWillAppear(_ animated: Bool) {
         if canModify == true {
             title = "編輯品項"
-            addItemButton.isHidden = false
+            // Show an add button in the nav bar only in edit mode
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItemTapped))
         } else {
             title = "品項資訊"
-            addItemButton.isHidden = true
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
     
-    /* 往左滑刪除品項 */
+    /* Swipe left to delete an item */
     func tableView(_ tableView: UITableView,
     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if canModify == true {
@@ -60,7 +56,7 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
                 
      
             outer: for i in 0..<Invoice.globalInvoiceArray.count {
-                        //先找是哪張發票
+                        // First find which invoice it is
                 if Invoice.globalInvoiceArray[i] == Invoice.invoiceShowCurrent {
                     Invoice.globalInvoiceArray[i].itemAndPrice = Invoice.globalInvoiceArray[i].itemAndPrice.filter { $0.itemName != Invoice.invoiceShowCurrent.itemAndPrice[indexPath.row].itemName }
                             break
@@ -84,7 +80,7 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     
-    @IBAction func addItemButton(_ sender: UIButton) {
+    @objc func addItemTapped() {
         let alertController = UIAlertController(title: "新增品項數量金額", message: "請輸入資訊", preferredStyle: UIAlertController.Style.alert)
         
         alertController.addTextField { textField in textField.placeholder = "品項" }
@@ -93,13 +89,13 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
         
         alertController.addAction(UIAlertAction(title: "取消", style: UIAlertAction.Style.cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "確定", style: UIAlertAction.Style.default) { action in
-            //點了確定後要做的事
+            // What to do after tapping OK
                 
             let itemString = alertController.textFields?[0].text ?? ""
             let amountString = alertController.textFields?[1].text ?? ""
             let priceString = alertController.textFields?[2].text ?? ""
             
-            // 判斷價格是不是合法(Int && >=0)
+            // Check whether the price is valid (Int && >=0)
             if let priceInt = Int(priceString), let amountInt = Int(amountString), priceInt >= 0, amountInt > 0 {
                 print("輸入的品項為： \(itemString) \n 輸入的數量為： \(amountString) \n 輸入的金額為： \(priceString)")
                 Invoice.invoiceShowCurrent.itemAndPrice.append(Item(itemName: itemString, amount: amountString, price: priceString))
@@ -128,7 +124,7 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) //dequeueReusableCell 以指定的cell識別碼來取得queue中可再利用的表格cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) //dequeueReusableCell retrieves a reusable table cell from the queue by the given cell identifier
         var itemAndPriceInfo = ""
         let item = Invoice.invoiceShowCurrent.itemAndPrice[indexPath.row]
         itemAndPriceInfo += "品項: \(item.itemName) ; 數量: \(item.amount) ; 金額: $\(item.price)\n"
@@ -139,9 +135,9 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("修改品項", indexPath.row)
-   
+
         let modifyItem = Invoice.invoiceShowCurrent.itemAndPrice[indexPath.row]
-        // 取消cell的選取狀態
+        // Clear the cell's selected state
         tableView.deselectRow(at: indexPath, animated: false)
         if !canModify {
             return
@@ -170,9 +166,9 @@ class ItemAndPriceInfoViewController: UIViewController, UITableViewDelegate, UIT
             let amountString = alertController.textFields?[1].text ?? ""
             let priceString = alertController.textFields?[2].text ?? ""
                 
-            // 判斷價格是不是合法(Int && >=0)
+            // Check whether the price is valid (Int && >=0)
             if let priceInt = Int(priceString), let amountInt = Int(amountString), priceInt >= 0, amountInt > 0 {
-                
+
                 print("輸入的品項為： \(itemString) \n 輸入的數量為： \(amountString) \n 輸入的金額為： \(priceString)")
                 Invoice.invoiceShowCurrent.itemAndPrice[indexPath.row] = Item(itemName: itemString, amount: amountString, price: priceString)
                 let invoiceDB = MyDatabase()

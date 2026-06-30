@@ -11,66 +11,130 @@ import SwiftUI
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    /*
-    // MARK: - Navigation
+    // UI built programmatically (no storyboard)
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let monthOrDaySegmentedControl = UISegmentedControl(items: ["日", "月"])
+    private let tableViewShowByMonthLabel = UILabel()
+    private let backMonthButton = UIButton(type: .system)
+    private let forwardMonthButton = UIButton(type: .system)
+    private let tableViewDatePicker = UIDatePicker()
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet weak var monthOrDaySegmentedControl: UISegmentedControl!
-    @IBOutlet weak var tableViewShowByMonthLabel: UILabel!
-    @IBOutlet weak var backMonthButton: UIButton!
-    @IBOutlet weak var forwardMonthButton: UIButton!
-    @IBOutlet weak var tableViewDatePicker: UIDatePicker!
-    
-    
     var backMonthButtonTitle = "\u{2190}"
     var forwardMonthButtonTitle = "\u{2192}"
     var tableViewHeader = ""
-    
-    // 日模式顯示在"顯示發票"tableView上的array
+
+    // Array shown in the "顯示發票" tableView in day mode
     var currentDayInvoiceArray: [Invoice] = []
-    
-    // 月模式
+
+    // Month mode
     var currentFirstMonth = ""
     var currentSecondMonth = ""
     var currentFirstMonthInvoice: [Invoice] = []
     var currentSecondMonthInvoice: [Invoice] = []
-    
+
     enum Mode {
         case dayMode
         case monthMode
     }
     var mode = Mode.monthMode
-    
-    /*enum CurrentMonth {
-        case first
-        case second
-    }*/
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemGroupedBackground
         title = "顯示發票"
+
+        // Left: day/month segmented control. Right: search + export
+        monthOrDaySegmentedControl.selectedSegmentIndex = 1
+        monthOrDaySegmentedControl.addTarget(self, action: #selector(dayOrMonthChange(_:)), for: .valueChanged)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: monthOrDaySegmentedControl)
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportInvoicesCSV)),
+            UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(openSearch))
+        ]
+
+        // Period header: ← label → and a date picker (day mode)
+        tableViewShowByMonthLabel.text = currentInvoicePeriod()
+        tableViewShowByMonthLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        tableViewShowByMonthLabel.textAlignment = .center
+        backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
+        forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
+        backMonthButton.titleLabel?.font = .systemFont(ofSize: 22)
+        forwardMonthButton.titleLabel?.font = .systemFont(ofSize: 22)
+        backMonthButton.addTarget(self, action: #selector(selectedMonth(_:)), for: .touchUpInside)
+        forwardMonthButton.addTarget(self, action: #selector(selectedMonth(_:)), for: .touchUpInside)
+
+        tableViewDatePicker.datePickerMode = .date
+        tableViewDatePicker.maximumDate = Date()
+        if #available(iOS 14.0, *) { tableViewDatePicker.preferredDatePickerStyle = .compact }
+        tableViewDatePicker.addTarget(self, action: #selector(changeSelectedDate(_:)), for: .valueChanged)
+
+        let monthRow = UIStackView(arrangedSubviews: [backMonthButton, tableViewShowByMonthLabel, forwardMonthButton])
+        monthRow.axis = .horizontal
+        monthRow.alignment = .center
+        monthRow.distribution = .equalSpacing
+
+        let header = UIStackView(arrangedSubviews: [monthRow, tableViewDatePicker])
+        header.axis = .vertical
+        header.alignment = .center
+        header.spacing = 8
+        header.translatesAutoresizingMaskIntoConstraints = false
+
         tableView.register(UINib(nibName: "TotalConsumptionOfMonthTableViewCell", bundle: nil), forCellReuseIdentifier: "consumptionOfMonthCell")
         tableView.register(UINib(nibName: "MyCustomTableViewCell", bundle: nil), forCellReuseIdentifier: "customCell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        monthOrDaySegmentedControl.selectedSegmentIndex = 1
-        tableViewDatePicker.maximumDate = Date()
-        backMonthButton.setTitle(backMonthButtonTitle, for: .normal)
-        forwardMonthButton.setTitle(forwardMonthButtonTitle, for: .normal)
+        tableView.backgroundColor = .systemGroupedBackground
+        tableView.translatesAutoresizingMaskIntoConstraints = false
 
+        view.addSubview(header)
+        view.addSubview(tableView)
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            header.topAnchor.constraint(equalTo: guide.topAnchor, constant: 8),
+            header.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20),
+            header.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20),
+            monthRow.leadingAnchor.constraint(equalTo: header.leadingAnchor),
+            monthRow.trailingAnchor.constraint(equalTo: header.trailingAnchor),
+
+            tableView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 8),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
+
+    @objc private func openSearch() {
+        navigationController?.pushViewController(SearchInvoiceViewController(), animated: true)
+    }
+
     
-    
-    // 在view呈現前 刷新tableView
+    // Export all invoices as CSV and open the share sheet
+    @objc func exportInvoicesCSV() {
+        let invoices = Invoice.globalInvoiceArray
+        guard !invoices.isEmpty else {
+            let alert = UIAlertController(title: "沒有可匯出的發票", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "確定", style: .default))
+            present(alert, animated: true)
+            return
+        }
+
+        let csv = InvoiceCSVExporter.csv(from: invoices)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("invoices.csv")
+        do {
+            try csv.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+            print("匯出 CSV 失敗: \(error.localizedDescription)")
+            return
+        }
+
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        // iPad requires an anchor, otherwise it will crash
+        activityVC.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityVC, animated: true)
+    }
+
+    // Refresh the tableView before the view appears
     override func viewWillAppear(_ animated: Bool) {
         arrayInit()
         monthModeSetting()
@@ -113,16 +177,16 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         currentDayInvoiceArray = Invoice.globalInvoiceArray.filter { $0.date.description == tableViewHeader }
     }
     
-    // 處理UITableView外觀
+    // Handle UITableView appearance
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("按下發票")
-        // 取消cell的選取狀態
+        // Deselect the cell
         tableView.deselectRow(at: indexPath, animated: false)
         if indexPath.row == 0 {
             return
         }
         
-        // 設定選取的發票index, 讓invoiceInfoView呈現出來
+        // Set the selected invoice index so invoiceInfoView can be displayed
         let invoiceIndex = indexPath.row - 1
         
         switch mode {
@@ -148,7 +212,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    // 每一組有幾個 cell
+    // Number of cells in each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch mode {
@@ -164,10 +228,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 { // 第一個 row 顯示總金額
+        if indexPath.row == 0 { // The first row shows the total amount
             let cell = tableView.dequeueReusableCell(withIdentifier: "consumptionOfMonthCell", for: indexPath) as? TotalConsumptionOfMonthTableViewCell
             var sum = 0
-            cell?.backgroundColor = .yellow
             switch mode {
             case .dayMode:
                 cell?.monthLabel.text = " 總消費"
@@ -192,9 +255,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell?.consumptionlabel.text = "$" + String(sum)
             return cell!
         } else {
-            // 取得 tableView 目前使用的 cell
+            // Get the cell currently used by the tableView
             let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? MyCustomTableViewCell
-            // 第一個cell為總月份消費, 所以index - 1
+            // The first cell is the monthly total consumption, so index - 1
             let invoiceIndex = indexPath.row - 1
             var invoice = Invoice();
             
@@ -223,7 +286,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    /* 往左滑刪除發票 */
+    /* Swipe left to delete an invoice */
     func tableView(_ tableView: UITableView,
     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.row == 0 {
@@ -231,7 +294,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         let deleteAction = UIContextualAction(style: .destructive, title: "刪除") { (action, view, completionHandler) in
             print("刪除")
-            // 刪除global和selected裡面的invoice
+            // Delete the invoice from both global and selected arrays
             let deleteInvoice: Invoice
             let invoiceIndex = indexPath.row - 1
             
@@ -259,7 +322,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    // 顯示tableView header
+    // Display the tableView header
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         switch mode {
@@ -285,7 +348,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return 50
     }
 
-    // 更改日月模式, 改tableViewHeader, 設定要在tableView顯示的array
+    // Switch between day/month mode, update tableViewHeader, and set the array to display in the tableView
     @IBAction func dayOrMonthChange(_ sender: UISegmentedControl) {
         print("dayMonthChange")
         arrayInit()
@@ -299,7 +362,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.reloadData()
     }
     
-    // 日期模式選取日期
+    // Select a date in day mode
     @IBAction func changeSelectedDate(_ sender: UIDatePicker) {
         print("選取日期")
         arrayInit()
@@ -307,8 +370,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.reloadData()
     }
     
-    // 月份模式 按鈕選取往前往後
-    // function行數減短一點, 把一些功能抽成function, 這樣比較知道在幹嘛
+    // Month mode: buttons to move forward/backward
+    // Shorten the function by extracting some logic into helper functions, making it easier to follow
     @IBAction func selectedMonth(_ sender: UIButton) {
         arrayInit()
         let curSelectedMonth = tableViewHeader.suffix(5)
@@ -317,7 +380,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if let buttonTitle = sender.currentTitle {
             switch buttonTitle {
-            // 往左按鈕 月份往前
+            // Left button: go to the previous months
             case backMonthButtonTitle:
                 let backCircularSelectedMonth = ["01-02": "11-12", "03-04": "01-02", "05-06": "03-04", "07-08": "05-06", "09-10": "07-08", "11-12": "09-10"]
    
@@ -331,7 +394,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 tableViewShowByMonthLabel.text = "\(updateYear), " + (backCircularSelectedMonth[String(curSelectedMonth)] ?? "")
                 
 
-            // 往右按鈕 月份往後
+            // Right button: go to the next months
             case forwardMonthButtonTitle:
                 let forwardCircularSelectedMonth = ["01-02": "03-04", "03-04": "05-06", "05-06": "07-08", "07-08": "09-10", "09-10": "11-12", "11-12":  "01-02"]
                 

@@ -8,15 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D316508228332C7600C46AD4 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316508128332C7600C46AD4 /* TableViewController.swift */; };
-		D3165084283348E300C46AD4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3165083283348E300C46AD4 /* GoogleService-Info.plist */; };
-		D316508828334A8300C46AD4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D316508728334A8300C46AD4 /* FirebaseAnalytics */; };
-		D316508B2833A39500C46AD4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D316508A2833A39500C46AD4 /* FirebaseAnalytics */; };
 		D316509628347D7A00C46AD4 /* InvoiceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316509428347D7A00C46AD4 /* InvoiceInfoViewController.swift */; };
-		D316509728347D7A00C46AD4 /* InvoiceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D316509528347D7A00C46AD4 /* InvoiceInfoViewController.xib */; };
 		D316509A28360EA500C46AD4 /* ModifyInvoiceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316509828360EA400C46AD4 /* ModifyInvoiceInfoViewController.swift */; };
-		D316509B28360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D316509928360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib */; };
 		D316509E28362E6B00C46AD4 /* ItemAndPriceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316509C28362E6B00C46AD4 /* ItemAndPriceInfoViewController.swift */; };
-		D316509F28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D316509D28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib */; };
 		D31650A7283737D200C46AD4 /* BonusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31650A6283737D200C46AD4 /* BonusViewController.swift */; };
 		D31D27A7283F0AE2003523DE /* MyInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D27A6283F0AE2003523DE /* MyInvoice.swift */; };
 		D31D27A9283F0CE6003523DE /* MyDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D27A8283F0CE6003523DE /* MyDatabase.swift */; };
@@ -26,16 +20,11 @@
 		D31D27B9283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31D27B7283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.swift */; };
 		D31D27BA283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D31D27B8283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib */; };
 		D31FCEFE283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FCEFD283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift */; };
-		D340C79C283B705200B5819D /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D340C79B283B705200B5819D /* FirebaseDatabase */; };
-		D340C79E283B705500B5819D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D340C79D283B705500B5819D /* FirebaseAuth */; };
 		D340C7A4283B79EF00B5819D /* SearchInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */; };
 		D38377A6284456E700C79ADF /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */; };
-		D38377A7284456E700C79ADF /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */; };
-		D38377AD2845A1B000C79ADF /* ObjcTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */; };
 		D3FE31382831E68D0065E12C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31372831E68D0065E12C /* AppDelegate.swift */; };
 		D3FE313A2831E68D0065E12C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE31392831E68D0065E12C /* SceneDelegate.swift */; };
 		D3FE313C2831E68D0065E12C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE313B2831E68D0065E12C /* HomePageViewController.swift */; };
-		D3FE313F2831E68D0065E12C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3FE313D2831E68D0065E12C /* Main.storyboard */; };
 		D3FE31412831E68D0065E12C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3FE31402831E68D0065E12C /* Assets.xcassets */; };
 		D3FE31442831E68D0065E12C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3FE31422831E68D0065E12C /* LaunchScreen.storyboard */; };
 		D3FE314F2831E68E0065E12C /* myProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE314E2831E68E0065E12C /* myProjectTests.swift */; };
@@ -44,20 +33,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D3900B17283D0F8C008AD9ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
-			remoteInfo = Charts;
-		};
-		D3900B19283D0F8C008AD9ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
-			remoteInfo = ChartsTests;
-		};
 		D3FE314B2831E68E0065E12C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FE312C2831E68D0065E12C /* Project object */;
@@ -76,13 +51,9 @@
 
 /* Begin PBXFileReference section */
 		D316508128332C7600C46AD4 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		D3165083283348E300C46AD4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D316509428347D7A00C46AD4 /* InvoiceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceInfoViewController.swift; sourceTree = "<group>"; };
-		D316509528347D7A00C46AD4 /* InvoiceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InvoiceInfoViewController.xib; sourceTree = "<group>"; };
 		D316509828360EA400C46AD4 /* ModifyInvoiceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyInvoiceInfoViewController.swift; sourceTree = "<group>"; };
-		D316509928360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModifyInvoiceInfoViewController.xib; sourceTree = "<group>"; };
 		D316509C28362E6B00C46AD4 /* ItemAndPriceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAndPriceInfoViewController.swift; sourceTree = "<group>"; };
-		D316509D28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemAndPriceInfoViewController.xib; sourceTree = "<group>"; };
 		D31650A6283737D200C46AD4 /* BonusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusViewController.swift; sourceTree = "<group>"; };
 		D31D27A6283F0AE2003523DE /* MyInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInvoice.swift; sourceTree = "<group>"; };
 		D31D27A8283F0CE6003523DE /* MyDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatabase.swift; sourceTree = "<group>"; };
@@ -94,16 +65,11 @@
 		D31FCEFD283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumptionAnalysisViewController.swift; sourceTree = "<group>"; };
 		D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInvoiceViewController.swift; sourceTree = "<group>"; };
 		D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
-		D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRCodeScannerViewController.xib; sourceTree = "<group>"; };
 		D38377AA2845A1B000C79ADF /* myProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "myProject-Bridging-Header.h"; sourceTree = "<group>"; };
-		D38377AB2845A1B000C79ADF /* ObjcTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcTableViewController.h; sourceTree = "<group>"; };
-		D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjcTableViewController.m; sourceTree = "<group>"; };
-		D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		D3FE31342831E68D0065E12C /* myProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FE31372831E68D0065E12C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3FE31392831E68D0065E12C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3FE313B2831E68D0065E12C /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
-		D3FE313E2831E68D0065E12C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3FE31402831E68D0065E12C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3FE31432831E68D0065E12C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3FE31452831E68D0065E12C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,10 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D340C79C283B705200B5819D /* FirebaseDatabase in Frameworks */,
-				D316508B2833A39500C46AD4 /* FirebaseAnalytics in Frameworks */,
-				D316508828334A8300C46AD4 /* FirebaseAnalytics in Frameworks */,
-				D340C79E283B705500B5819D /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,19 +112,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D3900B13283D0F8C008AD9ED /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D3900B18283D0F8C008AD9ED /* Charts.framework */,
-				D3900B1A283D0F8C008AD9ED /* ChartsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D3FE312B2831E68D0065E12C = {
 			isa = PBXGroup;
 			children = (
-				D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */,
 				D3FE31362831E68D0065E12C /* myProject */,
 				D3FE314D2831E68E0065E12C /* myProjectTests */,
 				D3FE31572831E68E0065E12C /* myProjectUITests */,
@@ -189,7 +141,6 @@
 				D31D27AA283F12C8003523DE /* MyExtension.swift */,
 				D3FE313B2831E68D0065E12C /* HomePageViewController.swift */,
 				D38377A4284456E700C79ADF /* QRCodeScannerViewController.swift */,
-				D38377A5284456E700C79ADF /* QRCodeScannerViewController.xib */,
 				D316508128332C7600C46AD4 /* TableViewController.swift */,
 				D340C7A3283B79EF00B5819D /* SearchInvoiceViewController.swift */,
 				D316509428347D7A00C46AD4 /* InvoiceInfoViewController.swift */,
@@ -201,18 +152,11 @@
 				D31D27B7283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.swift */,
 				D3FE31372831E68D0065E12C /* AppDelegate.swift */,
 				D3FE31392831E68D0065E12C /* SceneDelegate.swift */,
-				D3FE313D2831E68D0065E12C /* Main.storyboard */,
 				D3FE31422831E68D0065E12C /* LaunchScreen.storyboard */,
-				D316509928360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib */,
-				D316509528347D7A00C46AD4 /* InvoiceInfoViewController.xib */,
-				D316509D28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib */,
 				D31D27B4283F4B33003523DE /* MyCustomTableViewCell.xib */,
 				D31D27B8283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib */,
-				D3165083283348E300C46AD4 /* GoogleService-Info.plist */,
 				D3FE31452831E68D0065E12C /* Info.plist */,
 				D3FE31402831E68D0065E12C /* Assets.xcassets */,
-				D38377AB2845A1B000C79ADF /* ObjcTableViewController.h */,
-				D38377AC2845A1B000C79ADF /* ObjcTableViewController.m */,
 				D38377AA2845A1B000C79ADF /* myProject-Bridging-Header.h */,
 			);
 			path = myProject;
@@ -252,10 +196,6 @@
 			);
 			name = myProject;
 			packageProductDependencies = (
-				D316508728334A8300C46AD4 /* FirebaseAnalytics */,
-				D316508A2833A39500C46AD4 /* FirebaseAnalytics */,
-				D340C79B283B705200B5819D /* FirebaseDatabase */,
-				D340C79D283B705500B5819D /* FirebaseAuth */,
 			);
 			productName = myProject;
 			productReference = D3FE31342831E68D0065E12C /* myProject.app */;
@@ -330,18 +270,8 @@
 				Base,
 			);
 			mainGroup = D3FE312B2831E68D0065E12C;
-			packageReferences = (
-				D316508628334A8300C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				D31650892833A39500C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			productRefGroup = D3FE31352831E68D0065E12C /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D3900B13283D0F8C008AD9ED /* Products */;
-					ProjectRef = D3900B12283D0F8C008AD9ED /* Charts.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D3FE31332831E68D0065E12C /* myProject */,
@@ -351,37 +281,14 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		D3900B18283D0F8C008AD9ED /* Charts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Charts.framework;
-			remoteRef = D3900B17283D0F8C008AD9ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D3900B1A283D0F8C008AD9ED /* ChartsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ChartsTests.xctest;
-			remoteRef = D3900B19283D0F8C008AD9ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		D3FE31322831E68D0065E12C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D3FE31442831E68D0065E12C /* LaunchScreen.storyboard in Resources */,
-				D38377A7284456E700C79ADF /* QRCodeScannerViewController.xib in Resources */,
-				D3165084283348E300C46AD4 /* GoogleService-Info.plist in Resources */,
-				D316509B28360EA500C46AD4 /* ModifyInvoiceInfoViewController.xib in Resources */,
-				D316509728347D7A00C46AD4 /* InvoiceInfoViewController.xib in Resources */,
 				D3FE31412831E68D0065E12C /* Assets.xcassets in Resources */,
-				D3FE313F2831E68D0065E12C /* Main.storyboard in Resources */,
 				D31D27B6283F4B33003523DE /* MyCustomTableViewCell.xib in Resources */,
-				D316509F28362E6B00C46AD4 /* ItemAndPriceInfoViewController.xib in Resources */,
 				D31D27BA283F539C003523DE /* TotalConsumptionOfMonthTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,7 +324,6 @@
 				D316509A28360EA500C46AD4 /* ModifyInvoiceInfoViewController.swift in Sources */,
 				D340C7A4283B79EF00B5819D /* SearchInvoiceViewController.swift in Sources */,
 				D38377A6284456E700C79ADF /* QRCodeScannerViewController.swift in Sources */,
-				D38377AD2845A1B000C79ADF /* ObjcTableViewController.m in Sources */,
 				D31D27B5283F4B33003523DE /* MyCustomTableViewCell.swift in Sources */,
 				D31FCEFE283DB94D0050A7B4 /* ConsumptionAnalysisViewController.swift in Sources */,
 				D31D27A9283F0CE6003523DE /* MyDatabase.swift in Sources */,
@@ -460,14 +366,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D3FE313D2831E68D0065E12C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D3FE313E2831E68D0065E12C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D3FE31422831E68D0065E12C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -605,12 +503,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = myProject/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要使用相機才能掃描發票上的 QR Code 以自動帶入發票資訊。";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要存取相片以儲存發票相關圖片。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要存取相片以選取發票圖片。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -641,12 +538,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = myProject/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要使用相機才能掃描發票上的 QR Code 以自動帶入發票資訊。";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要存取相片以儲存發票相關圖片。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要存取相片以選取發票圖片。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -776,48 +672,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		D316508628334A8300C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
-		D31650892833A39500C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D316508728334A8300C46AD4 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D316508628334A8300C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		D316508A2833A39500C46AD4 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D316508628334A8300C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		D340C79B283B705200B5819D /* FirebaseDatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D316508628334A8300C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
-		};
-		D340C79D283B705500B5819D /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D316508628334A8300C46AD4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D3FE312C2831E68D0065E12C /* Project object */;
 }
