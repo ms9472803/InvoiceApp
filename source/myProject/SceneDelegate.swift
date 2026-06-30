@@ -17,7 +17,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-        
+
+        // 以程式碼把「消費分析」加入既有的 tab bar，避免直接修改 storyboard。
+        addConsumptionAnalysisTab()
+    }
+
+    private func addConsumptionAnalysisTab() {
+        guard let tabBarController = window?.rootViewController as? UITabBarController else { return }
+
+        let analysisVC = ConsumptionAnalysisViewController()
+        let nav = UINavigationController(rootViewController: analysisVC)
+        let image = UIImage(systemName: "chart.pie")
+        nav.tabBarItem = UITabBarItem(title: "消費分析", image: image, tag: 99)
+
+        var controllers = tabBarController.viewControllers ?? []
+        controllers.append(nav)
+        tabBarController.viewControllers = controllers
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

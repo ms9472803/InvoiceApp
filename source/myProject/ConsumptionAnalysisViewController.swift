@@ -1,159 +1,180 @@
-////
-////  ConsumptionAnalysisViewController.swift
-////  myProject
-////
-////  Created by Ryan Chen on 2022/5/25.
-////
 //
-//import UIKit
-//import Charts
+//  ConsumptionAnalysisViewController.swift
+//  myProject
 //
+//  Created by Ryan Chen on 2022/5/25.
+//  Reimplemented with native Swift Charts (no third-party dependency).
 //
-//class ConsumptionAnalysisViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-//    
-//    
-//
-//    @IBOutlet weak var yearTextField: UITextField!
-//    var pieChartView: PieChartView!
-//    let monthToIndex: [String: Int] = ["01":0, "02":1, "03":2 , "04":3, "05":4, "06":5, "07":6, "08":7, "09":8 , "10":9, "11":10, "12":11]
-//    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-//    var consumptionOfMonth: [Int] = Array(repeating: 0, count: 12)
-//    var pieChartDataEntries: [PieChartDataEntry] = []
-//    var currentYear = "2022"
-//    
-//    /*var pickerView: UIPickerView!
-//    var pickerViewDataSize: Int = 0
-//    var pickerViewData = [String]()*/
-//    
-//    
-//    var pickerView = UIPickerView()
-//    
-//    let year = ["2022", "2021", "2020", "2019"]
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do any additional setup after loading the view.
-//        
-// 
-//        
-//        pieChartView = PieChartView(frame: CGRect(x: 50, y: 200, width: 250, height: 250))
-//        pieChartView.center = view.center
-//        pieChartView.entryLabelColor = .black
-//        pieChartView.legend.enabled = false
-//        pieChartView.chartDescription.text = "消費分析"
-//        
-//        
-//        
-//        //chartView.frame = CGRect(x: 0, y: 0, width: 100, height: 300)
-//        view.addSubview(pieChartView)
-//        drawPieChart()
-//        //pieChartView.setExtraOffsets (left: -15.0, top: 10.0, right:-15.0, bottom: -30.0)
-//        
-//        pieChartView.translatesAutoresizingMaskIntoConstraints = false
-//        /*NSLayoutConstraint.activate([
-//            pieChartView.widthAnchor.constraint(equalToConstant: 300)
-//        ])*/
-//        
-//        pickerView.dataSource = self
-//        pickerView.delegate = self
-//        
-//        
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePresser))
-//        toolbar.setItems([doneBtn], animated: true)
-//        
-//        yearTextField.inputAccessoryView = toolbar
-//        yearTextField.inputView = pickerView
-//        yearTextField.textAlignment = .center
-//        yearTextField.placeholder = "選擇年份"
-//        yearTextField.text = currentYear
-//        
-//    }
-//    
-//    @objc func donePresser() {
-//        yearTextField.text = currentYear
-//        view.endEditing(true)
-//        drawPieChart()
-//    }
-//    
-//    func drawPieChart() {
-//        consumptionOfMonth = Array(repeating: 0, count: 12)
-//        pieChartDataEntries = []
-//        for invoice in Invoice.globalInvoiceArray {
-//            if invoice.date.prefix(4) != currentYear {
-//                continue
-//            }
-//            let month = invoice.date.prefix(7).suffix(2)
-//            consumptionOfMonth[monthToIndex[String(month)]!] += Int(invoice.totalPrice) ?? 0
-//        }
-//
-//        for i in 0..<consumptionOfMonth.count {
-//            pieChartDataEntries.append(PieChartDataEntry(value: Double(consumptionOfMonth[i]), label: months[i], icon: nil, data: nil))
-//            //print(i, consumptionOfMonth[i])
-//        }
-//        
-//        let sum = consumptionOfMonth.reduce(0) {$0 + $1}
-//        pieChartView.centerText = "支出總和\n$" + String(sum)
-//        
-//        let set = PieChartDataSet(entries: pieChartDataEntries, label: "")
-//        // 設定區塊顏色, 呈現順序會跟Entries array一樣
-//        
-//        set.colors = ChartColorTemplates.joyful()
-//        
-//        // 點選圓餅後突出多少
-//        set.selectionShift = 10
-//        // 圓餅每個部分分隔間距
-//        set.sliceSpace = 5
-//        set.entryLabelColor = .black
-//        set.valueColors = [UIColor.black]
-//        
-//        // 設定是否要呈現數值在圓餅圖上
-//        //set.drawValuesEnabled = false
-//        let pieChartData = PieChartData(dataSet: set)
-//        let pFormatter = NumberFormatter()
-//        pFormatter.numberStyle = .percent
-//        pFormatter.maximumFractionDigits = 2
-//        pFormatter.multiplier = 1
-//        pFormatter.percentSymbol = "%"
-//        pieChartData.setValueFormatter(DefaultValueFormatter(formatter: pFormatter))
-//        pieChartView.data = pieChartData
-//        pieChartView.usePercentValuesEnabled = true
-//        
-//        set.valueFormatter = DefaultValueFormatter(formatter: pFormatter)
-//        
-//        /*pieChartView.legend.enabled = true
-//        let legend = pieChartView.legend
-//        legend.horizontalAlignment = .center
-//        legend.verticalAlignment = .bottom
-//        legend.orientation = .horizontal
-//        legend.font = UIFont(name: "HelveticaNeue-Light", size: 12)!*/
-//    }
-//    
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return year.count
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return year[row]
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        currentYear = year[row]
-//    }
-//    
-//    /*
-//    // MARK: - Navigation
-//
-//    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        // Get the new view controller using segue.destination.
-//        // Pass the selected object to the new view controller.
-//    }
-//    */
-//
-//}
+
+import UIKit
+import SwiftUI
+import Charts
+
+// MARK: - Data model
+
+/// 單一月份的消費資料，供 Swift Charts 繪圖使用。
+struct MonthlyConsumption: Identifiable {
+    let id = UUID()
+    let monthIndex: Int      // 0 = Jan ... 11 = Dec
+    let monthLabel: String   // "Jan" ... "Dec"
+    let amount: Int
+}
+
+/// 把 `Invoice.globalInvoiceArray` 依年份彙總成每月消費金額。
+enum ConsumptionStats {
+    static let monthCodes = ["01", "02", "03", "04", "05", "06",
+                             "07", "08", "09", "10", "11", "12"]
+    static let monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+    /// 計算指定年份每個月的消費總額。
+    static func monthlyConsumption(for year: String) -> [MonthlyConsumption] {
+        var sums = Array(repeating: 0, count: 12)
+        for invoice in Invoice.globalInvoiceArray where invoice.date.prefix(4) == year {
+            let monthCode = String(invoice.date.prefix(7).suffix(2))
+            if let index = monthCodes.firstIndex(of: monthCode) {
+                sums[index] += Int(invoice.totalPrice) ?? 0
+            }
+        }
+        return (0..<12).map { MonthlyConsumption(monthIndex: $0, monthLabel: monthLabels[$0], amount: sums[$0]) }
+    }
+
+    /// 從現有發票資料推導出可選的年份清單（永遠包含當年）。
+    static func availableYears() -> [String] {
+        var years = Set(Invoice.globalInvoiceArray.map { String($0.date.prefix(4)) })
+        years = years.filter { $0.count == 4 && Int($0) != nil }
+        let currentYear = Calendar.current.component(.year, from: Date())
+        years.insert(String(currentYear))
+        return years.sorted(by: >)
+    }
+}
+
+// MARK: - View model
+
+@available(iOS 16.0, *)
+final class ConsumptionViewModel: ObservableObject {
+    @Published var year: String
+    @Published var data: [MonthlyConsumption] = []
+    @Published var years: [String] = []
+
+    var total: Int { data.reduce(0) { $0 + $1.amount } }
+
+    init() {
+        let current = String(Calendar.current.component(.year, from: Date()))
+        self.year = current
+        reload()
+    }
+
+    func reload() {
+        years = ConsumptionStats.availableYears()
+        if !years.contains(year) { year = years.first ?? year }
+        data = ConsumptionStats.monthlyConsumption(for: year)
+    }
+}
+
+// MARK: - SwiftUI chart
+
+@available(iOS 16.0, *)
+struct ConsumptionAnalysisView: View {
+    @ObservedObject var model: ConsumptionViewModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("年份")
+                    .font(.headline)
+                Picker("年份", selection: $model.year) {
+                    ForEach(model.years, id: \.self) { Text($0).tag($0) }
+                }
+                .pickerStyle(.menu)
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text("支出總和")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Text("$\(model.total)")
+                        .font(.title2.bold())
+                }
+            }
+            .padding(.horizontal)
+
+            if model.total == 0 {
+                Spacer()
+                Text("這一年沒有發票資料")
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Spacer()
+            } else {
+                Chart(model.data) { item in
+                    BarMark(
+                        x: .value("月份", item.monthLabel),
+                        y: .value("金額", item.amount)
+                    )
+                    .foregroundStyle(by: .value("月份", item.monthLabel))
+                    .cornerRadius(4)
+                }
+                .chartLegend(.hidden)
+                .padding()
+            }
+        }
+        .padding(.top)
+        .onChange(of: model.year) { _ in model.reload() }
+        .onAppear { model.reload() }
+    }
+}
+
+// MARK: - Hosting view controller
+
+class ConsumptionAnalysisViewController: UIViewController {
+
+    private var viewModel: AnyObject?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "消費分析"
+        view.backgroundColor = .systemBackground
+
+        if #available(iOS 16.0, *) {
+            let model = ConsumptionViewModel()
+            viewModel = model
+            let host = UIHostingController(rootView: ConsumptionAnalysisView(model: model))
+            addChild(host)
+            host.view.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(host.view)
+            NSLayoutConstraint.activate([
+                host.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+            host.didMove(toParent: self)
+
+            // 資料庫非同步載入完成後，重新整理圖表。
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("DatabaseReady"),
+                object: nil,
+                queue: .main
+            ) { [weak model] _ in
+                model?.reload()
+            }
+        } else {
+            let label = UILabel()
+            label.text = "消費分析需要 iOS 16 以上版本"
+            label.textColor = .secondaryLabel
+            label.textAlignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(label)
+            NSLayoutConstraint.activate([
+                label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 16.0, *), let model = viewModel as? ConsumptionViewModel {
+            model.reload()
+        }
+    }
+}
