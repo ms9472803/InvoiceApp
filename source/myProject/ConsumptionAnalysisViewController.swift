@@ -20,6 +20,13 @@ struct MonthlyConsumption: Identifiable {
     let amount: Int
 }
 
+/// 單一分類的消費資料。
+struct CategoryConsumption: Identifiable {
+    let id = UUID()
+    let category: String
+    let amount: Int
+}
+
 /// 把 `Invoice.globalInvoiceArray` 依年份彙總成每月消費金額。
 enum ConsumptionStats {
     static let monthCodes = ["01", "02", "03", "04", "05", "06",
@@ -39,6 +46,18 @@ enum ConsumptionStats {
         return (0..<12).map { MonthlyConsumption(monthIndex: $0, monthLabel: monthLabels[$0], amount: sums[$0]) }
     }
 
+    /// 計算指定年份各分類的消費總額（僅回傳有消費的分類，由高到低）。
+    static func categoryConsumption(for year: String) -> [CategoryConsumption] {
+        var sums: [String: Int] = [:]
+        for invoice in Invoice.globalInvoiceArray where invoice.date.prefix(4) == year {
+            let category = invoice.category.isEmpty ? "其他" : invoice.category
+            sums[category, default: 0] += Int(invoice.totalPrice) ?? 0
+        }
+        return sums.filter { $0.value > 0 }
+            .map { CategoryConsumption(category: $0.key, amount: $0.value) }
+            .sorted { $0.amount > $1.amount }
+    }
+
     /// 從現有發票資料推導出可選的年份清單（永遠包含當年）。
     static func availableYears() -> [String] {
         var years = Set(Invoice.globalInvoiceArray.map { String($0.date.prefix(4)) })
@@ -55,6 +74,7 @@ enum ConsumptionStats {
 final class ConsumptionViewModel: ObservableObject {
     @Published var year: String
     @Published var data: [MonthlyConsumption] = []
+    @Published var categoryData: [CategoryConsumption] = []
     @Published var years: [String] = []
 
     var total: Int { data.reduce(0) { $0 + $1.amount } }
@@ -69,6 +89,7 @@ final class ConsumptionViewModel: ObservableObject {
         years = ConsumptionStats.availableYears()
         if !years.contains(year) { year = years.first ?? year }
         data = ConsumptionStats.monthlyConsumption(for: year)
+        categoryData = ConsumptionStats.categoryConsumption(for: year)
     }
 }
 
@@ -105,16 +126,40 @@ struct ConsumptionAnalysisView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 Spacer()
             } else {
-                Chart(model.data) { item in
-                    BarMark(
-                        x: .value("月份", item.monthLabel),
-                        y: .value("金額", item.amount)
-                    )
-                    .foregroundStyle(by: .value("月份", item.monthLabel))
-                    .cornerRadius(4)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 24) {
+                        Text("每月支出")
+                            .font(.headline)
+                        Chart(model.data) { item in
+                            BarMark(
+                                x: .value("月份", item.monthLabel),
+                                y: .value("金額", item.amount)
+                            )
+                            .foregroundStyle(by: .value("月份", item.monthLabel))
+                            .cornerRadius(4)
+                        }
+                        .chartLegend(.hidden)
+                        .frame(height: 260)
+
+                        Text("分類占比")
+                            .font(.headline)
+                        Chart(model.categoryData) { item in
+                            BarMark(
+                                x: .value("金額", item.amount),
+                                y: .value("分類", item.category)
+                            )
+                            .foregroundStyle(by: .value("分類", item.category))
+                            .annotation(position: .trailing) {
+                                Text("$\(item.amount)")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .chartLegend(.hidden)
+                        .frame(height: CGFloat(max(1, model.categoryData.count)) * 44 + 20)
+                    }
+                    .padding(.horizontal)
                 }
-                .chartLegend(.hidden)
-                .padding()
             }
         }
         .padding(.top)

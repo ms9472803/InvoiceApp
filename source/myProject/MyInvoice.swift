@@ -33,7 +33,8 @@ import UIKit
     var date: String = ""
     var storeName: String = ""
     var itemAndPrice: [Item] = []
-    
+    var category: String = "其他"
+
     static var invoiceShowCurrent = Invoice()
     static var globalInvoiceArray: [Invoice] = [] {
         didSet {
@@ -53,11 +54,12 @@ import UIKit
     
     override init() {}
     
-    init(number: String, date: String, storeName: String, itemAndPrice: [Item]) {
+    init(number: String, date: String, storeName: String, itemAndPrice: [Item], category: String = "其他") {
         self.number = number
         self.date = date
         self.storeName = storeName
         self.itemAndPrice = itemAndPrice
+        self.category = category
     }
     
     var totalPrice: String {
@@ -281,6 +283,9 @@ func loadWinningNumbers() {
 
 // 存放暫時的品項, 目前一次新增一個item
 var temporaryItemAndPrice: [Item] = []
+
+// 可選的消費分類
+let invoiceCategories = ["餐飲", "交通", "購物", "娛樂", "醫療", "其他"]
 
 
 func transformDatePickerToString(_ datePicker: UIDatePicker) -> String {

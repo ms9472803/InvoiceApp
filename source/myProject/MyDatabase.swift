@@ -64,6 +64,7 @@ import CoreData
             stringAttribute("number"),
             stringAttribute("date"),
             stringAttribute("storeName"),
+            stringAttribute("category"),
             itemsRelationship
         ]
         itemEntity.properties = [
@@ -110,6 +111,7 @@ import CoreData
         invoiceObject.setValue(invoice.number, forKey: "number")
         invoiceObject.setValue(invoice.date, forKey: "date")
         invoiceObject.setValue(invoice.storeName, forKey: "storeName")
+        invoiceObject.setValue(invoice.category, forKey: "category")
 
         let itemsSet = invoiceObject.mutableSetValue(forKey: "items")
         for item in invoice.itemAndPrice {
@@ -140,6 +142,7 @@ import CoreData
                 let number = object.value(forKey: "number") as? String ?? ""
                 let date = object.value(forKey: "date") as? String ?? ""
                 let storeName = object.value(forKey: "storeName") as? String ?? ""
+                let category = object.value(forKey: "category") as? String ?? "其他"
 
                 var items: [Item] = []
                 if let itemObjects = object.value(forKey: "items") as? Set<NSManagedObject> {
@@ -151,7 +154,7 @@ import CoreData
                         ))
                     }
                 }
-                invoices.append(Invoice(number: number, date: date, storeName: storeName, itemAndPrice: items))
+                invoices.append(Invoice(number: number, date: date, storeName: storeName, itemAndPrice: items, category: category))
             }
         } catch {
             print("讀取發票失敗: \(error.localizedDescription)")

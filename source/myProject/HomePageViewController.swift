@@ -93,42 +93,56 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
     // 利用 @IBAction keyword 將這個method公開給interface builder
     // 按下儲存發票後執行
     @IBAction func storeInvoice(_ sender: UIButton) {
-        
         let invoiceNumber = invoiceNumberTextField.text ?? ""
-        let invoiceStore = invoiceStoreTextField.text ?? ""
-        let invoiceDate = invoiceDateTextField.text ?? ""
 
-        var alertControllerTitle = ""
-        var alertControllerMessage = ""
-        
         /* 檢查發票號碼格式 */
-        if !invoiceNumberFormatCheck(invoiceNumber) {
-            alertControllerTitle = "儲存失敗"
-            alertControllerMessage = "發票號碼格式不符合"
-        } else if !isUnique(invoiceNumber){
-            alertControllerTitle = "儲存失敗"
-            alertControllerMessage = "發票號碼已存在"
-        } else {
-            alertControllerTitle = "儲存成功"
-            /* 新增發票, 加入到globalInvoiceArray */
-            let addInvoice = Invoice(number: invoiceNumber, date: invoiceDate, storeName: invoiceStore, itemAndPrice: temporaryItemAndPrice)
-            Invoice.globalInvoiceArray.append(addInvoice)
-            let invoiceDB = MyDatabase()
-            invoiceDB.addInvoiceToDB(addInvoice)
+        guard invoiceNumberFormatCheck(invoiceNumber) else {
+            showSimpleAlert(title: "儲存失敗", message: "發票號碼格式不符合")
+            return
         }
-        
-        let alertController = UIAlertController(title: alertControllerTitle, message: alertControllerMessage, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "確定", style: UIAlertAction.Style.default, handler: nil))
-        present(alertController, animated: true, completion: nil)
-        
-        // 清空所有text, 初始化Date
+        guard isUnique(invoiceNumber) else {
+            showSimpleAlert(title: "儲存失敗", message: "發票號碼已存在")
+            return
+        }
+
+        // 選擇消費分類後再儲存
+        let sheet = UIAlertController(title: "選擇消費分類", message: nil, preferredStyle: .actionSheet)
+        for category in invoiceCategories {
+            sheet.addAction(UIAlertAction(title: category, style: .default) { _ in
+                self.saveInvoice(category: category)
+            })
+        }
+        sheet.addAction(UIAlertAction(title: "取消", style: .cancel))
+        sheet.popoverPresentationController?.sourceView = sender
+        sheet.popoverPresentationController?.sourceRect = sender.bounds
+        present(sheet, animated: true)
+    }
+
+    private func saveInvoice(category: String) {
+        let addInvoice = Invoice(number: invoiceNumberTextField.text ?? "",
+                                 date: invoiceDateTextField.text ?? "",
+                                 storeName: invoiceStoreTextField.text ?? "",
+                                 itemAndPrice: temporaryItemAndPrice,
+                                 category: category)
+        Invoice.globalInvoiceArray.append(addInvoice)
+        MyDatabase().addInvoiceToDB(addInvoice)
+
+        // 清空所有欄位
         invoiceNumberTextField.text = ""
         invoiceDateTextField.text = ""
         invoiceStoreTextField.text = ""
         itemAndPriceTextView.text = "(可留空)"
         invoiceTotalPriceLabel.text = "$0"
-        // 由於temporaryItemAndPrice是暫時的, 因此儲存發票後要清空
+        // temporaryItemAndPrice 是暫時的, 儲存後要清空
         temporaryItemAndPrice = []
+
+        showSimpleAlert(title: "儲存成功", message: "分類：\(category)")
+    }
+
+    private func showSimpleAlert(title: String, message: String?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "確定", style: .default))
+        present(alertController, animated: true)
     }
     
     // 按下新增品項後執行
