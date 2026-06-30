@@ -605,9 +605,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = myProject/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要使用相機才能掃描發票上的 QR Code 以自動帶入發票資訊。";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要存取相片以儲存發票相關圖片。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要存取相片以選取發票圖片。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -641,9 +641,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = myProject/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要使用相機才能掃描發票上的 QR Code 以自動帶入發票資訊。";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "需要存取相片以儲存發票相關圖片。";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要存取相片以選取發票圖片。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
