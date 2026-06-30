@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import FirebaseCore
-import FirebaseAuth
-import FirebaseDatabase
 import AVFoundation
 
 class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, AVCaptureMetadataOutputObjectsDelegate{
@@ -60,7 +57,16 @@ class HomePageViewController: UIViewController, UITextViewDelegate, UIImagePicke
         loadingLabel.textAlignment = .center
         loadingDBView?.addSubview(loadingLabel)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(dbReady), name: NSNotification.Name("DatabaseReady"), object: nil)
+        // Core Data 為同步讀取，App 啟動時通常已就緒；若已就緒則直接解除 loading 畫面
+        if MyDatabase.isReady {
+            dbReady()
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(dbReady), name: MyDatabase.databaseReadyNotification, object: nil)
+            // 安全機制：避免任何意外導致畫面永遠卡在 loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+                self?.dbReady()
+            }
+        }
     }
     
     @objc func donePresser() {
